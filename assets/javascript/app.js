@@ -1,4 +1,11 @@
 
+const apiKeys = [
+  skyscanner = "",
+  yelp = "",
+  google = "",
+  ticketmaster = "",
+]
+
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
 let pageDisplayBool = [true, false, false, false, false];
 
