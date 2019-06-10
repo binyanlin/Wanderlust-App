@@ -1,0 +1,17 @@
+.foodpage {
+  width: 100%;
+}
+
+.foodTitle {
+  width: 100%;
+  background-color: #77b6f4;
+}
+.footContainer {
+  width: 100% !important; 
+}
+
+.foodCSS {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+}
