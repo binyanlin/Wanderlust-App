@@ -96,3 +96,8 @@ input[id=socialLvl]::-webkit-slider-thumb {
 html, body {
     height: 100%;
 }
+
+.genDes
+{
+  text-transform:capitalize;
+}

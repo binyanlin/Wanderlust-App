@@ -366,7 +366,6 @@ $(document).on("click", ".buttonStart", function(){
 
   //make a new array of objects to hold the arrays that match  
   let usersPool = [];
-  
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs
   for (let i=0; i<genDestinations.length; i++) {
@@ -397,12 +396,11 @@ $(document).on("click", ".buttonStart", function(){
       };
     };
   };
-  //console.log(usersPool);
-});
-
-//randomly pick from userPool array and display the new location
-
-//end GENERATING DESTINATION section
+  console.log(usersPool);
+  //randomly pick from userPool array and display the new location
+  let rand = usersPool[Math.floor(Math.random() * usersPool.length)];
+  $(".genDes").text(rand);
+});//end GENERATING DESTINATION section
 
 $(document).on("click", ".eventsB", function() {
   pageDisplayBool[1] = false;
