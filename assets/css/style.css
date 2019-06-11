@@ -20,6 +20,10 @@
   width: 100% !important; 
 }
 
+.arrowButton {
+  width: 80px;
+  height: auto;
+}
 .foodCSS {
   width: 200px;
   height: 300px;

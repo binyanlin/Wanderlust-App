@@ -9,7 +9,7 @@ const apiKeys = [
 // 7vmrY-xkHwlI8QAWACW6dg
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
-let pageDisplayBool = [true, false, false, false, false];
+let pageDisplayBool = [false, false, false, true, false];
 
 const displayer = () => {
   $(".openingPage").hide();
