@@ -6,6 +6,11 @@
   width: 100%;
   background-color: #77b6f4;
 }
+
+.eventTitle {
+  width: 100%;
+  background-color: #83db99;
+}
 .foodContainer {
   width: 100% !important; 
 }
