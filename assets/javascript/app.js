@@ -2,14 +2,12 @@
 const apiKeys = [
   skyscanner = "",
   yelp = "ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx",
-  google = "",
+  google = "AIzaSyAMWOCBFoVqJB5KTEuPEBjW_02OBE2C6qk",
   ticketmaster = "",
 ];
 
 // Yelp Client ID
 // 7vmrY-xkHwlI8QAWACW6dg
-
-
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
 let pageDisplayBool = [true, false, false, false, false];
@@ -67,6 +65,37 @@ $(document).on("click", ".restartButton", function() {
   pageDisplayBool[1] = false;
   pageDisplayBool[0] = true;
   displayer();
+});
+
+//SLIDERS input functions to display a string at each range
+$('#safetyLvl').on("input", function() {
+  if (this.value === "1") {
+    $("#safetyMsg").text("Know safety, no accidents");
+}else if (this.value === "2") {
+  $("#safetyMsg").text("I'm down for an adventure");
+}else if (this.value === "3") {
+  $("#safetyMsg").text("My middle name is danger");
+}
+});
+
+$('#moneyLvl').on("input", function() {
+  if (this.value === "1") {
+    $("#moneyMsg").text("I can live off scraps");
+}else if (this.value === "2") {
+  $("#moneyMsg").text("Balling on a budget");
+}else if (this.value === "3") {
+  $("#moneyMsg").text("I must dine like a king");
+}
+});
+
+$('#socialLvl').on("input", function() {
+  if (this.value === "1") {
+    $("#socialMsg").text("All I need is me, myself, and I");
+}else if (this.value === "2") {
+  $("#socialMsg").text("Over-planning kills magic");
+}else if (this.value === "3") {
+  $("#socialMsg").text("No road is long with good company");
+}
 });
 
 //--------------------------------------- start yelp food API section -------------------------------------------

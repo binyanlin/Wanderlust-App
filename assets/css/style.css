@@ -15,3 +15,55 @@
   height: 300px;
   object-fit: cover;
 }
+
+.slidecontainer {
+  align-content: center;
+  text-align: center;
+}
+
+label {
+  display: block;
+  width: 55%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 32px;
+  width: 32px;
+  margin-top: -15px;
+  border-radius: 0;
+}
+
+input[id=safetyLvl]::-webkit-slider-thumb {
+  background: url('../images/slider1icon.png') no-repeat;
+  background-size: 40px;
+}
+
+input[id=moneyLvl]::-webkit-slider-thumb {
+  background: url('../images/slider2icon.png') no-repeat;
+  background-size: 40px;
+}
+
+input[id=socialLvl]::-webkit-slider-thumb {
+  background: url('../images/slider3icon.png') no-repeat;
+  background-size: 40px;
+}
