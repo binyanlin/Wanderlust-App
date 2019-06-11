@@ -18,11 +18,13 @@ const displayer = () => {
   $(".eventPage").hide();
   $(".foodPage").hide();
   $(".scheduler").hide();
+  $(".map").hide();
   
   if (pageDisplayBool[0]) {
     $(".openingPage").show();
   } if (pageDisplayBool[1]) {
     $(".secondPage").show();
+    $(".map").show();
   } if (pageDisplayBool[2]) {
     $(".eventPage").show();
   } if (pageDisplayBool[3]) {
