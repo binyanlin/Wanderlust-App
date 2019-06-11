@@ -6,6 +6,16 @@
   width: 100%;
   background-color: #77b6f4;
 }
+
+.buttonStart {
+  width: 80%;
+  object-fit: cover;
+}
+
+.eventTitle {
+  width: 100%;
+  background-color: #83db99;
+}
 .foodContainer {
   width: 100% !important; 
 }
@@ -28,6 +38,17 @@ label {
   margin-right: auto;
 }
 
+.eventsB {
+  background-color: #D3EDDA;
+}
+
+.foodPlacesB {
+  background-color: #CCE5FF;
+}
+
+.destinationB {
+  background-color: #D1ECF1;
+}
 .slider {
   -webkit-appearance: none;
   width: 100%;
@@ -66,4 +87,12 @@ input[id=moneyLvl]::-webkit-slider-thumb {
 input[id=socialLvl]::-webkit-slider-thumb {
   background: url('../images/slider3icon.png') no-repeat;
   background-size: 40px;
+}
+#map {
+    height: 33%;
+    margin: 5%;
+    padding: 5%;
+}
+html, body {
+    height: 100%;
 }

@@ -10,16 +10,25 @@
   <title>Wanderlust</title>
 </head>
 <body class="">
-  
 <!--------------------------------------start Opening Page with Button---------------------------------------->
+<div class="map"id ="map"></div>
 <div class="openingPage m-3">
-
   <div class="title text-center py-4"><h1>Wanderlust</h1></div>
-
   <div class="quote1 text-center py-3">
     <h4>Not all who wander are lost...</h4>
     <h4>Especially not with our help</h4>
   </div>
+  
+  <div class="aboutMe">
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm py-3">
+          <p>Love traveling for cheap? Don't care where you go? Wanderlust is the app for you!</p>
+          <p>We help you find cheap flights, search attractions, and plan your trip for you with just the touch of one button.</p>
+        </div>
+        <div class="col-sm-3 py-3"></div>
+      </div>
+    </div>
   
   <!--SLIDERS-->
     <!--safety setting-->
@@ -47,53 +56,41 @@
   </div>
 
   <div class="mx-auto row py-5">
-    <div class="col-sm-3"></div>
-    <button type="button" class="buttonStart col-sm btn btn-danger text-light"><h1>Wander</h1></button>
-    <div class="col-sm-3"></div>
+    <div class="col-sm"></div>
+    <button type="button" class="buttonStart col-sm btn">
+      <img src="./assets/images/planebutton.png"></img>
+    </button>
+    <div class="col-sm"></div>
   </div>
 
-  <div class="aboutMe">
-    <div class="row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm py-3">
-        <p>Love traveling for cheap? Don't care where you go? Wanderlust is the app for you!</p>
-        <p>We help you find cheap flights, search attractions, and plan your trip for you with just the touch of one button.</p>
-      </div>
-      <div class="col-sm-3 py-3"></div>
-    </div>
-  </div>
 </div>
 <!-----------------------------------------end Opening Page---------------------------------------------->
-
 <!-----------------------------------------start Main About Page----------------------------------------------->
 <div class="secondPage m-3">
-
   <div class="destination text-center py-4 m-3">
     <h1>Generated Destination</h1>
     <h3>Flight Cost: <span class="flightCost"></span></h3>
   <!-- link to flight as well -->
   </div>
-
-
   <div class="row mainContent mx-4">
 
-    <div class="col-sm eventsB my-5 btn">
-      <button class="jumbotron alert-secondary btn">
+    <div class="col-sm my-5 btn">
+      <button class="jumbotron eventsB btn">
         <h3 class="text-center">Events</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit culpa accusamus ut necessitatibus id perspiciatis quas delectus repellat quis molestias!</p>
       </button>
     </div>
 
     <div class="col-sm-5 destinationInfo">
-      <div class="jumbotron">
+      <div class="jumbotron destinationB">
         <h3 class="text-center">Destination Info</h3>
 
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor tempora nemo velit autem a suscipit aut asperiores, quos at, nesciunt tempore perferendis ut fuga optio provident sint quisquam. Cum, voluptatum? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus aspernatur quibusdam enim molestiae, maxime nemo vel voluptatibus maiores officia velit repudiandae fuga temporibus facilis, dignissimos eum obcaecati consequatur veniam hic.</p>
       </div>
     </div>
 
-    <div class="col-sm foodPlacesB my-5">
-      <button class="jumbotron alert-secondary btn">
+    <div class="col-sm my-5">
+      <button class="jumbotron foodPlacesB btn">
         <h3 class="text-center">Food Places</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit culpa accusamus ut necessitatibus id perspiciatis quas delectus repellat quis molestias!</p>
       </button>
@@ -108,7 +105,6 @@
   
 </div>
 <!---------------------------------------end Main About Page---------------------------------------------->
-
 <!-----------------------------------------Start Food Page----------------------------------------------->
 <div class="foodPage m-0">
 
@@ -190,15 +186,14 @@
 
 </div>
 <!-----------------------------------------End Food Page----------------------------------------------->
-
 <!-----------------------------------------Start Event Page----------------------------------------------->
 <div class="eventPage m-0">
 
-    <div class="event eventTitle text-center py-4 foodTitle">
+    <div class="event eventTitle text-center py-4 eventTitle">
       <h1>Events and Activities</h1>
     </div>
   
-    <div class="eventContainer alert-primary py-4">
+    <div class="eventContainer alert-success py-4">
 
       <h2 class="text-center my-4">Activities</h2>
       <div class="row activities mx-2">
@@ -263,9 +258,10 @@
     </div>
 </div>
   <!-----------------------------------------End Event Page----------------------------------------------->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzvQfDVkDFhHxzx7PCUmtc-ev0kc4nhTI&callback=initMap">
+    </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="./assets/javascript/app.js"></script>
-
-
 </body>
 </html>
