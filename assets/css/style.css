@@ -38,6 +38,17 @@ label {
   margin-right: auto;
 }
 
+.eventsB {
+  background-color: #D3EDDA;
+}
+
+.foodPlacesB {
+  background-color: #CCE5FF;
+}
+
+.destinationB {
+  background-color: #D1ECF1;
+}
 .slider {
   -webkit-appearance: none;
   width: 100%;
