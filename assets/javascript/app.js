@@ -69,39 +69,6 @@ var map, infoWindow;
        infoWindow.open(map);
      }
 
-$(document).on("click", ".buttonStart", function(){
-  pageDisplayBool[0] = false;
-  pageDisplayBool[1] = true;
-  console.log(pageDisplayBool);
-  displayer();
-});
-
-$(document).on("click", ".eventsB", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[2] = true;
-  displayer();
-});
-
-$(document).on("click", ".foodPlacesB", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[3] = true;
-  displayer();
-});
-
-$(document).on("click", ".backButton", function() {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = false;
-  pageDisplayBool[1] = true;
-  displayer();
-});
-
-$(document).on("click", ".restartButton", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[0] = true;
-  displayer();
-});
-
 //SLIDERS input functions to display a string at each range
 $('#safetyLvl').on("input", function() {
   if (this.value === "1") {
@@ -382,28 +349,6 @@ const genDestinations = [
   }
 ];//end ARRAY OF OBJECTS section
 
-const displayer = () => {
-  $(".openingPage").hide();
-  $(".secondPage").hide();
-  $(".eventPage").hide();
-  $(".foodPage").hide();
-  $(".scheduler").hide();
-  
-  if (pageDisplayBool[0]) {
-    $(".openingPage").show();
-  } if (pageDisplayBool[1]) {
-    $(".secondPage").show();
-  } if (pageDisplayBool[2]) {
-    $(".eventPage").show();
-  } if (pageDisplayBool[3]) {
-    $(".foodPage").show();
-  } if (pageDisplayBool[4]) {
-    $(".scheduler").show();
-  };
-};
-
-displayer();
-
 //start GENERATING DESTINATION section
 $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[0] = false;
@@ -458,7 +403,6 @@ $(document).on("click", ".buttonStart", function(){
 //randomly pick from userPool array and display the new location
 
 //end GENERATING DESTINATION section
-
 
 $(document).on("click", ".eventsB", function() {
   pageDisplayBool[1] = false;
