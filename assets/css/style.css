@@ -72,3 +72,11 @@ input[id=socialLvl]::-webkit-slider-thumb {
   background: url('../images/slider3icon.png') no-repeat;
   background-size: 40px;
 }
+#map {
+    height: 33%;
+    margin: 5%;
+    padding: 5%;
+}
+html, body {
+    height: 100%;
+}
