@@ -384,6 +384,8 @@ $(document).on("click", ".restartButton", function() {
   displayer();
 });
 
+let selectedLocation;
+
 //start FUNCTION GENERATEDESTINATION section
 function generateDestination() {
   //stores the user's inputs from sliders
@@ -435,6 +437,7 @@ function generateDestination() {
   userDestination = usersPool[Math.floor(Math.random() * usersPool.length)];
   $(".genDes").text(userDestination);
   console.log(userDestination);
+  selectedLocation = userDestination;
 };//end FUNCTION GENERATEDESTINATION section
   
 //--------------------------------------- start yelp food API section -------------------------------------------
@@ -449,7 +452,7 @@ term2 = "?term=lunch";
 term3 = "?term=dinner";
 
 // locationYelp = `&latitude=${destinationLatitude}&longitude=${destinationLongitude}`;
-locationYelp = "&location=denver, CO"
+locationYelp = `&location=${selectedLocation}`
 limit = "&limit=30";
 radius = "&radius=25000";  //in meters (max 40000 is 25 miles)
 price = "&price=1,2"; //1 = $, 2 = $$ etc
@@ -672,7 +675,6 @@ $(document).on("click", ".btnLeftBlue3", function () {
 
 
 term5 ="?term=activities";
-locationYelp = "&location=denver, CO";
 query5 = term5 + locationYelp + limit;
 
 queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query5}`;
