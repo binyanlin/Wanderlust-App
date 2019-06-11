@@ -12,7 +12,7 @@ const apiKeys = [
 
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
-let pageDisplayBool = [false, false, false, true, false];
+let pageDisplayBool = [true, false, false, false, false];
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -34,20 +34,44 @@ const displayer = () => {
   };
 };
 
-
 displayer();
-
 
 $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[0] = false;
   pageDisplayBool[1] = true;
   console.log(pageDisplayBool);
   displayer();
-
 });
 
-//yelp API section -------------------------------------------
+$(document).on("click", ".eventsB", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[2] = true;
+  displayer();
+});
 
+$(document).on("click", ".foodPlacesB", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[3] = true;
+  displayer();
+});
+
+$(document).on("click", ".backButton", function() {
+  pageDisplayBool[2] = false;
+  pageDisplayBool[3] = false;
+  pageDisplayBool[4] = false;
+  pageDisplayBool[1] = true;
+  displayer();
+});
+
+$(document).on("click", ".restartButton", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[0] = true;
+  displayer();
+});
+
+//--------------------------------------- start yelp food API section -------------------------------------------
+
+// Next to implement: button for "see more food" that switches out the 5 restaurants for the next 5 on the list, up to 25
 // test destination: 39.7392° N, 104.9903° W
 destinationLatitude = "39.7392";
 destinationLongitude = "-104.9903";
@@ -61,8 +85,6 @@ locationYelp = "&location=denver, CO"
 limit = "&limit=10";
 radius = "&radius=20000";  //in meters (max 40000 is 25 miles)
 price = "&price=1,2"; //1 = $, 2 = $$ etc
-
-
 
 // breakfast ajax
 query = term + locationYelp + limit + radius + price;
@@ -151,4 +173,71 @@ for(let i=0; i<5; i++) {
   $(`.dinner${i+1}`).append(foodInfo2);
 };
 });
+//--------------------------------------- end yelp food API section -------------------------------------------
 
+//--------------------------------------- start event API section ---------------------------------------------
+
+
+// unirest.post("https://Ticketmasterstefan-skliarovV1.p.rapidapi.com/addDeliveriesToCart")
+// .header("X-RapidAPI-Host", "Ticketmasterstefan-skliarovV1.p.rapidapi.com")
+// .header("X-RapidAPI-Key", "8330ea6096msha4fd84b5e8f593bp161f8ejsn6c508a8ee435")
+// .header("Content-Type", "application/x-www-form-urlencoded")
+// .end(function (result) {
+//   console.log(result.status, result.headers, result.body);
+// });
+
+
+term5 ="?term=activities";
+locationYelp = "&location=denver, CO";
+query5 = term5 + locationYelp;
+
+queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query5}`;
+$.ajax({
+  url: queryURLyelp,
+  method: "GET",
+  headers: {
+    "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
+  }
+}).then(function(response){
+console.log(response);
+for(let i=0; i<10; i++) {
+  let name = response.businesses[i].name;
+  let imageURL = response.businesses[i].image_url;
+  let yelpURL = response.businesses[i].url;
+  // let activityLatitude = reponse.businesses[i].coordinates.latitude;
+  // let activityLongitude = reponse.businesses[i].coordinates.longitude;
+  $(`.activitiesImage${[i+1]}`).attr("src", imageURL);
+  $(`.activitiesLink${[i+1]}`).attr("href", yelpURL);
+  let activityInfo = $(`<p class="text-center">`).text(name);
+  $(`.activities${i+1}`).append(activityInfo);
+};
+});
+
+// term6 ="?term=nightlife";
+// locationYelp = "&location=denver, CO";
+// query6 = term6 + locationYelp;
+
+// queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query6}`;
+// $.ajax({
+//   url: queryURLyelp,
+//   method: "GET",
+//   headers: {
+//     "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
+//   }
+// }).then(function(response){
+// console.log(response);
+// // for(let i=0; i<10; i++) {
+// //   let name = response.businesses[i].name;
+// //   let imageURL = response.businesses[i].image_url;
+// //   let yelpURL = response.businesses[i].url;
+// //   // let activityLatitude = reponse.businesses[i].coordinates.latitude;
+// //   // let activityLongitude = reponse.businesses[i].coordinates.longitude;
+// //   $(`.activitiesImage${[i+1]}`).attr("src", imageURL);
+// //   $(`.activitiesLink${[i+1]}`).attr("href", yelpURL);
+// //   let activityInfo = $(`<p class="text-center">`).text(name);
+// //   $(`.activities${i+1}`).append(activityInfo);
+// // };
+// });
+
+
+//---------------------------------------- end event API section ---------------------------------------------
