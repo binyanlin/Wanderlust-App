@@ -20,7 +20,6 @@ const displayer = () => {
   $(".scheduler").hide();
   $(".map").hide();
   
-  
   if (pageDisplayBool[0]) {
     $(".openingPage").show();
   } if (pageDisplayBool[1]) {
@@ -34,22 +33,33 @@ const displayer = () => {
     $(".scheduler").show();
   };
 };
-
 displayer();
+
+
 var map, infoWindow;
      function initMap() {
        map = new google.maps.Map(document.getElementById('map'), {
-         center: {lat: -34.397, lng: 150.644},
+         center: {lat: 37.733795, lng: -122.446747},
          zoom: 6
        });
        infoWindow = new google.maps.InfoWindow;
+       console.log(map)
+       console.log(infoWindow);
        // Try HTML5 geolocation.
        if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(function(position) {
+           console.log(navigator)
            var pos = {
              lat: position.coords.latitude,
              lng: position.coords.longitude
-           };
+           };    
+           var currentLocationmarker = new google.maps.Marker({position: pos, map: map});
+           for(let i = 0; i < genDestinations.length; i++){
+           var currentLocationmarker = new google.maps.Marker({position: genDestinations[i].pos, map: map});
+           }
+           
+           //var destinationMarker = new google.maps.Marker({position: genDestinations[i], map: map});
+           
            infoWindow.setPosition(pos);
            infoWindow.setContent('Location found.');
            infoWindow.open(map);
@@ -68,6 +78,7 @@ var map, infoWindow;
                              'Error: The Geolocation service failed.' :
                              'Error: Your browser doesn\'t support geolocation.');
        infoWindow.open(map);
+      
      }
 
 $(document).on("click", ".buttonStart", function(){
@@ -141,84 +152,132 @@ const genDestinations = [
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 35,
+    lng: 135.45
+    }
   }, 
   {
     name: "istanbul",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0, 
+    pos : {
+    lat: 41.0082,
+    lng: 28.9784
+    }
   },
   {
     name: "new york city",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0, 
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    }
   }, 
   {
     name: "bali",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   }, 
   {
     name: "florence",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "amsterdam",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "venice",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "melbourne",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "porto",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "honolulu",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "salzburg",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "paris",
     place_id: "",
     safety: 0,
     money: 0,
-    social: 0 
+    social: 0,
+    pos : {
+    lat: 40.785091,
+    lng: -73.968285
+    } 
   },
   {
     name: "seychalles",
