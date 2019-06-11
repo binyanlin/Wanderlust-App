@@ -71,32 +71,278 @@ $(document).on("click", ".restartButton", function() {
 $('#safetyLvl').on("input", function() {
   if (this.value === "1") {
     $("#safetyMsg").text("Know safety, no accidents");
-}else if (this.value === "2") {
-  $("#safetyMsg").text("I'm down for an adventure");
-}else if (this.value === "3") {
-  $("#safetyMsg").text("My middle name is danger");
-}
+  }else if (this.value === "2") {
+    $("#safetyMsg").text("I'm down for an adventure");
+  }else if (this.value === "3") {
+    $("#safetyMsg").text("My middle name is danger");
+  }
 });
 
 $('#moneyLvl').on("input", function() {
   if (this.value === "1") {
     $("#moneyMsg").text("I can live off scraps");
-}else if (this.value === "2") {
-  $("#moneyMsg").text("Balling on a budget");
-}else if (this.value === "3") {
-  $("#moneyMsg").text("I must dine like a king");
-}
+  }else if (this.value === "2") {
+    $("#moneyMsg").text("Balling on a budget");
+  }else if (this.value === "3") {
+    $("#moneyMsg").text("I must dine like a king");
+  }
 });
 
 $('#socialLvl').on("input", function() {
   if (this.value === "1") {
     $("#socialMsg").text("All I need is me, myself, and I");
-}else if (this.value === "2") {
-  $("#socialMsg").text("Over-planning kills magic");
-}else if (this.value === "3") {
-  $("#socialMsg").text("No road is long with good company");
-}
-});
+  }else if (this.value === "2") {
+    $("#socialMsg").text("Over-planning kills magic");
+  }else if (this.value === "3") {
+    $("#socialMsg").text("No road is long with good company");
+  }
+});//end SLIDERS section
+
+//ARRAY OF OBJECTS for preset destinations 
+const genDestinations = [
+  {
+    name: "kyoto",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "istanbul",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "new york city",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "bali",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "florence",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "amsterdam",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "venice",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "melbourne",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "porto",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "honolulu",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "salzburg",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "paris",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "seychalles",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "puerto vallarta",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "las vegas",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "taipei",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "portland",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "los angeles",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "madrid",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "lisbon",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "sao paulo",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "singapore",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "vienna",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "rio de janeiro",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "osaka",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "vancouver",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "queenstown",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }, 
+  {
+    name: "el chalten",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "coron",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "moab",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "puerto escondido",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "nara",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "victoria falls",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  },
+  {
+    name: "corsica",
+    place_id: "",
+    safety: 0,
+    money: 0,
+    social: 0 
+  }
+];//end ARRAY OF OBJECTS section
+
+//FUNCTION to take the 3 user inputs and randomly generate a single destination based on the criteria given
+//blah blah blah
+//end generateDestination FUNCTION section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
 
