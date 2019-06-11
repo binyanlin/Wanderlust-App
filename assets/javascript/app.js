@@ -1,4 +1,3 @@
-
 const apiKeys = [
   skyscanner = "",
   yelp = "ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx",
@@ -11,108 +10,6 @@ const apiKeys = [
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
 let pageDisplayBool = [true, false, false, false, false];
-
-const displayer = () => {
-  $(".openingPage").hide();
-  $(".secondPage").hide();
-  $(".eventPage").hide();
-  $(".foodPage").hide();
-  $(".scheduler").hide();
-  $(".map").hide();
-  
-  if (pageDisplayBool[0]) {
-    $(".openingPage").show();
-  } if (pageDisplayBool[1]) {
-    $(".secondPage").show();
-    $(".map").show();
-  } if (pageDisplayBool[2]) {
-    $(".eventPage").show();
-  } if (pageDisplayBool[3]) {
-    $(".foodPage").show();
-  } if (pageDisplayBool[4]) {
-    $(".scheduler").show();
-  };
-};
-displayer();
-
-
-var map, infoWindow;
-     function initMap() {
-       map = new google.maps.Map(document.getElementById('map'), {
-         center: {lat: 37.733795, lng: -122.446747},
-         zoom: 6
-       });
-       infoWindow = new google.maps.InfoWindow;
-       console.log(map)
-       console.log(infoWindow);
-       // Try HTML5 geolocation.
-       if (navigator.geolocation) {
-         navigator.geolocation.getCurrentPosition(function(position) {
-           console.log(navigator)
-           var pos = {
-             lat: position.coords.latitude,
-             lng: position.coords.longitude
-           };    
-           var currentLocationmarker = new google.maps.Marker({position: pos, map: map});
-           for(let i = 0; i < genDestinations.length; i++){
-           var currentLocationmarker = new google.maps.Marker({position: genDestinations[i].pos, map: map});
-           }
-           
-           //var destinationMarker = new google.maps.Marker({position: genDestinations[i], map: map});
-           
-           infoWindow.setPosition(pos);
-           infoWindow.setContent('Location found.');
-           infoWindow.open(map);
-           map.setCenter(pos);
-         }, function() {
-           handleLocationError(true, infoWindow, map.getCenter());
-         });
-       } else {
-         // Browser doesn't support Geolocation
-         handleLocationError(false, infoWindow, map.getCenter());
-       }
-     }
-     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-       infoWindow.setPosition(pos);
-       infoWindow.setContent(browserHasGeolocation ?
-                             'Error: The Geolocation service failed.' :
-                             'Error: Your browser doesn\'t support geolocation.');
-       infoWindow.open(map);
-      
-     }
-
-$(document).on("click", ".buttonStart", function(){
-  pageDisplayBool[0] = false;
-  pageDisplayBool[1] = true;
-  console.log(pageDisplayBool);
-  displayer();
-});
-
-$(document).on("click", ".eventsB", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[2] = true;
-  displayer();
-});
-
-$(document).on("click", ".foodPlacesB", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[3] = true;
-  displayer();
-});
-
-$(document).on("click", ".backButton", function() {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = false;
-  pageDisplayBool[1] = true;
-  displayer();
-});
-
-$(document).on("click", ".restartButton", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[0] = true;
-  displayer();
-});
 
 //SLIDERS input functions to display a string at each range
 $('#safetyLvl').on("input", function() {
@@ -153,10 +50,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 35,
-    lng: 135.45
-    }
   }, 
   {
     name: "istanbul",
@@ -164,10 +57,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0, 
-    pos : {
-    lat: 41.0082,
-    lng: 28.9784
-    }
   },
   {
     name: "new york city",
@@ -175,10 +64,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0, 
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    }
   }, 
   {
     name: "bali",
@@ -186,10 +71,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   }, 
   {
     name: "florence",
@@ -197,10 +78,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "amsterdam",
@@ -208,10 +85,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "venice",
@@ -219,10 +92,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "melbourne",
@@ -230,10 +99,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "porto",
@@ -241,10 +106,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "honolulu",
@@ -252,10 +113,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "salzburg",
@@ -263,10 +120,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "paris",
@@ -274,10 +127,6 @@ const genDestinations = [
     safety: 0,
     money: 0,
     social: 0,
-    pos : {
-    lat: 40.785091,
-    lng: -73.968285
-    } 
   },
   {
     name: "seychalles",
@@ -435,9 +284,105 @@ const genDestinations = [
   }
 ];//end ARRAY OF OBJECTS section
 
-//FUNCTION to take the 3 user inputs and randomly generate a single destination based on the criteria given
-//blah blah blah
-//end generateDestination FUNCTION section
+const displayer = () => {
+  $(".openingPage").hide();
+  $(".secondPage").hide();
+  $(".eventPage").hide();
+  $(".foodPage").hide();
+  $(".scheduler").hide();
+  $(".map").hide();
+  
+  if (pageDisplayBool[0]) {
+    $(".openingPage").show();
+  } if (pageDisplayBool[1]) {
+    $(".secondPage").show();
+    $(".map").show();
+  } if (pageDisplayBool[2]) {
+    $(".eventPage").show();
+  } if (pageDisplayBool[3]) {
+    $(".foodPage").show();
+  } if (pageDisplayBool[4]) {
+    $(".scheduler").show();
+  };
+};
+displayer();
+
+var map, infoWindow;
+     function initMap() {
+       map = new google.maps.Map(document.getElementById('map'), {
+         center: {lat: 37.733795, lng: -122.446747},
+         zoom: 6
+       });
+       infoWindow = new google.maps.InfoWindow;
+       console.log(map)
+       console.log(infoWindow);
+       // Try HTML5 geolocation.
+       if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+           console.log(navigator)
+           var pos = {
+             lat: position.coords.latitude,
+             lng: position.coords.longitude
+           };    
+           var currentLocationmarker = new google.maps.Marker({position: pos, map: map});
+           for(let i = 0; i < genDestinations.length; i++){
+           var currentLocationmarker = new google.maps.Marker({position: genDestinations[i].pos, map: map});
+           }
+           
+           //var destinationMarker = new google.maps.Marker({position: genDestinations[i], map: map});
+           
+           infoWindow.setPosition(pos);
+           infoWindow.setContent('Location found.');
+           infoWindow.open(map);
+           map.setCenter(pos);
+         }, function() {
+           handleLocationError(true, infoWindow, map.getCenter());
+         });
+       } else {
+         // Browser doesn't support Geolocation
+         handleLocationError(false, infoWindow, map.getCenter());
+       }
+     }
+     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+       infoWindow.setPosition(pos);
+       infoWindow.setContent(browserHasGeolocation ?
+                             'Error: The Geolocation service failed.' :
+                             'Error: Your browser doesn\'t support geolocation.');
+       infoWindow.open(map);     
+     }
+
+$(document).on("click", ".buttonStart", function(){
+  pageDisplayBool[0] = false;
+  pageDisplayBool[1] = true;
+  console.log(pageDisplayBool);
+  displayer();
+});
+
+$(document).on("click", ".eventsB", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[2] = true;
+  displayer();
+});
+
+$(document).on("click", ".foodPlacesB", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[3] = true;
+  displayer();
+});
+
+$(document).on("click", ".backButton", function() {
+  pageDisplayBool[2] = false;
+  pageDisplayBool[3] = false;
+  pageDisplayBool[4] = false;
+  pageDisplayBool[1] = true;
+  displayer();
+});
+
+$(document).on("click", ".restartButton", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[0] = true;
+  displayer();
+});
 
 //--------------------------------------- start yelp food API section -------------------------------------------
 
