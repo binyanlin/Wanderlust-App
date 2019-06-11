@@ -2,7 +2,7 @@
 const apiKeys = [
   skyscanner = "",
   yelp = "ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx",
-  google = "AIzaSyAMWOCBFoVqJB5KTEuPEBjW_02OBE2C6qk",
+  //google = "AIzaSyAMWOCBFoVqJB5KTEuPEBjW_02OBE2C6qk",
   ticketmaster = "",
 ];
 
