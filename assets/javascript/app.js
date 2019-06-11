@@ -356,6 +356,7 @@ $(document).on("click", ".buttonStart", function(){
   console.log(pageDisplayBool);
   displayer();
   generateDestination();
+  YelpAPISearch();
 });
 
 $(document).on("click", ".eventsB", function() {
@@ -444,33 +445,166 @@ function generateDestination() {
 
 // Next to implement: button for "see more food" that switches out the 5 restaurants for the next 5 on the list, up to 25
 // test destination: 39.7392° N, 104.9903° W
-destinationLatitude = "39.7392";
-destinationLongitude = "-104.9903";
+const YelpAPISearch = () => {
+  console.log("selectedLocation is " + selectedLocation);  
+  term = "?term=breakfast";
+  term2 = "?term=lunch";
+  term3 = "?term=dinner";
 
-term = "?term=breakfast";
-term2 = "?term=lunch";
-term3 = "?term=dinner";
+  // locationYelp = `&latitude=${destinationLatitude}&longitude=${destinationLongitude}`;
+  locationYelp = `&location=${selectedLocation}`
+  limit = "&limit=30";
+  radius = "&radius=25000";  //in meters (max 40000 is 25 miles)
+  price = "&price=1,2"; //1 = $, 2 = $$ etc
 
-// locationYelp = `&latitude=${destinationLatitude}&longitude=${destinationLongitude}`;
-locationYelp = `&location=${selectedLocation}`
-limit = "&limit=30";
-radius = "&radius=25000";  //in meters (max 40000 is 25 miles)
-price = "&price=1,2"; //1 = $, 2 = $$ etc
+  // breakfast ajax
+  let breakfastObj;
 
-// breakfast ajax
-let breakfastObj;
+  query = term + locationYelp + limit + radius + price;
+  queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query}`;
+  $.ajax({
+    url: queryURLyelp,
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
+    }
+  }).then(function(response){
+    console.log(response);
+    breakfastObj = response;
+    for(let i=0; i<5; i++) {
+      let name = response.businesses[i].name;
+      let price = response.businesses[i].price;
+      let rating = response.businesses[i].rating;
+      let imageURL = response.businesses[i].image_url;
+      let yelpURL = response.businesses[i].url;
+      // let foodLatitude = reponse.businesses[i].coordinates.latitude;
+      // let foodLongitude = reponse.businesses[i].coordinates.longitude;
 
-query = term + locationYelp + limit + radius + price;
-queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query}`;
-$.ajax({
-  url: queryURLyelp,
-  method: "GET",
-  headers: {
-    "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
-  }
-}).then(function(response){
+      $(`.breakfastImage${[i+1]}`).attr("src", imageURL);
+      $(`.breakfastLink${[i+1]}`).attr("href", yelpURL);
+      let foodInfo = $(`<p class="text-center">`).text(name);
+      let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
+      $(`.breakfast${i+1}`).append(foodInfo);
+      $(`.breakfast${i+1}`).append(foodInfo2);
+    };
+  });
+
+  let breakfastIndex = 0;
+  $(document).on("click", ".btnRightBlue1", function () {
+    if (breakfastObj) {
+      if (breakfastIndex >= 0 && breakfastIndex <= 4) {
+        breakfastIndex += 1;
+        for (let i=0; i < 5; i++) {
+          $(`.breakfastImage${[i + 1]}`).attr("src", breakfastObj.businesses[i+breakfastIndex*5].image_url);
+          $(`.breakfastLink${[i + 1]}`).attr("href", breakfastObj.businesses[i+breakfastIndex*5].url);
+          let foodInfo = $(`<p class="text-center">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
+          let foodInfo2 = $(`<p class="text-center">`).text("Price " + breakfastObj.businesses[i+breakfastIndex*5].price + "  Rating " + breakfastObj.businesses[i+breakfastIndex*5].rating + " ★");
+          $(`.breakfast${i + 1}`).empty();
+          $(`.breakfast${i + 1}`).append(foodInfo);
+          $(`.breakfast${i + 1}`).append(foodInfo2);
+        };
+      };
+    };
+  });
+
+  $(document).on("click", ".btnLeftBlue1", function () {
+    if (breakfastObj) {
+      if (breakfastIndex >= 1 && breakfastIndex <= 5) {
+        breakfastIndex -= 1;
+        for (let i=0; i < 5; i++) {
+          $(`.breakfastImage${[i + 1]}`).attr("src", breakfastObj.businesses[i+breakfastIndex*5].image_url);
+          $(`.breakfastLink${[i + 1]}`).attr("href", breakfastObj.businesses[i+breakfastIndex*5].url);
+          let foodInfo = $(`<p class="text-center">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
+          let foodInfo2 = $(`<p class="text-center">`).text("Price " + breakfastObj.businesses[i+breakfastIndex*5].price + "  Rating " + breakfastObj.businesses[i+breakfastIndex*5].rating + " ★");
+          $(`.breakfast${i + 1}`).empty();
+          $(`.breakfast${i + 1}`).append(foodInfo);
+          $(`.breakfast${i + 1}`).append(foodInfo2);
+        };
+      };
+    };
+  });
+
+  // lunch ajax
+  let lunchObj;
+  query2 = term2 + locationYelp + limit + radius + price;
+  queryURLyelp2 = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query2}`;
+
+  $.ajax({
+    url: queryURLyelp2,
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
+    }
+  }).then(function(response){
+    console.log(response);
+    lunchObj = response;
+    for(let i=0; i<5; i++) {
+      let name = response.businesses[i].name;
+      let price = response.businesses[i].price;
+      let rating = response.businesses[i].rating;
+      let imageURL = response.businesses[i].image_url;
+      let yelpURL = response.businesses[i].url;
+      // let foodLatitude = reponse.businesses[i].coordinates.latitude;
+      // let foodLongitude = reponse.businesses[i].coordinates.longitude;
+
+      $(`.lunchImage${[i+1]}`).attr("src", imageURL);
+      $(`.lunchLink${[i+1]}`).attr("href", yelpURL);
+      let foodInfo = $(`<p class="text-center">`).text(name);
+      let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
+      $(`.lunch${i+1}`).append(foodInfo);
+      $(`.lunch${i+1}`).append(foodInfo2);
+    };
+  });
+
+  let lunchIndex = 0;
+
+  $(document).on("click", ".btnRightBlue2", function () {
+    if (lunchObj) {
+      if (lunchIndex >= 0 && lunchIndex <= 4) {
+        lunchIndex += 1;
+        for (let i=0; i < 5; i++) {
+          $(`.lunchImage${[i + 1]}`).attr("src", lunchObj.businesses[i+lunchIndex*5].image_url);
+          $(`.lunchLink${[i + 1]}`).attr("href", lunchObj.businesses[i+lunchIndex*5].url);
+          let foodInfo = $(`<p class="text-center">`).text(lunchObj.businesses[i+lunchIndex*5].name);
+          let foodInfo2 = $(`<p class="text-center">`).text("Price " + lunchObj.businesses[i+lunchIndex*5].price + "  Rating " + lunchObj.businesses[i+lunchIndex*5].rating + " ★");
+          $(`.lunch${i + 1}`).empty();
+          $(`.lunch${i + 1}`).append(foodInfo);
+          $(`.lunch${i + 1}`).append(foodInfo2);
+        };
+      };
+    };
+  });
+
+  $(document).on("click", ".btnLeftBlue2", function () {
+    if (lunchObj) {
+      if (lunchIndex >= 1 && lunchIndex <= 5) {
+        lunchIndex -= 1;
+        for (let i=0; i < 5; i++) {
+          $(`.lunchImage${[i + 1]}`).attr("src", lunchObj.businesses[i+lunchIndex*5].image_url);
+          $(`.lunchLink${[i + 1]}`).attr("href", lunchObj.businesses[i+lunchIndex*5].url);
+          let foodInfo = $(`<p class="text-center">`).text(lunchObj.businesses[i+lunchIndex*5].name);
+          let foodInfo2 = $(`<p class="text-center">`).text("Price " + lunchObj.businesses[i+lunchIndex*5].price + "  Rating " + lunchObj.businesses[i+lunchIndex*5].rating + " ★");
+          $(`.lunch${i + 1}`).empty();
+          $(`.lunch${i + 1}`).append(foodInfo);
+          $(`.lunch${i + 1}`).append(foodInfo2);
+        };
+      };
+    };
+  });
+
+  let dinnerObj;
+  // dinner ajax
+  query3 = term3 + locationYelp + limit + radius + price;
+  queryURLyelp3 = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query3}`;
+  $.ajax({
+    url: queryURLyelp3,
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
+    }
+  }).then(function(response){
   console.log(response);
-  breakfastObj = response;
+  dinnerObj = response;
   for(let i=0; i<5; i++) {
     let name = response.businesses[i].name;
     let price = response.businesses[i].price;
@@ -480,184 +614,50 @@ $.ajax({
     // let foodLatitude = reponse.businesses[i].coordinates.latitude;
     // let foodLongitude = reponse.businesses[i].coordinates.longitude;
 
-    $(`.breakfastImage${[i+1]}`).attr("src", imageURL);
-    $(`.breakfastLink${[i+1]}`).attr("href", yelpURL);
+    $(`.dinnerImage${[i+1]}`).attr("src", imageURL);
+    $(`.dinnerLink${[i+1]}`).attr("href", yelpURL);
     let foodInfo = $(`<p class="text-center">`).text(name);
     let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
-    $(`.breakfast${i+1}`).append(foodInfo);
-    $(`.breakfast${i+1}`).append(foodInfo2);
+    $(`.dinner${i+1}`).append(foodInfo);
+    $(`.dinner${i+1}`).append(foodInfo2);
   };
-});
+  });
 
-let breakfastIndex = 0;
-$(document).on("click", ".btnRightBlue1", function () {
-  if (breakfastObj) {
-    if (breakfastIndex >= 0 && breakfastIndex <= 4) {
-      breakfastIndex += 1;
-      for (let i=0; i < 5; i++) {
-        $(`.breakfastImage${[i + 1]}`).attr("src", breakfastObj.businesses[i+breakfastIndex*5].image_url);
-        $(`.breakfastLink${[i + 1]}`).attr("href", breakfastObj.businesses[i+breakfastIndex*5].url);
-        let foodInfo = $(`<p class="text-center">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
-        let foodInfo2 = $(`<p class="text-center">`).text("Price " + breakfastObj.businesses[i+breakfastIndex*5].price + "  Rating " + breakfastObj.businesses[i+breakfastIndex*5].rating + " ★");
-        $(`.breakfast${i + 1}`).empty();
-        $(`.breakfast${i + 1}`).append(foodInfo);
-        $(`.breakfast${i + 1}`).append(foodInfo2);
+  let dinnerIndex = 0;
+
+  $(document).on("click", ".btnRightBlue3", function () {
+    if (dinnerObj) {
+      if (dinnerIndex >= 0 && dinnerIndex <= 4) {
+        dinnerIndex += 1;
+        for (let i=0; i < 5; i++) {
+          $(`.dinnerImage${[i + 1]}`).attr("src", dinnerObj.businesses[i+dinnerIndex*5].image_url);
+          $(`.dinnerLink${[i + 1]}`).attr("href", dinnerObj.businesses[i+dinnerIndex*5].url);
+          let foodInfo = $(`<p class="text-center">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
+          let foodInfo2 = $(`<p class="text-center">`).text("Price " + dinnerObj.businesses[i+dinnerIndex*5].price + "  Rating " + dinnerObj.businesses[i+dinnerIndex*5].rating + " ★");
+          $(`.dinner${i + 1}`).empty();
+          $(`.dinner${i + 1}`).append(foodInfo);
+          $(`.dinner${i + 1}`).append(foodInfo2);
+        };
       };
     };
-  };
-});
+  });
 
-$(document).on("click", ".btnLeftBlue1", function () {
-  if (breakfastObj) {
-    if (breakfastIndex >= 1 && breakfastIndex <= 5) {
-      breakfastIndex -= 1;
-      for (let i=0; i < 5; i++) {
-        $(`.breakfastImage${[i + 1]}`).attr("src", breakfastObj.businesses[i+breakfastIndex*5].image_url);
-        $(`.breakfastLink${[i + 1]}`).attr("href", breakfastObj.businesses[i+breakfastIndex*5].url);
-        let foodInfo = $(`<p class="text-center">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
-        let foodInfo2 = $(`<p class="text-center">`).text("Price " + breakfastObj.businesses[i+breakfastIndex*5].price + "  Rating " + breakfastObj.businesses[i+breakfastIndex*5].rating + " ★");
-        $(`.breakfast${i + 1}`).empty();
-        $(`.breakfast${i + 1}`).append(foodInfo);
-        $(`.breakfast${i + 1}`).append(foodInfo2);
+  $(document).on("click", ".btnLeftBlue3", function () {
+    if (dinnerObj) {
+      if (dinnerIndex >= 1 && dinnerIndex <= 5) {
+        dinnerIndex -= 1;
+        for (let i=0; i < 5; i++) {
+          $(`.dinnerImage${[i + 1]}`).attr("src", dinnerObj.businesses[i+dinnerIndex*5].image_url);
+          $(`.dinnerLink${[i + 1]}`).attr("href", dinnerObj.businesses[i+dinnerIndex*5].url);
+          let foodInfo = $(`<p class="text-center">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
+          let foodInfo2 = $(`<p class="text-center">`).text("Price " + dinnerObj.businesses[i+dinnerIndex*5].price + "  Rating " + dinnerObj.businesses[i+dinnerIndex*5].rating + " ★");
+          $(`.dinner${i + 1}`).empty();
+          $(`.dinner${i + 1}`).append(foodInfo);
+          $(`.dinner${i + 1}`).append(foodInfo2);
+        };
       };
     };
-  };
-});
-
-// lunch ajax
-let lunchObj;
-query2 = term2 + locationYelp + limit + radius + price;
-queryURLyelp2 = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query2}`;
-
-$.ajax({
-  url: queryURLyelp2,
-  method: "GET",
-  headers: {
-    "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
-  }
-}).then(function(response){
-  console.log(response);
-  lunchObj = response;
-  for(let i=0; i<5; i++) {
-    let name = response.businesses[i].name;
-    let price = response.businesses[i].price;
-    let rating = response.businesses[i].rating;
-    let imageURL = response.businesses[i].image_url;
-    let yelpURL = response.businesses[i].url;
-    // let foodLatitude = reponse.businesses[i].coordinates.latitude;
-    // let foodLongitude = reponse.businesses[i].coordinates.longitude;
-
-    $(`.lunchImage${[i+1]}`).attr("src", imageURL);
-    $(`.lunchLink${[i+1]}`).attr("href", yelpURL);
-    let foodInfo = $(`<p class="text-center">`).text(name);
-    let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
-    $(`.lunch${i+1}`).append(foodInfo);
-    $(`.lunch${i+1}`).append(foodInfo2);
-  };
-});
-
-let lunchIndex = 0;
-
-$(document).on("click", ".btnRightBlue2", function () {
-  if (lunchObj) {
-    if (lunchIndex >= 0 && lunchIndex <= 4) {
-      lunchIndex += 1;
-      for (let i=0; i < 5; i++) {
-        $(`.lunchImage${[i + 1]}`).attr("src", lunchObj.businesses[i+lunchIndex*5].image_url);
-        $(`.lunchLink${[i + 1]}`).attr("href", lunchObj.businesses[i+lunchIndex*5].url);
-        let foodInfo = $(`<p class="text-center">`).text(lunchObj.businesses[i+lunchIndex*5].name);
-        let foodInfo2 = $(`<p class="text-center">`).text("Price " + lunchObj.businesses[i+lunchIndex*5].price + "  Rating " + lunchObj.businesses[i+lunchIndex*5].rating + " ★");
-        $(`.lunch${i + 1}`).empty();
-        $(`.lunch${i + 1}`).append(foodInfo);
-        $(`.lunch${i + 1}`).append(foodInfo2);
-      };
-    };
-  };
-});
-
-$(document).on("click", ".btnLeftBlue2", function () {
-  if (lunchObj) {
-    if (lunchIndex >= 1 && lunchIndex <= 5) {
-      lunchIndex -= 1;
-      for (let i=0; i < 5; i++) {
-        $(`.lunchImage${[i + 1]}`).attr("src", lunchObj.businesses[i+lunchIndex*5].image_url);
-        $(`.lunchLink${[i + 1]}`).attr("href", lunchObj.businesses[i+lunchIndex*5].url);
-        let foodInfo = $(`<p class="text-center">`).text(lunchObj.businesses[i+lunchIndex*5].name);
-        let foodInfo2 = $(`<p class="text-center">`).text("Price " + lunchObj.businesses[i+lunchIndex*5].price + "  Rating " + lunchObj.businesses[i+lunchIndex*5].rating + " ★");
-        $(`.lunch${i + 1}`).empty();
-        $(`.lunch${i + 1}`).append(foodInfo);
-        $(`.lunch${i + 1}`).append(foodInfo2);
-      };
-    };
-  };
-});
-
-let dinnerObj;
-// dinner ajax
-query3 = term3 + locationYelp + limit + radius + price;
-queryURLyelp3 = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query3}`;
-$.ajax({
-  url: queryURLyelp3,
-  method: "GET",
-  headers: {
-    "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
-  }
-}).then(function(response){
-console.log(response);
-dinnerObj = response;
-for(let i=0; i<5; i++) {
-  let name = response.businesses[i].name;
-  let price = response.businesses[i].price;
-  let rating = response.businesses[i].rating;
-  let imageURL = response.businesses[i].image_url;
-  let yelpURL = response.businesses[i].url;
-  // let foodLatitude = reponse.businesses[i].coordinates.latitude;
-  // let foodLongitude = reponse.businesses[i].coordinates.longitude;
-
-  $(`.dinnerImage${[i+1]}`).attr("src", imageURL);
-  $(`.dinnerLink${[i+1]}`).attr("href", yelpURL);
-  let foodInfo = $(`<p class="text-center">`).text(name);
-  let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
-  $(`.dinner${i+1}`).append(foodInfo);
-  $(`.dinner${i+1}`).append(foodInfo2);
-};
-});
-
-let dinnerIndex = 0;
-
-$(document).on("click", ".btnRightBlue3", function () {
-  if (dinnerObj) {
-    if (dinnerIndex >= 0 && dinnerIndex <= 4) {
-      dinnerIndex += 1;
-      for (let i=0; i < 5; i++) {
-        $(`.dinnerImage${[i + 1]}`).attr("src", dinnerObj.businesses[i+dinnerIndex*5].image_url);
-        $(`.dinnerLink${[i + 1]}`).attr("href", dinnerObj.businesses[i+dinnerIndex*5].url);
-        let foodInfo = $(`<p class="text-center">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
-        let foodInfo2 = $(`<p class="text-center">`).text("Price " + dinnerObj.businesses[i+dinnerIndex*5].price + "  Rating " + dinnerObj.businesses[i+dinnerIndex*5].rating + " ★");
-        $(`.dinner${i + 1}`).empty();
-        $(`.dinner${i + 1}`).append(foodInfo);
-        $(`.dinner${i + 1}`).append(foodInfo2);
-      };
-    };
-  };
-});
-
-$(document).on("click", ".btnLeftBlue3", function () {
-  if (dinnerObj) {
-    if (dinnerIndex >= 1 && dinnerIndex <= 5) {
-      dinnerIndex -= 1;
-      for (let i=0; i < 5; i++) {
-        $(`.dinnerImage${[i + 1]}`).attr("src", dinnerObj.businesses[i+dinnerIndex*5].image_url);
-        $(`.dinnerLink${[i + 1]}`).attr("href", dinnerObj.businesses[i+dinnerIndex*5].url);
-        let foodInfo = $(`<p class="text-center">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
-        let foodInfo2 = $(`<p class="text-center">`).text("Price " + dinnerObj.businesses[i+dinnerIndex*5].price + "  Rating " + dinnerObj.businesses[i+dinnerIndex*5].rating + " ★");
-        $(`.dinner${i + 1}`).empty();
-        $(`.dinner${i + 1}`).append(foodInfo);
-        $(`.dinner${i + 1}`).append(foodInfo2);
-      };
-    };
-  };
-});
+  });
 
 
 //--------------------------------------- end yelp food API section -------------------------------------------
@@ -700,35 +700,6 @@ for(let i=0; i<10; i++) {
 });
 //map display, appends to #map div
 
-     
-     
-
-
-// term6 ="?term=nightlife";
-// locationYelp = "&location=denver, CO";
-// query6 = term6 + locationYelp;
-
-// queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query6}`;
-// $.ajax({
-//   url: queryURLyelp,
-//   method: "GET",
-//   headers: {
-//     "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
-//   }
-// }).then(function(response){
-// console.log(response);
-// // for(let i=0; i<10; i++) {
-// //   let name = response.businesses[i].name;
-// //   let imageURL = response.businesses[i].image_url;
-// //   let yelpURL = response.businesses[i].url;
-// //   // let activityLatitude = reponse.businesses[i].coordinates.latitude;
-// //   // let activityLongitude = reponse.businesses[i].coordinates.longitude;
-// //   $(`.activitiesImage${[i+1]}`).attr("src", imageURL);
-// //   $(`.activitiesLink${[i+1]}`).attr("href", yelpURL);
-// //   let activityInfo = $(`<p class="text-center">`).text(name);
-// //   $(`.activities${i+1}`).append(activityInfo);
-// // };
-// });
-
+}; //end "yelpAPIsearch"
 
 //---------------------------------------- end event API section ---------------------------------------------
