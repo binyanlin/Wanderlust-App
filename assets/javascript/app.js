@@ -9,7 +9,7 @@ const apiKeys = [
 // 7vmrY-xkHwlI8QAWACW6dg
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
-let pageDisplayBool = [false, false, false, true, false];
+let pageDisplayBool = [true, false, false, false, false];
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -349,23 +349,57 @@ const genDestinations = [
   }
 ];//end ARRAY OF OBJECTS section
 
-//start GENERATING DESTINATION section
+
 $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[0] = false;
   pageDisplayBool[1] = true;
   console.log(pageDisplayBool);
   displayer();
+  generateDestination();
+});
 
+$(document).on("click", ".eventsB", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[2] = true;
+  displayer();
+});
+
+$(document).on("click", ".foodPlacesB", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[3] = true;
+  displayer();
+});
+
+$(document).on("click", ".backButton", function() {
+  pageDisplayBool[2] = false;
+  pageDisplayBool[3] = false;
+  pageDisplayBool[4] = false;
+  pageDisplayBool[1] = true;
+  displayer();
+});
+
+$(document).on("click", ".restartButton", function() {
+  pageDisplayBool[1] = false;
+  pageDisplayBool[0] = true;
+  displayer();
+});
+
+//start FUNCTION GENERATEDESTINATION section
+function generateDestination() {
   //stores the user's inputs from sliders
   const userInput = {
     safety: $("#safetyLvl").val(),
     money: $("#moneyLvl").val(),
-    social: $("#socialLvl").val() 
+    social: $("#socialLvl").val(), 
   };
   //console.log(userInput); test worked
 
   //make a new array of objects to hold the arrays that match  
   let usersPool = [];
+
+  //make a variable to contain user's generated destination
+  let userDestination = ""
+
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs
   for (let i=0; i<genDestinations.length; i++) {
@@ -398,35 +432,10 @@ $(document).on("click", ".buttonStart", function(){
   };
   console.log(usersPool);
   //randomly pick from userPool array and display the new location
-  let rand = usersPool[Math.floor(Math.random() * usersPool.length)];
-  $(".genDes").text(rand);
-});//end GENERATING DESTINATION section
-
-$(document).on("click", ".eventsB", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[2] = true;
-  displayer();
-});
-
-$(document).on("click", ".foodPlacesB", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[3] = true;
-  displayer();
-});
-
-$(document).on("click", ".backButton", function() {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = false;
-  pageDisplayBool[1] = true;
-  displayer();
-});
-
-$(document).on("click", ".restartButton", function() {
-  pageDisplayBool[1] = false;
-  pageDisplayBool[0] = true;
-  displayer();
-});
+  userDestination = usersPool[Math.floor(Math.random() * usersPool.length)];
+  $(".genDes").text(userDestination);
+  console.log(userDestination);
+};//end FUNCTION GENERATEDESTINATION section
   
 //--------------------------------------- start yelp food API section -------------------------------------------
 
