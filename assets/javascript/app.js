@@ -70,7 +70,9 @@ var map, infoWindow;
      }
 
 //Functions for scheduler
-const scheduleFood = [];
+const scheduleFoodBreakfast = [];
+const scheduleFoodLunch = [];
+const scheduleFoodDinner = [];
 
 //SLIDERS input functions to display a string at each range
 $('#safetyLvl').on("input", function() {
@@ -388,7 +390,9 @@ $(document).on("click", ".restartButton", function() {
   displayer();
   empty();
   selectedLocation = "";
-  scheduleFood.length = 0;
+  scheduleFoodBreakfast.length = 0;
+  scheduleFoodLunch.length = 0;
+  scheduleFoodDinner.length = 0;
 });
 
 //make a new array of objects to hold the arrays that match  
@@ -536,7 +540,7 @@ const YelpAPISearch = () => {
 
       $(`.breakfastImage${[i+1]}`).attr("src", imageURL);
       $(`.breakfastLink${[i+1]}`).attr("href", yelpURL);
-      let foodInfo = $(`<p class="text-center restaurantName">`).text(name);
+      let foodInfo = $(`<p class="text-center restaurantNameB">`).text(name);
       let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
       $(`.breakfast${i+1}`).append(foodInfo);
       $(`.breakfast${i+1}`).append(foodInfo2);
@@ -551,7 +555,7 @@ const YelpAPISearch = () => {
         for (let i=0; i < 5; i++) {
           $(`.breakfastImage${[i + 1]}`).attr("src", breakfastObj.businesses[i+breakfastIndex*5].image_url);
           $(`.breakfastLink${[i + 1]}`).attr("href", breakfastObj.businesses[i+breakfastIndex*5].url);
-          let foodInfo = $(`<p class="text-center restaurantName">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
+          let foodInfo = $(`<p class="text-center restaurantNameB">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
           let foodInfo2 = $(`<p class="text-center">`).text("Price " + breakfastObj.businesses[i+breakfastIndex*5].price + "  Rating " + breakfastObj.businesses[i+breakfastIndex*5].rating + " ★");
           $(`.breakfast${i + 1}`).empty();
           $(`.breakfast${i + 1}`).append(foodInfo);
@@ -568,7 +572,7 @@ const YelpAPISearch = () => {
         for (let i=0; i < 5; i++) {
           $(`.breakfastImage${[i + 1]}`).attr("src", breakfastObj.businesses[i+breakfastIndex*5].image_url);
           $(`.breakfastLink${[i + 1]}`).attr("href", breakfastObj.businesses[i+breakfastIndex*5].url);
-          let foodInfo = $(`<p class="text-center restaurantName">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
+          let foodInfo = $(`<p class="text-center restaurantNameB">`).text(breakfastObj.businesses[i+breakfastIndex*5].name);
           let foodInfo2 = $(`<p class="text-center">`).text("Price " + breakfastObj.businesses[i+breakfastIndex*5].price + "  Rating " + breakfastObj.businesses[i+breakfastIndex*5].rating + " ★");
           $(`.breakfast${i + 1}`).empty();
           $(`.breakfast${i + 1}`).append(foodInfo);
@@ -603,7 +607,7 @@ const YelpAPISearch = () => {
 
       $(`.lunchImage${[i+1]}`).attr("src", imageURL);
       $(`.lunchLink${[i+1]}`).attr("href", yelpURL);
-      let foodInfo = $(`<p class="text-center restaurantName">`).text(name);
+      let foodInfo = $(`<p class="text-center restaurantNameL">`).text(name);
       let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
       $(`.lunch${i+1}`).append(foodInfo);
       $(`.lunch${i+1}`).append(foodInfo2);
@@ -619,7 +623,7 @@ const YelpAPISearch = () => {
         for (let i=0; i < 5; i++) {
           $(`.lunchImage${[i + 1]}`).attr("src", lunchObj.businesses[i+lunchIndex*5].image_url);
           $(`.lunchLink${[i + 1]}`).attr("href", lunchObj.businesses[i+lunchIndex*5].url);
-          let foodInfo = $(`<p class="text-center restaurantName">`).text(lunchObj.businesses[i+lunchIndex*5].name);
+          let foodInfo = $(`<p class="text-center restaurantNameL">`).text(lunchObj.businesses[i+lunchIndex*5].name);
           let foodInfo2 = $(`<p class="text-center">`).text("Price " + lunchObj.businesses[i+lunchIndex*5].price + "  Rating " + lunchObj.businesses[i+lunchIndex*5].rating + " ★");
           $(`.lunch${i + 1}`).empty();
           $(`.lunch${i + 1}`).append(foodInfo);
@@ -636,7 +640,7 @@ const YelpAPISearch = () => {
         for (let i=0; i < 5; i++) {
           $(`.lunchImage${[i + 1]}`).attr("src", lunchObj.businesses[i+lunchIndex*5].image_url);
           $(`.lunchLink${[i + 1]}`).attr("href", lunchObj.businesses[i+lunchIndex*5].url);
-          let foodInfo = $(`<p class="text-center restaurantName">`).text(lunchObj.businesses[i+lunchIndex*5].name);
+          let foodInfo = $(`<p class="text-center restaurantNameL">`).text(lunchObj.businesses[i+lunchIndex*5].name);
           let foodInfo2 = $(`<p class="text-center">`).text("Price " + lunchObj.businesses[i+lunchIndex*5].price + "  Rating " + lunchObj.businesses[i+lunchIndex*5].rating + " ★");
           $(`.lunch${i + 1}`).empty();
           $(`.lunch${i + 1}`).append(foodInfo);
@@ -670,7 +674,7 @@ const YelpAPISearch = () => {
 
     $(`.dinnerImage${[i+1]}`).attr("src", imageURL);
     $(`.dinnerLink${[i+1]}`).attr("href", yelpURL);
-    let foodInfo = $(`<p class="text-center restaurantName">`).text(name);
+    let foodInfo = $(`<p class="text-center restaurantNameD">`).text(name);
     let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
     $(`.dinner${i+1}`).append(foodInfo);
     $(`.dinner${i+1}`).append(foodInfo2);
@@ -686,7 +690,7 @@ const YelpAPISearch = () => {
         for (let i=0; i < 5; i++) {
           $(`.dinnerImage${[i + 1]}`).attr("src", dinnerObj.businesses[i+dinnerIndex*5].image_url);
           $(`.dinnerLink${[i + 1]}`).attr("href", dinnerObj.businesses[i+dinnerIndex*5].url);
-          let foodInfo = $(`<p class="text-center restaurantName">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
+          let foodInfo = $(`<p class="text-center restaurantNameD">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
           let foodInfo2 = $(`<p class="text-center">`).text("Price " + dinnerObj.businesses[i+dinnerIndex*5].price + "  Rating " + dinnerObj.businesses[i+dinnerIndex*5].rating + " ★");
           $(`.dinner${i + 1}`).empty();
           $(`.dinner${i + 1}`).append(foodInfo);
@@ -703,7 +707,7 @@ const YelpAPISearch = () => {
         for (let i=0; i < 5; i++) {
           $(`.dinnerImage${[i + 1]}`).attr("src", dinnerObj.businesses[i+dinnerIndex*5].image_url);
           $(`.dinnerLink${[i + 1]}`).attr("href", dinnerObj.businesses[i+dinnerIndex*5].url);
-          let foodInfo = $(`<p class="text-center restaurantName">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
+          let foodInfo = $(`<p class="text-center restaurantNameD">`).text(dinnerObj.businesses[i+dinnerIndex*5].name);
           let foodInfo2 = $(`<p class="text-center">`).text("Price " + dinnerObj.businesses[i+dinnerIndex*5].price + "  Rating " + dinnerObj.businesses[i+dinnerIndex*5].rating + " ★");
           $(`.dinner${i + 1}`).empty();
           $(`.dinner${i + 1}`).append(foodInfo);
@@ -799,12 +803,26 @@ $(document).on("click", ".foodScheduleB", function() {
 });
 
 $(document).on("click", ".foodSubmitB", function() {
-  let selectedFood = $(".foodSelected").parent().siblings("a").find(".restaurantName").text();
-  console.log(selectedFood);
-  scheduleFood.push(selectedFood);
-  console.log(scheduleFood);
+
+  let selectedFoodB = $(".foodSelected").parent().siblings("a").find(".restaurantNameB").text();
+  let selectedFoodL = $(".foodSelected").parent().siblings("a").find(".restaurantNameL").text();
+  let selectedFoodD = $(".foodSelected").parent().siblings("a").find(".restaurantNameD").text();
+  
+  scheduleFoodBreakfast.push(selectedFoodB);
+  scheduleFoodLunch.push(selectedFoodL);
+  scheduleFoodDinner.push(selectedFoodD);
+  console.log("breakfast " + scheduleFoodBreakfast + " lunch: " + scheduleFoodLunch + " dinner: " + scheduleFoodDinner);
   $(".foodScheduleB").find("img").removeClass("foodSelected");
-})
+//will have to make a function to split restaurant names in array by using if lowercase + next one is capital,
+//split into 2 
+});
+
+$(document).on("click", ".eventButton", function() {
+  pageDisplayBool[2] = true;
+  pageDisplayBool[3] = false;
+  displayer();
+});
+
 
 
 }; //end "yelpAPIsearch"
