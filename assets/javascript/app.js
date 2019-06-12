@@ -9,7 +9,7 @@ const apiKeys = [
 // 7vmrY-xkHwlI8QAWACW6dg
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
-let pageDisplayBool = [true, false, false, false, false];
+let pageDisplayBool = [false, false, false, false, true];
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -825,7 +825,7 @@ $(document).on("click", ".foodSubmitB", function() {
   scheduleFoodBreakfast.push(selectedFoodB);
   scheduleFoodLunch.push(selectedFoodL);
   scheduleFoodDinner.push(selectedFoodD);
-  console.log("breakfast " + scheduleFoodBreakfast + " lunch: " + scheduleFoodLunch + " dinner: " + scheduleFoodDinner);
+  console.log("breakfast: " + scheduleFoodBreakfast + " lunch: " + scheduleFoodLunch + " dinner: " + scheduleFoodDinner);
   $(".foodScheduleB").find("img").removeClass("foodSelected");
 //will have to make a function to split restaurant names in array by using if lowercase + next one is capital,
 //split into 2 
