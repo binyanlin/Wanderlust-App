@@ -108,8 +108,13 @@ input[id=socialLvl]::-webkit-slider-thumb {
 }
 
 #map {
-    height: 33%;
-    margin: 5%;
+    display: block;
+    width: 95%;
+    height: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5%;
 }
 

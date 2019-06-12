@@ -35,39 +35,6 @@ const displayer = () => {
 };
 
 displayer();
-var map, infoWindow;
-     function initMap() {
-       map = new google.maps.Map(document.getElementById('map'), {
-         center: {lat: -34.397, lng: 150.644},
-         zoom: 6
-       });
-       infoWindow = new google.maps.InfoWindow;
-       // Try HTML5 geolocation.
-       if (navigator.geolocation) {
-         navigator.geolocation.getCurrentPosition(function(position) {
-           var pos = {
-             lat: position.coords.latitude,
-             lng: position.coords.longitude
-           };
-           infoWindow.setPosition(pos);
-           infoWindow.setContent('Location found.');
-           infoWindow.open(map);
-           map.setCenter(pos);
-         }, function() {
-           handleLocationError(true, infoWindow, map.getCenter());
-         });
-       } else {
-         // Browser doesn't support Geolocation
-         handleLocationError(false, infoWindow, map.getCenter());
-       }
-     }
-     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-       infoWindow.setPosition(pos);
-       infoWindow.setContent(browserHasGeolocation ?
-                             'Error: The Geolocation service failed.' :
-                             'Error: Your browser doesn\'t support geolocation.');
-       infoWindow.open(map);
-     }
 
 //SLIDERS input functions to display a string at each range
 $('#safetyLvl').on("input", function() {
@@ -342,13 +309,16 @@ const genDestinations = [
   }
 ];//end ARRAY OF OBJECTS section
 
+let selectedLocation = "" //a string to hold final location
+
 $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[0] = false;
   pageDisplayBool[1] = true;
   console.log(pageDisplayBool);
   displayer();
-  YelpAPISearch();
   decideSort();
+  initMap();
+  //YelpAPISearch();
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -385,11 +355,11 @@ $(document).on("click", ".restartButton", function() {
   displayer();
   empty();
   selectedLocation = "";
+  mapInput = "";
 });
 
 //make a new array of objects to hold the arrays that match  
 let usersPool = [];
-let selectedLocation = "" //a string to hold final location
 let pickedPool = []; //using this so user can select a new location
 
 //function to empty usersPool
@@ -457,6 +427,7 @@ function generateDestination() {
   if(filteredPool.length > 0) {
     //randomly pick from filteredPool array and display the new location
   selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+  mapInput = selectedLocation;
   pickedPool.push(selectedLocation);
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
@@ -481,6 +452,7 @@ function defaultDestination() {
   if(filteredPool.length > 0) {
     //randomly pick from filteredPool array and display the new location
   selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+  mapInput = selectedLocation;
   pickedPool.push(selectedLocation);
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
@@ -488,7 +460,45 @@ function defaultDestination() {
     alert ("You've exhausted cities with your slide options, adjust the slider!");
   };
 };//end FUNCTION DEFAULTDESTINATION section
-  
+
+//start MAP section
+let geocoder;
+let map;
+
+function initMap() {
+  geocoder = new google.maps.Geocoder();
+  let latlng = new google.maps.LatLng();
+  let mapOptions = {
+    zoom: 8,
+    center: latlng
+  };
+  map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  // Call the genMap function (once) when the map is idle (ready)
+  google.maps.event.addListenerOnce(map, 'idle', genMap);
+};
+
+function genMap() {
+
+  // Define address to center map to
+  var address = selectedLocation;
+  geocoder.geocode({
+    'address': address
+  }, function (results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+
+      // Center map on location
+      map.setCenter(results[0].geometry.location);
+
+      // Add marker on location
+      var marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location
+      });
+    } 
+  });
+};//start MAP section
+
 //--------------------------------------- start yelp food API section -------------------------------------------
 
 // Next to implement: button for "see more food" that switches out the 5 restaurants for the next 5 on the list, up to 25
