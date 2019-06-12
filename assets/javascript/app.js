@@ -349,7 +349,6 @@ $(document).on("click", ".buttonStart", function(){
   displayer();
   YelpAPISearch();
   decideSort();
-  
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -391,6 +390,7 @@ $(document).on("click", ".restartButton", function() {
 //make a new array of objects to hold the arrays that match  
 let usersPool = [];
 let selectedLocation = "" //a string to hold final location
+let pickedPool = []; //using this so user can select a new location
 
 //function to empty usersPool
 function empty() {
@@ -449,10 +449,20 @@ function generateDestination() {
     };
   };
   console.log(usersPool);
-  //randomly pick from userPool array and display the new location
-  selectedLocation = usersPool[Math.floor(Math.random() * usersPool.length)];
+
+  let filteredPool = usersPool.filter(function(x) { 
+    return pickedPool.indexOf(x) < 0;
+  });
+
+  if(filteredPool.length > 0) {
+    //randomly pick from filteredPool array and display the new location
+  selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+  pickedPool.push(selectedLocation);
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
+  }else {
+    alert ("You've exhausted cities with your slide options, adjust the slider!");
+  };
 };//end FUNCTION GENERATEDESTINATION section
 
 //start FUNCTION DEFAULTDESTINATION section
@@ -463,10 +473,20 @@ function defaultDestination() {
           usersPool.push(genDestinations[i].name);
   };
   console.log(usersPool);
-  //randomly pick from userPool array and display the new location
-  selectedLocation = usersPool[Math.floor(Math.random() * usersPool.length)];
+
+  let filteredPool = usersPool.filter(function(x) { 
+    return pickedPool.indexOf(x) < 0;
+  });
+
+  if(filteredPool.length > 0) {
+    //randomly pick from filteredPool array and display the new location
+  selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+  pickedPool.push(selectedLocation);
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
+  }else {
+    alert ("You've exhausted cities with your slide options, adjust the slider!");
+  };
 };//end FUNCTION DEFAULTDESTINATION section
   
 //--------------------------------------- start yelp food API section -------------------------------------------
