@@ -347,8 +347,8 @@ $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[1] = true;
   console.log(pageDisplayBool);
   displayer();
-  YelpAPISearch();
   decideSort();
+  YelpAPISearch();
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -723,7 +723,9 @@ const YelpAPISearch = () => {
 
 
 term5 ="?term=activities";
-query5 = term5 + locationYelp + limit;
+limit2 = "&limit=50";
+query5 = term5 + locationYelp + limit2;
+let activityObj;
 
 queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query5}`;
 $.ajax({
@@ -734,6 +736,7 @@ $.ajax({
   }
 }).then(function(response){
 console.log(response);
+activityObj = response;
 for(let i=0; i<10; i++) {
   let name = response.businesses[i].name;
   let imageURL = response.businesses[i].image_url;
@@ -746,7 +749,61 @@ for(let i=0; i<10; i++) {
   $(`.activities${i+1}`).append(activityInfo);
 };
 });
-//map display, appends to #map div
+
+
+let activitiesIndex = 0;
+
+$(document).on("click", ".btnRightGreen1", function () {
+  if (activityObj) {
+    if (activitiesIndex >= 0 && activitiesIndex <= 3) {
+      activitiesIndex += 1;
+      for (let i=0; i < 10; i++) {
+        $(`.activitiesImage${[i + 1]}`).attr("src", activityObj.businesses[i+activitiesIndex*10].image_url);
+        $(`.activitiesLink${[i + 1]}`).attr("href", activityObj.businesses[i+activitiesIndex*10].url);
+        let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i+activitiesIndex*10].name);
+        // let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*10].price + "  Rating " + activityObj.businesses[i+activitiesIndex*10].rating + " ★");
+        $(`.activities${i + 1}`).empty();
+        $(`.activities${i + 1}`).append(activityInfo);
+        // $(`.activities${i + 1}`).append(activityInfo2);
+      };
+    };
+  };
+});
+
+
+$(document).on("click", ".btnLeftGreen1", function () {
+  if (activityObj) {
+    if (activitiesIndex >= 1 && activitiesIndex <= 4) {
+      activitiesIndex -= 1;
+      for (let i=0; i < 10; i++) {
+        $(`.activitiesImage${[i + 1]}`).attr("src", activityObj.businesses[i+activitiesIndex*10].image_url);
+        $(`.activitiesLink${[i + 1]}`).attr("href", activityObj.businesses[i+activitiesIndex*10].url);
+        let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i+activitiesIndex*10].name);
+        // let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*10].price + "  Rating " + activityObj.businesses[i+activitiesIndex*10].rating + " ★");
+        $(`.activities${i + 1}`).empty();
+        $(`.activities${i + 1}`).append(activityInfo);
+        // $(`.activities${i + 1}`).append(activityInfo2);
+      };
+    };
+  };
+});
+
+// $(document).on("click", ".btnLeftGreen1", function () {
+//   if (activityObj) {
+//     if (activitiesIndex >= 2 && activitiesIndex <= 10) {
+//       activitiesIndex -= 2;
+//       for (let i=0; i < 5; i++) {
+//         $(`.activitiesImage${[i + 6]}`).attr("src", activityObj.businesses[i+activitiesIndex*5].image_url);
+//         $(`.activitiesLink${[i + 6]}`).attr("href", activityObj.businesses[i+activitiesIndex*5].url);
+//         let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i+activitiesIndex*5].name);
+//         let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*5].price + "  Rating " + activityObj.businesses[i+activitiesIndex*5].rating + " ★");
+//         $(`.activities${i + 6}`).empty();
+//         $(`.activities${i + 6}`).append(activityInfo);
+//         $(`.activities${i + 6}`).append(activityInfo2);
+//       };
+//     };
+//   };
+// });
 
 }; //end "yelpAPIsearch"
 
