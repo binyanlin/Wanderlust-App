@@ -2,7 +2,7 @@ const apiKeys = [
   skyscanner = "",
   yelp = "ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx",
   //google = "AIzaSyAMWOCBFoVqJB5KTEuPEBjW_02OBE2C6qk",
-  ticketmaster = "",
+  ticketmaster = "BcoRupkLYUA1zod2EnO8sFIzAvgAGXvq",
 ];
 
 // Yelp Client ID
@@ -396,6 +396,8 @@ let pickedPool = []; //using this so user can select a new location
 function empty() {
   //empty your array
   usersPool.length = 0;
+  $(".activitiesR").text("");
+  $(".food").text("");
 }
 
 //function to decide to pick from our full list or not based on if user leaves at least two values at 0
@@ -494,13 +496,13 @@ function defaultDestination() {
 // Next to implement: button for "see more food" that switches out the 5 restaurants for the next 5 on the list, up to 25
 // test destination: 39.7392° N, 104.9903° W
 const YelpAPISearch = () => {
-  console.log("selectedLocation is " + selectedLocation);  
   term = "?term=breakfast";
   term2 = "?term=lunch";
   term3 = "?term=dinner";
 
   // locationYelp = `&latitude=${destinationLatitude}&longitude=${destinationLongitude}`;
   locationYelp = `&location=${selectedLocation}`
+  $(".selectedLocation").text(selectedLocation);
   limit = "&limit=30";
   radius = "&radius=25000";  //in meters (max 40000 is 25 miles)
   price = "&price=1,2"; //1 = $, 2 = $$ etc
@@ -788,23 +790,24 @@ $(document).on("click", ".btnLeftGreen1", function () {
   };
 });
 
-// $(document).on("click", ".btnLeftGreen1", function () {
-//   if (activityObj) {
-//     if (activitiesIndex >= 2 && activitiesIndex <= 10) {
-//       activitiesIndex -= 2;
-//       for (let i=0; i < 5; i++) {
-//         $(`.activitiesImage${[i + 6]}`).attr("src", activityObj.businesses[i+activitiesIndex*5].image_url);
-//         $(`.activitiesLink${[i + 6]}`).attr("href", activityObj.businesses[i+activitiesIndex*5].url);
-//         let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i+activitiesIndex*5].name);
-//         let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*5].price + "  Rating " + activityObj.businesses[i+activitiesIndex*5].rating + " ★");
-//         $(`.activities${i + 6}`).empty();
-//         $(`.activities${i + 6}`).append(activityInfo);
-//         $(`.activities${i + 6}`).append(activityInfo2);
-//       };
-//     };
-//   };
-// });
-
 }; //end "yelpAPIsearch"
+//----------------------------------------start Ticketmaster API----------------------------------------------
+
+// https://app.ticketmaster.com/{package}/{version}/{resource}.json?apikey=**{API key}
+// var request = new XMLHttpRequest();
+
+// request.open('GET', 'https://app.ticketmaster.eu/mfxapi/v2/events?domain&lang&attraction_ids&category_ids&subcategory_ids&event_ids&event_name&venue_ids&city_ids&country_ids&postal_code&lat&long&radius&eventdate_to&eventdate_from&onsaledate_to&onsaledate_from&offsaledate_to&offsaledate_from&min_price&max_price&price_excl_fees&seats_available&cancelled&&is_not_package&sort_by&order&rows&start&excludee_external');
+
+// request.setRequestHeader('Accept', 'application/json');
+
+// request.onreadystatechange = function () {
+//   if (this.readyState === 4) {
+//     console.log('Status:', this.status);
+//     console.log('Headers:', this.getAllResponseHeaders());
+//     console.log('Body:', this.responseText);
+//   }
+// };
+
+// request.send();
 
 //---------------------------------------- end event API section ---------------------------------------------
