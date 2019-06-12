@@ -347,8 +347,9 @@ $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[1] = true;
   console.log(pageDisplayBool);
   displayer();
-  generateDestination();
   YelpAPISearch();
+  decideSort();
+  
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -383,25 +384,39 @@ $(document).on("click", ".restartButton", function() {
   pageDisplayBool[1] = false;
   pageDisplayBool[0] = true;
   displayer();
+  empty();
+  selectedLocation = "";
 });
 
-let selectedLocation;
-let userDestination = ""
+//make a new array of objects to hold the arrays that match  
+let usersPool = [];
+let selectedLocation = "" //a string to hold final location
+
+//function to empty usersPool
+function empty() {
+  //empty your array
+  usersPool.length = 0;
+}
+
+//function to decide to pick from our full list or not based on if user leaves at least two values at 0
+function decideSort() {
+  if ($("#safetyLvl").val() === "0" && $("#moneyLvl").val() === "0" && $("#socialLvl").val() == "0"){
+    defaultDestination();
+  }else if($("#safetyLvl").val() === "0" && $("#moneyLvl").val() === "0"){
+    defaultDestination();
+  }else if($("#safetyLvl").val() === "0" && $("#socialLvl").val() === "0"){
+    defaultDestination();
+  }else if($("#mafetyLvl").val() === "0" && $("#socialLvl").val() === "0"){
+    defaultDestination();
+  }else{
+    generateDestination();
+  }
+}
+
 //start FUNCTION GENERATEDESTINATION section
 function generateDestination() {
-  //stores the user's inputs from sliders
-  const userInput = {
-    safety: $("#safetyLvl").val(),
-    money: $("#moneyLvl").val(),
-    social: $("#socialLvl").val(), 
-  };
+
   //console.log(userInput); test worked
-
-  //make a new array of objects to hold the arrays that match  
-  let usersPool = [];
-
-  //make a variable to contain user's generated destination
-  
 
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs
@@ -435,11 +450,24 @@ function generateDestination() {
   };
   console.log(usersPool);
   //randomly pick from userPool array and display the new location
-  userDestination = usersPool[Math.floor(Math.random() * usersPool.length)];
-  $(".genDes").text(userDestination);
-  console.log(userDestination);
-  selectedLocation = userDestination;
+  selectedLocation = usersPool[Math.floor(Math.random() * usersPool.length)];
+  $(".genDes").text(selectedLocation);
+  console.log(selectedLocation);
 };//end FUNCTION GENERATEDESTINATION section
+
+//start FUNCTION DEFAULTDESTINATION section
+function defaultDestination() { 
+
+  //have a for loop sift through the array of objects
+  for (let i=0; i<genDestinations.length; i++) {
+          usersPool.push(genDestinations[i].name);
+  };
+  console.log(usersPool);
+  //randomly pick from userPool array and display the new location
+  selectedLocation = usersPool[Math.floor(Math.random() * usersPool.length)];
+  $(".genDes").text(selectedLocation);
+  console.log(selectedLocation);
+};//end FUNCTION DEFAULTDESTINATION section
   
 //--------------------------------------- start yelp food API section -------------------------------------------
 
