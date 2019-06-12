@@ -2,7 +2,7 @@ const apiKeys = [
   skyscanner = "",
   yelp = "ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx",
   //google = "AIzaSyAMWOCBFoVqJB5KTEuPEBjW_02OBE2C6qk",
-  ticketmaster = "",
+  ticketmaster = "BcoRupkLYUA1zod2EnO8sFIzAvgAGXvq",
 ];
 
 // Yelp Client ID
@@ -318,7 +318,7 @@ $(document).on("click", ".buttonStart", function(){
   displayer();
   decideSort();
   initMap();
-  //YelpAPISearch();
+  YelpAPISearch();
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -366,6 +366,8 @@ let pickedPool = []; //using this so user can select a new location
 function empty() {
   //empty your array
   usersPool.length = 0;
+  $(".activitiesR").text("");
+  $(".food").text("");
 }
 
 //function to decide to pick from our full list or not based on if user leaves at least two values at 0
@@ -427,7 +429,6 @@ function generateDestination() {
   if(filteredPool.length > 0) {
     //randomly pick from filteredPool array and display the new location
   selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
-  mapInput = selectedLocation;
   pickedPool.push(selectedLocation);
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
@@ -452,7 +453,6 @@ function defaultDestination() {
   if(filteredPool.length > 0) {
     //randomly pick from filteredPool array and display the new location
   selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
-  mapInput = selectedLocation;
   pickedPool.push(selectedLocation);
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
@@ -479,9 +479,8 @@ function initMap() {
 };
 
 function genMap() {
-
   // Define address to center map to
-  var address = selectedLocation;
+  let address = selectedLocation;
   geocoder.geocode({
     'address': address
   }, function (results, status) {
@@ -491,26 +490,26 @@ function genMap() {
       map.setCenter(results[0].geometry.location);
 
       // Add marker on location
-      var marker = new google.maps.Marker({
+      let marker = new google.maps.Marker({
         map: map,
         position: results[0].geometry.location
       });
     } 
   });
-};//start MAP section
+};//end MAP section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
 
 // Next to implement: button for "see more food" that switches out the 5 restaurants for the next 5 on the list, up to 25
 // test destination: 39.7392° N, 104.9903° W
 const YelpAPISearch = () => {
-  console.log("selectedLocation is " + selectedLocation);  
   term = "?term=breakfast";
   term2 = "?term=lunch";
   term3 = "?term=dinner";
 
   // locationYelp = `&latitude=${destinationLatitude}&longitude=${destinationLongitude}`;
   locationYelp = `&location=${selectedLocation}`
+  $(".selectedLocation").text(selectedLocation);
   limit = "&limit=30";
   radius = "&radius=25000";  //in meters (max 40000 is 25 miles)
   price = "&price=1,2"; //1 = $, 2 = $$ etc
@@ -733,7 +732,9 @@ const YelpAPISearch = () => {
 
 
 term5 ="?term=activities";
-query5 = term5 + locationYelp + limit;
+limit2 = "&limit=50";
+query5 = term5 + locationYelp + limit2;
+let activityObj;
 
 queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query5}`;
 $.ajax({
@@ -744,6 +745,7 @@ $.ajax({
   }
 }).then(function(response){
 console.log(response);
+activityObj = response;
 for(let i=0; i<10; i++) {
   let name = response.businesses[i].name;
   let imageURL = response.businesses[i].image_url;
@@ -756,8 +758,63 @@ for(let i=0; i<10; i++) {
   $(`.activities${i+1}`).append(activityInfo);
 };
 });
-//map display, appends to #map div
+
+
+let activitiesIndex = 0;
+
+$(document).on("click", ".btnRightGreen1", function () {
+  if (activityObj) {
+    if (activitiesIndex >= 0 && activitiesIndex <= 3) {
+      activitiesIndex += 1;
+      for (let i=0; i < 10; i++) {
+        $(`.activitiesImage${[i + 1]}`).attr("src", activityObj.businesses[i+activitiesIndex*10].image_url);
+        $(`.activitiesLink${[i + 1]}`).attr("href", activityObj.businesses[i+activitiesIndex*10].url);
+        let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i+activitiesIndex*10].name);
+        // let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*10].price + "  Rating " + activityObj.businesses[i+activitiesIndex*10].rating + " ★");
+        $(`.activities${i + 1}`).empty();
+        $(`.activities${i + 1}`).append(activityInfo);
+        // $(`.activities${i + 1}`).append(activityInfo2);
+      };
+    };
+  };
+});
+
+
+$(document).on("click", ".btnLeftGreen1", function () {
+  if (activityObj) {
+    if (activitiesIndex >= 1 && activitiesIndex <= 4) {
+      activitiesIndex -= 1;
+      for (let i=0; i < 10; i++) {
+        $(`.activitiesImage${[i + 1]}`).attr("src", activityObj.businesses[i+activitiesIndex*10].image_url);
+        $(`.activitiesLink${[i + 1]}`).attr("href", activityObj.businesses[i+activitiesIndex*10].url);
+        let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i+activitiesIndex*10].name);
+        // let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*10].price + "  Rating " + activityObj.businesses[i+activitiesIndex*10].rating + " ★");
+        $(`.activities${i + 1}`).empty();
+        $(`.activities${i + 1}`).append(activityInfo);
+        // $(`.activities${i + 1}`).append(activityInfo2);
+      };
+    };
+  };
+});
 
 }; //end "yelpAPIsearch"
+//----------------------------------------start Ticketmaster API----------------------------------------------
+
+// https://app.ticketmaster.com/{package}/{version}/{resource}.json?apikey=**{API key}
+// var request = new XMLHttpRequest();
+
+// request.open('GET', 'https://app.ticketmaster.eu/mfxapi/v2/events?domain&lang&attraction_ids&category_ids&subcategory_ids&event_ids&event_name&venue_ids&city_ids&country_ids&postal_code&lat&long&radius&eventdate_to&eventdate_from&onsaledate_to&onsaledate_from&offsaledate_to&offsaledate_from&min_price&max_price&price_excl_fees&seats_available&cancelled&&is_not_package&sort_by&order&rows&start&excludee_external');
+
+// request.setRequestHeader('Accept', 'application/json');
+
+// request.onreadystatechange = function () {
+//   if (this.readyState === 4) {
+//     console.log('Status:', this.status);
+//     console.log('Headers:', this.getAllResponseHeaders());
+//     console.log('Body:', this.responseText);
+//   }
+// };
+
+// request.send();
 
 //---------------------------------------- end event API section ---------------------------------------------
