@@ -119,8 +119,8 @@ const genDestinations = [
   {
     name: "new york city",
     place_id: "",
-    safety: 2,
-    money: 3,
+    safety: 3,
+    money: 2,
     social: 2 
   }, 
   {
@@ -186,13 +186,6 @@ const genDestinations = [
     money: 3,
     social: 1
   },
-  {
-    name: "seychalles",
-    place_id: "",
-    safety: 3,
-    money: 2,
-    social: 2 
-  }, 
   {
     name: "puerto vallarta",
     place_id: "",
@@ -349,7 +342,6 @@ const genDestinations = [
   }
 ];//end ARRAY OF OBJECTS section
 
-
 $(document).on("click", ".buttonStart", function(){
   pageDisplayBool[0] = false;
   pageDisplayBool[1] = true;
@@ -357,6 +349,14 @@ $(document).on("click", ".buttonStart", function(){
   displayer();
   generateDestination();
   YelpAPISearch();
+});
+
+//using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
+//certain flights don't have a prefill option but in that scenario the user can just click on flights and enter it themselves
+$('.flightsB').click(function() {
+  let flightSearch = selectedLocation;
+  flightSearch = flightSearch.replace(/\s+/g, '-');//replacing spaces with dashes as that's how the search goes
+  window.open('https://www.momondo.com/flights/' + flightSearch, '_blank');
 });
 
 $(document).on("click", ".eventsB", function() {
@@ -386,7 +386,7 @@ $(document).on("click", ".restartButton", function() {
 });
 
 let selectedLocation;
-
+let userDestination = ""
 //start FUNCTION GENERATEDESTINATION section
 function generateDestination() {
   //stores the user's inputs from sliders
@@ -401,7 +401,7 @@ function generateDestination() {
   let usersPool = [];
 
   //make a variable to contain user's generated destination
-  let userDestination = ""
+  
 
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs

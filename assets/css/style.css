@@ -8,8 +8,22 @@
 }
 
 .buttonStart {
-  width: 80%;
+  width: 95%;
   object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#startButton {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+
+.aboutMe {
+  text-align: center;
 }
 
 .eventTitle {
@@ -21,7 +35,7 @@
 }
 
 .arrowButton {
-  width: 60px;
+  width: 80px;
   height: auto;
 }
 .foodCSS {
@@ -92,11 +106,13 @@ input[id=socialLvl]::-webkit-slider-thumb {
   background: url('../images/slider3icon.png') no-repeat;
   background-size: 40px;
 }
+
 #map {
     height: 33%;
     margin: 5%;
     padding: 5%;
 }
+
 html, body {
     height: 100%;
 }
