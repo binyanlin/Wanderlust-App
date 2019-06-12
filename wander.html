@@ -23,8 +23,11 @@
       <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm py-3">
-          <p>Love traveling for cheap? Don't care where you go? Wanderlust is the app for you!</p>
-          <p>We help you find cheap flights, search attractions, and plan your trip for you with just the touch of one button.</p>
+          <!--<p>Love traveling for cheap? Don't care where you go? Wanderlust is the app for you!</p>-->
+          <p>Love traveling but have got too many options in mind? Wanderlust is the app for you!</p>
+          <!--<p>We help you find cheap flights, search attractions, and plan your trip for you with just the touch of one button.</p>-->
+          <p>We help you find cheap flights, search attractions, and plan your trip for you.</p>
+          <p></p>Simply adjust your preference below, click the button, and see where our winds take you.</p>
         </div>
         <div class="col-sm-3 py-3"></div>
       </div>
@@ -58,7 +61,7 @@
   <div class="mx-auto row py-5">
     <div class="col-sm"></div>
     <button type="button" class="buttonStart col-sm btn">
-      <img src="./assets/images/planebutton.png"></img>
+      <img id = startButton src="./assets/images/planebutton.png"></img>
     </button>
     <div class="col-sm"></div>
   </div>
@@ -68,12 +71,13 @@
 <!-----------------------------------------start Main About Page----------------------------------------------->
 <div class="secondPage m-3">
   <div class="destination text-center py-4 m-3">
+    <button class="jumbotron flightsB btn">
     <h1 class = genDes>Generated Destination</h1>
-    <h3>Flight Cost: <span class="flightCost"></span></h3>
-  <!-- link to flight as well -->
+    <h3>Click here to book your flight!</h3>
+  </button>
   </div>
   <div class="row mainContent mx-4">
-
+ 
     <div class="col-sm my-5 btn">
       <button class="jumbotron eventsB btn">
         <h3 class="text-center">Events</h3>
