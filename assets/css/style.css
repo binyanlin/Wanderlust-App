@@ -138,3 +138,7 @@ html, body {
 {
   text-transform:capitalize;
 }
+
+.foodSelected {
+  box-shadow: 10px 10px 5px grey;
+}
