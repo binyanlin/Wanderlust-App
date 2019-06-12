@@ -557,6 +557,7 @@ const YelpAPISearch = () => {
   let breakfastIndex = 0;
   $(document).on("click", ".btnRightBlue1", function () {
     if (breakfastObj) {
+      $(".foodScheduleB").find("img").removeClass("foodSelected");
       if (breakfastIndex >= 0 && breakfastIndex <= 4) {
         breakfastIndex += 1;
         for (let i=0; i < 5; i++) {
@@ -574,6 +575,7 @@ const YelpAPISearch = () => {
 
   $(document).on("click", ".btnLeftBlue1", function () {
     if (breakfastObj) {
+      $(".foodScheduleB").find("img").removeClass("foodSelected");
       if (breakfastIndex >= 1 && breakfastIndex <= 5) {
         breakfastIndex -= 1;
         for (let i=0; i < 5; i++) {
@@ -625,6 +627,7 @@ const YelpAPISearch = () => {
 
   $(document).on("click", ".btnRightBlue2", function () {
     if (lunchObj) {
+      $(".foodScheduleB").find("img").removeClass("foodSelected");
       if (lunchIndex >= 0 && lunchIndex <= 4) {
         lunchIndex += 1;
         for (let i=0; i < 5; i++) {
@@ -642,6 +645,7 @@ const YelpAPISearch = () => {
 
   $(document).on("click", ".btnLeftBlue2", function () {
     if (lunchObj) {
+      $(".foodScheduleB").find("img").removeClass("foodSelected");
       if (lunchIndex >= 1 && lunchIndex <= 5) {
         lunchIndex -= 1;
         for (let i=0; i < 5; i++) {
@@ -692,6 +696,7 @@ const YelpAPISearch = () => {
 
   $(document).on("click", ".btnRightBlue3", function () {
     if (dinnerObj) {
+      $(".foodScheduleB").find("img").removeClass("foodSelected");
       if (dinnerIndex >= 0 && dinnerIndex <= 4) {
         dinnerIndex += 1;
         for (let i=0; i < 5; i++) {
@@ -709,6 +714,7 @@ const YelpAPISearch = () => {
 
   $(document).on("click", ".btnLeftBlue3", function () {
     if (dinnerObj) {
+      $(".foodScheduleB").find("img").removeClass("foodSelected");
       if (dinnerIndex >= 1 && dinnerIndex <= 5) {
         dinnerIndex -= 1;
         for (let i=0; i < 5; i++) {
@@ -719,6 +725,7 @@ const YelpAPISearch = () => {
           $(`.dinner${i + 1}`).empty();
           $(`.dinner${i + 1}`).append(foodInfo);
           $(`.dinner${i + 1}`).append(foodInfo2);
+          
         };
       };
     };
