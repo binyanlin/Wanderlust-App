@@ -319,9 +319,9 @@ $(document).on("click", ".buttonStart", function () {
   //YelpAPISearch();
   getBackground();
   genDescription();
-//backgroundtest
- // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
-      //document.body.style.backgroundSize = "cover"; 
+  //backgroundtest
+  // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
+  //document.body.style.backgroundSize = "cover"; 
   ticketMastAPISearch();
 });
 
@@ -510,32 +510,32 @@ function genMap() {
 
 //start LOCATION DESCRIPTION section
 function genDescription() {
-    let cors = "https://cors-anywhere.herokuapp.com/";
-    let desDiv = " div.common-text-ReadMore__content--2X4LR";  
-    //setTimeout(function () { 
-    for (let i=0; i<genDestinations.length; i++) {
-      
-        if (selectedLocation === genDestinations[i].name) {
-          let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
-        //  setTimeout(function () { 
-          $('#tripInfo').load(combo); 
-        //}, 2000)
-        }
-    }; 
- // }, 4000) 
+  let cors = "https://cors-anywhere.herokuapp.com/";
+  let desDiv = " div.common-text-ReadMore__content--2X4LR";
+  //setTimeout(function () { 
+  for (let i = 0; i < genDestinations.length; i++) {
+
+    if (selectedLocation === genDestinations[i].name) {
+      let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
+      //  setTimeout(function () { 
+      $('#tripInfo').load(combo);
+      //}, 2000)
+    }
+  };
+  // }, 4000) 
 };
 //end LOCATION DESCRIPTION section
 
 //start 2NDPGBG section
 function getBackground() {
-  for (let i=0; i<genDestinations.length; i++) {
+  for (let i = 0; i < genDestinations.length; i++) {
     if (selectedLocation === genDestinations[i].name) {
       let bgPick = genDestinations[i].name;
       bgPick = bgPick.replace(/\s+/g, '-');//replacing spaces with dashes
-      document.body.style.background = "url(assets/images/"+bgPick+".jpg) no-repeat center center fixed"; 
-      document.body.style.backgroundSize = "cover"; 
+      document.body.style.background = "url(assets/images/" + bgPick + ".jpg) no-repeat center center fixed";
+      document.body.style.backgroundSize = "cover";
     }
-  }; 
+  };
 };//end 2NDPGBG section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
@@ -898,12 +898,41 @@ const ticketMastAPISearch = () => {
 
   $.ajax({
     type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + selectedLocation + "&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?location=" + selectedLocation + "&size=1&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
     async: true,
     dataType: "json",
     success: function (json) {
 
-      console.log(json);
+      var events = json._embedded.events[0]._embedded.venues[0].city;
+      console.log(events);
+
+
+      // for (let i = 0; i <= events.length; i++) {
+      //   x = events[i]._embedded.venues;
+
+      // }
+
+
+
+
+
+      // let address = events[i].name
+      // geocoder.geocode({
+      //   'address': address
+      // }, function (results, status) {
+      //   if (status == google.maps.GeocoderStatus.OK) {
+
+      //     // Center map on location
+      //     map.setCenter(results[0].geometry.location);
+
+      //     // Add marker on location
+      //     let marker = new google.maps.Marker({
+      //       map: map,
+      //       position: results[0].geometry.location
+      //     });
+      //   }
+      // });
+
 
       // Parse the response.
 
