@@ -76,238 +76,238 @@ $('#socialLvl').on("input", function() {
 const genDestinations = [
   {
     name: "kyoto",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g298564",
     safety: 1,
     money: 2,
     social: 2 
   }, 
   {
     name: "istanbul",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g293974",
     safety: 2,
     money: 2,
     social: 2 
   },
   {
     name: "new york city",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g60763",
     safety: 3,
     money: 2,
     social: 2 
   }, 
   {
     name: "bali",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g294226",
     safety: 2,
     money: 2,
     social: 3 
   }, 
   {
     name: "florence",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g187895",
     safety: 1,
     money: 2,
     social: 3 
   },
   {
     name: "amsterdam",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g188590",
     safety: 2,
     money: 3,
     social: 3 
   },
   {
     name: "venice",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g187870",
     safety: 1,
     money: 3,
     social: 1 
   },
   {
     name: "melbourne",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g255100",
     safety: 3,
     money: 3,
     social: 3 
   },
   {
     name: "porto",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g189180",
     safety: 2,
     money: 1,
     social: 3 
   },
   {
     name: "honolulu",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g60982",
     safety: 3,
     money: 2,
     social: 3
   },
   {
     name: "salzburg",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g190441",
     safety: 1,
     money: 3,
     social: 2 
   },
   {
     name: "paris",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g187147",
     safety: 2,
     money: 3,
     social: 1
   },
   {
     name: "puerto vallarta",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g150793",
     safety: 2,
     money: 1,
     social: 2 
   },
   {
     name: "las vegas",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g45963",
     safety: 2,
     money: 3,
     social: 3 
   },
   {
     name: "taipei",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g293913",
     safety: 1,
     money: 1,
     social: 3 
   },
   {
     name: "portland",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g52024",
     safety: 1,
     money: 1,
     social: 2 
   },
   {
     name: "los angeles",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g32655",
     safety: 2,
     money: 2,
     social: 3 
   },
   {
     name: "madrid",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g187514",
     safety: 1,
     money: 2,
     social: 3 
   },
   {
     name: "lisbon",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g189158",
     safety: 1,
     money: 1,
     social: 3 
   },
   {
     name: "sao paulo",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g303631",
     safety: 3,
     money: 3,
     social: 2 
   }, 
   {
     name: "singapore",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g294265",
     safety: 1,
     money: 3,
     social: 2 
   },
   {
     name: "vienna",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g190454",
     safety: 1,
     money: 2,
     social: 1 
   },
   {
     name: "rio de janeiro",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g303506",
     safety: 3,
     money: 1,
     social: 3 
   },
   {
     name: "osaka",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g298566",
     safety: 1,
     money: 2,
     social: 3 
   },
   {
     name: "vancouver",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g154943",
     safety: 2,
     money: 2,
     social: 1 
   }, 
   {
     name: "queenstown",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g255122",
     safety: 2,
     money: 2,
     social: 1
   }, 
   {
     name: "el chalten",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g316035",
     safety: 3,
     money: 1,
     social: 1 
   },
   {
     name: "coron",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g729733",
     safety: 3,
     money: 3,
     social: 1 
   },
   {
     name: "moab",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g60724",
     safety: 3,
     money: 1,
     social: 3 
   },
   {
     name: "puerto escondido",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g153373",
     safety: 3,
     money: 2,
     social: 1 
   },
   {
     name: "nara",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g298198",
     safety: 1,
     money: 1,
     social: 1 
   },
   {
     name: "victoria falls",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g293761",
     safety: 3,
     money: 1,
     social: 2 
   },
   {
     name: "corsica",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g187139",
     safety: 2,
     money: 1,
     social: 1 
   },
   {
     name: "tokyo",
-    place_id: "",
+    tripAdvisorLink: "https://www.tripadvisor.com/Home-g298184",
     safety: 1,
     money: 3,
     social: 3
@@ -323,7 +323,8 @@ $(document).on("click", ".buttonStart", function(){
   displayer();
   decideSort();
   initMap();
-  YelpAPISearch();
+  //YelpAPISearch();
+  genDescription();
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -363,7 +364,7 @@ $(document).on("click", ".restartButton", function() {
   scheduleFoodBreakfast.length = 0;
   scheduleFoodLunch.length = 0;
   scheduleFoodDinner.length = 0;
-  mapInput = "";
+  $('#tripInfo').empty();
 });
 
 //make a new array of objects to hold the arrays that match  
@@ -401,7 +402,7 @@ function generateDestination() {
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs
   for (let i=0; i<genDestinations.length; i++) {
-    if ($("#safetyLvl").val() === genDestinations[i].safety){
+    if ($("#safetyLvl").val() == genDestinations[i].safety){
       if ($("#moneyLvl").val() == genDestinations[i].money){
         if ($("#socialLvl").val() == genDestinations[i].social){
           usersPool.push(genDestinations[i].name);
@@ -409,13 +410,13 @@ function generateDestination() {
         };
       };
     };
-    if ($("#safetyLvl").val() === genDestinations[i].safety){
+    if ($("#safetyLvl").val() == genDestinations[i].safety){
       if ($("#moneyLvl").val() == genDestinations[i].money){
           usersPool.push(genDestinations[i].name);
           //console.log("dos")
       };
     };
-    if ($("#safetyLvl").val() === genDestinations[i].safety){
+    if ($("#safetyLvl").val() == genDestinations[i].safety){
       if ($("#socialLvl").val() == genDestinations[i].social){
         usersPool.push(genDestinations[i].name);
         //console.log("tres")
@@ -441,7 +442,7 @@ function generateDestination() {
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
   }else {
-    alert ("You've exhausted cities with your slide options, adjust the slider!");
+    alert ("You've exhausted cities with your slide options, adjust the sliders!");
   };
 };//end FUNCTION GENERATEDESTINATION section
 
@@ -465,7 +466,7 @@ function defaultDestination() {
   $(".genDes").text(selectedLocation);
   console.log(selectedLocation);
   }else {
-    alert ("You've exhausted cities with your slide options, adjust the slider!");
+    alert ("You've exhausted cities with your slide options, adjust the sliders!");
   };
 };//end FUNCTION DEFAULTDESTINATION section
 
@@ -505,6 +506,24 @@ function genMap() {
     } 
   });
 };//end MAP section
+
+//start LOCATION DESCRIPTION section
+function genDescription() {
+  let cors = "https://cors-anywhere.herokuapp.com/";
+  let desDiv = " div.common-text-ReadMore__content--2X4LR";  
+  setTimeout(function () {              
+    for (let i=0; i<genDestinations.length; i++) {
+      setTimeout(function () { 
+        if (selectedLocation === "puerto escondido") {
+          $('#tripInfo').text("Looking for a tropical Mexican fishing village with relaxing beaches, oceanfront seafood bars and restaurants, unspoiled reefs for diving and snorkeling, and waves suitable for championship surfing? Puerto Escondido has all that plus the Laguna de Manialtepec mangrove lagoon for tours combining kayaking, boating, bird-watching, and swimming in phosphorescent waters.")
+        } else if (selectedLocation === genDestinations[i].name) {
+        let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
+        $('#tripInfo').load(combo); 
+      }
+    }, 1500)
+    };
+  }, 1500)
+};//end LOCATION DESCRIPTION section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
 
