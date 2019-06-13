@@ -110,10 +110,15 @@ label {
 
 .destinationB {
   background-color: #D1ECF1;
-  min-height: 500px;
-  padding-bottom: 70%;
-  padding-top: 10%;
+  min-height: 300px;
 }
+
+#tripInfo {
+  white-space: normal;
+  height: 300px;
+  overflow:overlay
+}
+
 .slider {
   -webkit-appearance: none;
   width: 100%;
@@ -124,6 +129,17 @@ label {
   opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
+}
+
+#map{
+    /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+    -webkit-border-radius: 12px; 
+  
+    /* Firefox 1-3.6 */
+    -moz-border-radius: 12px; 
+    
+    /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+    border-radius: 12px; 
 }
 
 .slider:hover {
@@ -221,4 +237,27 @@ table.table-bordered > tbody > tr > td{
 .fudStyle {
   width: 100%;
   height: 100%;
+}
+
+.firstbg {
+  background: url('../../assets/images/firstpg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+}
+
+.containerWrap {
+  border: 5px solid rgba(126, 58, 58, 0.7);
+  border-style: groove; 
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+  display: block;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
 }
