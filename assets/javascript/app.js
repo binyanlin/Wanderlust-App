@@ -829,20 +829,20 @@ $(document).on("click", ".foodSubmitB", function() {
   $(".foodScheduleB").find("img").removeClass("foodSelected");
 
   const foodBlockMaker = (arr) => {
-  for (let i=0; i<arr.length; i++) {
-    let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodChosen${i}">`);
-    foodBlock.append(`<h5>${arr[i]}</h5>`);
-    $(".dragContainer").append(foodBlock);
+  if (arr.length > 0) {
+    for (let i=0; i<arr.length; i++) {
+      let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodChosen${i}">`);
+      foodBlock.append(`<h5>${arr[i]}</h5>`);
+      $(".dragContainer").append(foodBlock);
+      };
+    arr.length = 0;
     };
   };
 
   foodBlockMaker(scheduleFoodBreakfast);
   foodBlockMaker(scheduleFoodLunch);
   foodBlockMaker(scheduleFoodDinner);
-  
-  scheduleFoodBreakfast.length = 0
-  scheduleFoodLunch.length = 0
-  scheduleFoodDinner.length = 0;
+
 //will have to make a function to split restaurant names in array by using if lowercase + next one is capital,
 //split into 2 
 });
