@@ -316,9 +316,12 @@ $(document).on("click", ".buttonStart", function () {
   displayer();
   decideSort();
   initMap();
-  YelpAPISearch();
+  //YelpAPISearch();
   getBackground();
   genDescription();
+//backgroundtest
+ // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
+      //document.body.style.backgroundSize = "cover"; 
   ticketMastAPISearch();
 });
 
@@ -361,24 +364,9 @@ $(document).on("click", ".restartButton", function () {
   empty();
   selectedLocation = "";
   $('#tripInfo').empty();
-  $('body').css('background', "url()");
+  $('body').css('background', "none");
   scheduleFirstVisit = true;
 });
-
-function getBackground() {
-  $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-    {
-      tags: (selectedLocation + " travel"),
-      tagmode: "any",
-      format: "json"
-    },
-    function (data) {
-      console.log(data)
-      var image_src = data.items[0]['media']['m'];
-      document.body.style.background = "url('" + image_src + "') no-repeat center center fixed";
-      document.body.style.backgroundSize = "100% auto";
-    });
-};
 
 //make a new array of objects to hold the arrays that match  
 let usersPool = [];
@@ -522,19 +510,33 @@ function genMap() {
 
 //start LOCATION DESCRIPTION section
 function genDescription() {
-  setTimeout(function () {
     let cors = "https://cors-anywhere.herokuapp.com/";
-    let desDiv = " div.common-text-ReadMore__content--2X4LR";
-    for (let i = 0; i < genDestinations.length; i++) {
-      setTimeout(function () {
+    let desDiv = " div.common-text-ReadMore__content--2X4LR";  
+    //setTimeout(function () { 
+    for (let i=0; i<genDestinations.length; i++) {
+      
         if (selectedLocation === genDestinations[i].name) {
           let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
-          $('#tripInfo').load(combo);
+        //  setTimeout(function () { 
+          $('#tripInfo').load(combo); 
+        //}, 2000)
         }
-      }, 3000)
-    };
-  }, 4000)
-};//end LOCATION DESCRIPTION section
+    }; 
+ // }, 4000) 
+};
+//end LOCATION DESCRIPTION section
+
+//start 2NDPGBG section
+function getBackground() {
+  for (let i=0; i<genDestinations.length; i++) {
+    if (selectedLocation === genDestinations[i].name) {
+      let bgPick = genDestinations[i].name;
+      bgPick = bgPick.replace(/\s+/g, '-');//replacing spaces with dashes
+      document.body.style.background = "url(assets/images/"+bgPick+".jpg) no-repeat center center fixed"; 
+      document.body.style.backgroundSize = "cover"; 
+    }
+  }; 
+};//end 2NDPGBG section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
 
