@@ -279,13 +279,6 @@ const genDestinations = [
     social: 3
   },
   {
-    name: "puerto escondido",
-    tripAdvisorLink: "https://www.tripadvisor.com/Home-g153373",
-    safety: 3,
-    money: 2,
-    social: 1
-  },
-  {
     name: "nara",
     tripAdvisorLink: "https://www.tripadvisor.com/Home-g298198",
     safety: 1,
@@ -320,24 +313,11 @@ let selectedLocation = "" //a string to hold final location
 $(document).on("click", ".buttonStart", function () {
   pageDisplayBool[0] = false;
   pageDisplayBool[1] = true;
-
-  $(document).ready(function () {
-    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-      {
-        tags: (selectedLocation + " landscape"),
-        tagmode: "any",
-        format: "json"
-      },
-      function (data) {
-        console.log(data)
-        var image_src = data.items[0]['media']['m'];
-        $('body').css('background-image', "url('" + image_src + "')");
-      });
-  });
   displayer();
   decideSort();
   initMap();
   YelpAPISearch();
+  getBackground();
   genDescription();
 });
 
@@ -376,9 +356,24 @@ $(document).on("click", ".restartButton", function () {
   empty();
   selectedLocation = "";
   $('#tripInfo').empty();
+  $('body').css('background', "url()");
   scheduleFirstVisit = true;
-
 });
+
+function getBackground() {
+  $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+  {
+    tags: (selectedLocation + " travel"),
+    tagmode: "any",
+    format: "json"
+  },
+  function (data) {
+    console.log(data)
+    var image_src = data.items[0]['media']['m'];
+    document.body.style.background = "url('" + image_src + "') no-repeat center center fixed"; 
+    document.body.style.backgroundSize = "100% auto"; 
+  });
+};
 
 //make a new array of objects to hold the arrays that match  
 let usersPool = [];
@@ -522,20 +517,18 @@ function genMap() {
 
 //start LOCATION DESCRIPTION section
 function genDescription() {
-  let cors = "https://cors-anywhere.herokuapp.com/";
-  let desDiv = " div.common-text-ReadMore__content--2X4LR";  
-  setTimeout(function () {              
+  setTimeout(function () { 
+    let cors = "https://cors-anywhere.herokuapp.com/";
+    let desDiv = " div.common-text-ReadMore__content--2X4LR";  
     for (let i=0; i<genDestinations.length; i++) {
       setTimeout(function () { 
-        if (selectedLocation === "puerto escondido") {
-          $('#tripInfo').text("Looking for a tropical Mexican fishing village with relaxing beaches, oceanfront seafood bars and restaurants, unspoiled reefs for diving and snorkeling, and waves suitable for championship surfing? Puerto Escondido has all that plus the Laguna de Manialtepec mangrove lagoon for tours combining kayaking, boating, bird-watching, and swimming in phosphorescent waters.")
-        } else if (selectedLocation === genDestinations[i].name) {
-        let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
-        $('#tripInfo').load(combo); 
-      }
-    }, 1500)
-    };
-  }, 1500)
+        if (selectedLocation === genDestinations[i].name) {
+          let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
+          $('#tripInfo').load(combo); 
+        }
+      }, 3000)
+    };  
+  }, 4000)
 };//end LOCATION DESCRIPTION section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
