@@ -80,6 +80,8 @@ label {
 
 .destinationB {
   background-color: #D1ECF1;
+  padding-bottom: 70%;
+  padding-top: 10%;
 }
 .slider {
   -webkit-appearance: none;
@@ -144,3 +146,4 @@ html, body {
 .foodSelected {
   box-shadow: 10px 10px 5px grey;
 }
+
