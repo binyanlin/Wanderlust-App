@@ -319,6 +319,7 @@ $(document).on("click", ".buttonStart", function () {
   YelpAPISearch();
   getBackground();
   genDescription();
+  ticketMastAPISearch();
 });
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
@@ -362,17 +363,17 @@ $(document).on("click", ".restartButton", function () {
 
 function getBackground() {
   $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-  {
-    tags: (selectedLocation + " travel"),
-    tagmode: "any",
-    format: "json"
-  },
-  function (data) {
-    console.log(data)
-    var image_src = data.items[0]['media']['m'];
-    document.body.style.background = "url('" + image_src + "') no-repeat center center fixed"; 
-    document.body.style.backgroundSize = "100% auto"; 
-  });
+    {
+      tags: (selectedLocation + " travel"),
+      tagmode: "any",
+      format: "json"
+    },
+    function (data) {
+      console.log(data)
+      var image_src = data.items[0]['media']['m'];
+      document.body.style.background = "url('" + image_src + "') no-repeat center center fixed";
+      document.body.style.backgroundSize = "100% auto";
+    });
 };
 
 //make a new array of objects to hold the arrays that match  
@@ -408,23 +409,23 @@ function generateDestination() {
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs
 
-  for (let i=0; i<genDestinations.length; i++) {
-    if ($("#safetyLvl").val() == genDestinations[i].safety){
-      if ($("#moneyLvl").val() == genDestinations[i].money){
-        if ($("#socialLvl").val() == genDestinations[i].social){
+  for (let i = 0; i < genDestinations.length; i++) {
+    if ($("#safetyLvl").val() == genDestinations[i].safety) {
+      if ($("#moneyLvl").val() == genDestinations[i].money) {
+        if ($("#socialLvl").val() == genDestinations[i].social) {
           usersPool.push(genDestinations[i].name);
           //console.log("uno")
         };
       };
     };
-    if ($("#safetyLvl").val() == genDestinations[i].safety){
-      if ($("#moneyLvl").val() == genDestinations[i].money){
-          usersPool.push(genDestinations[i].name);
-          //console.log("dos")
+    if ($("#safetyLvl").val() == genDestinations[i].safety) {
+      if ($("#moneyLvl").val() == genDestinations[i].money) {
+        usersPool.push(genDestinations[i].name);
+        //console.log("dos")
       };
     };
-    if ($("#safetyLvl").val() == genDestinations[i].safety){
-      if ($("#socialLvl").val() == genDestinations[i].social){
+    if ($("#safetyLvl").val() == genDestinations[i].safety) {
+      if ($("#socialLvl").val() == genDestinations[i].social) {
         usersPool.push(genDestinations[i].name);
         //console.log("tres")
       };
@@ -445,12 +446,12 @@ function generateDestination() {
   if (filteredPool.length > 0) {
     //randomly pick from filteredPool array and display the new location
 
-  selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
-  pickedPool.push(selectedLocation);
-  $(".genDes").text(selectedLocation);
-  console.log(selectedLocation);
-  }else {
-    alert ("You've exhausted cities with your slide options, adjust the sliders!");
+    selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+    pickedPool.push(selectedLocation);
+    $(".genDes").text(selectedLocation);
+    console.log(selectedLocation);
+  } else {
+    alert("You've exhausted cities with your slide options, adjust the sliders!");
   };
 };//end FUNCTION GENERATEDESTINATION section
 
@@ -469,12 +470,12 @@ function defaultDestination() {
 
   if (filteredPool.length > 0) {
     //randomly pick from filteredPool array and display the new location
-  selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
-  pickedPool.push(selectedLocation);
-  $(".genDes").text(selectedLocation);
-  console.log(selectedLocation);
-  }else {
-    alert ("You've exhausted cities with your slide options, adjust the sliders!");
+    selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+    pickedPool.push(selectedLocation);
+    $(".genDes").text(selectedLocation);
+    console.log(selectedLocation);
+  } else {
+    alert("You've exhausted cities with your slide options, adjust the sliders!");
   };
 };//end FUNCTION DEFAULTDESTINATION section
 
@@ -517,17 +518,17 @@ function genMap() {
 
 //start LOCATION DESCRIPTION section
 function genDescription() {
-  setTimeout(function () { 
+  setTimeout(function () {
     let cors = "https://cors-anywhere.herokuapp.com/";
-    let desDiv = " div.common-text-ReadMore__content--2X4LR";  
-    for (let i=0; i<genDestinations.length; i++) {
-      setTimeout(function () { 
+    let desDiv = " div.common-text-ReadMore__content--2X4LR";
+    for (let i = 0; i < genDestinations.length; i++) {
+      setTimeout(function () {
         if (selectedLocation === genDestinations[i].name) {
           let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
-          $('#tripInfo').load(combo); 
+          $('#tripInfo').load(combo);
         }
       }, 3000)
-    };  
+    };
   }, 4000)
 };//end LOCATION DESCRIPTION section
 
@@ -837,45 +838,46 @@ const YelpAPISearch = () => {
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
-    setTimeout(function(){ 
-      $(doop).find("img").removeClass("foodSelected"); }, 3000);
+    setTimeout(function () {
+      $(doop).find("img").removeClass("foodSelected");
+    }, 3000);
     let selectedFood = $(this).siblings("a").find(".restaurantName").text();
     let btnColor = ["btn-success", "btn-primary", "btn-danger", "btn-secondary", "btn-light", "btn-warning", "btn-info"]
     let foodBlock = $(`<div class="fudStyle col-sm rounded text-center">`);
-      foodBlock.append(`<h5>${selectedFood}</h5>`);
-      $(".dragContainer").append(foodBlock);
-      let color = btnColor[Math.floor(Math.random()*btnColor.length)];
-      foodBlock.addClass(`${color}`);
-      selectedFood ="";
-      foodBlock = "";
+    foodBlock.append(`<h5>${selectedFood}</h5>`);
+    $(".dragContainer").append(foodBlock);
+    let color = btnColor[Math.floor(Math.random() * btnColor.length)];
+    foodBlock.addClass(`${color}`);
+    selectedFood = "";
+    foodBlock = "";
 
   });
 
-$(document).on("click", ".eventButton", function() {
-  pageDisplayBool[2] = true;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = false;
-  displayer();
-});
+  $(document).on("click", ".eventButton", function () {
+    pageDisplayBool[2] = true;
+    pageDisplayBool[3] = false;
+    pageDisplayBool[4] = false;
+    displayer();
+  });
 
-$(document).on("click", ".foodButton", function() {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = true;
-  pageDisplayBool[4] = false;
-  displayer();
-});
+  $(document).on("click", ".foodButton", function () {
+    pageDisplayBool[2] = false;
+    pageDisplayBool[3] = true;
+    pageDisplayBool[4] = false;
+    displayer();
+  });
 
-$(document).on("click", ".scheduleButton", function() {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = true;
-  if (scheduleFirstVisit) {
-    scheduleMaker();
-    scheduleFirstVisit = false;
-  }
-  displayer();
-  //function that starts running the scheduler for you 
-});
+  $(document).on("click", ".scheduleButton", function () {
+    pageDisplayBool[2] = false;
+    pageDisplayBool[3] = false;
+    pageDisplayBool[4] = true;
+    if (scheduleFirstVisit) {
+      scheduleMaker();
+      scheduleFirstVisit = false;
+    }
+    displayer();
+    //function that starts running the scheduler for you 
+  });
 
 
 }; //end "yelpAPIsearch"
@@ -883,22 +885,29 @@ $(document).on("click", ".scheduleButton", function() {
 
 //----------------------------------------start Ticketmaster API----------------------------------------------
 
-// https://app.ticketmaster.com/{package}/{version}/{resource}.json?apikey=**{API key}
-// var request = new XMLHttpRequest();
+const ticketMastAPISearch = () => {
 
-// request.open('GET', 'https://app.ticketmaster.eu/mfxapi/v2/events?domain&lang&attraction_ids&category_ids&subcategory_ids&event_ids&event_name&venue_ids&city_ids&country_ids&postal_code&lat&long&radius&eventdate_to&eventdate_from&onsaledate_to&onsaledate_from&offsaledate_to&offsaledate_from&min_price&max_price&price_excl_fees&seats_available&cancelled&&is_not_package&sort_by&order&rows&start&excludee_external');
 
-// request.setRequestHeader('Accept', 'application/json');
+  $.ajax({
+    type: "GET",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + selectedLocation + "&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
+    async: true,
+    dataType: "json",
+    success: function (json) {
 
-// request.onreadystatechange = function () {
-//   if (this.readyState === 4) {
-//     console.log('Status:', this.status);
-//     console.log('Headers:', this.getAllResponseHeaders());
-//     console.log('Body:', this.responseText);
-//   }
-// };
+      console.log(json);
 
-// request.send();
+      // Parse the response.
+
+
+      // Do other things.
+    },
+    error: function (xhr, status, err) {
+
+    }
+  });
+}
+
 
 //---------------------------------------- end event API section ---------------------------------------------
 
@@ -909,11 +918,11 @@ const scheduleMaker = () => {
   // select 3 food places from each yelp obj for breakfast, lunch, dinner
   let randomNum = [];
   let scheduleArr = ["t1a", "t1b", "t1c", "t5a", "t5b", "t5c", "t11a", "t11b", "t11c"];
-  
+
   const numGen = () => {
     randomNum = [];
-    for (let i=0; i<9; i++) {
-      let currentNum = (Math.floor(Math.random()*25));
+    for (let i = 0; i < 9; i++) {
+      let currentNum = (Math.floor(Math.random() * 25));
       if (i < 3) {
         if (randomNum.indexOf(currentNum) === -1) {
           randomNum.push(currentNum);
@@ -921,13 +930,13 @@ const scheduleMaker = () => {
           i--;
         }
       } else if (i >= 3 && i < 6) {
-          if (randomNum.indexOf(currentNum) <= 2) {
+        if (randomNum.indexOf(currentNum) <= 2) {
           randomNum.push(currentNum);
         } else {
           i--;
         }
       } else if (i >= 6 && i < 9) {
-          if (randomNum.indexOf(currentNum) <= 6) {
+        if (randomNum.indexOf(currentNum) <= 6) {
           randomNum.push(currentNum)
         } else {
           i--;
@@ -939,7 +948,7 @@ const scheduleMaker = () => {
 
   numGen();
 
-  for (let i=0; i<randomNum.length; i++) {
+  for (let i = 0; i < randomNum.length; i++) {
     let fud;
     let fudURL;
     if (i < 3) {
@@ -965,5 +974,5 @@ const scheduleMaker = () => {
       $(`.foodBlock${i}`).addClass("btn-info")
     };
   };
-  
+
 }; //end scheduleMaker function
