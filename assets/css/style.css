@@ -57,14 +57,14 @@
 }
 
 .eventCSS {
-  width: 200px;
-  height: 300px;
+  width: 100%;
+  min-height: 300px;
   object-fit: cover;
 }
 
 .eventCSS2 {
-  width: 300px;
-  height: 200px;
+  width: 100%;
+  min-height: 200px;
   object-fit: cover;
 }
 
@@ -96,14 +96,17 @@ label {
 
 .eventsB {
   background-color: #D3EDDA;
+  min-height: 300px;
 }
 
 .foodPlacesB {
   background-color: #CCE5FF;
+  min-height: 300px;
 }
 
 .destinationB {
   background-color: #D1ECF1;
+  min-height: 500px;
   padding-bottom: 70%;
   padding-top: 10%;
 }
