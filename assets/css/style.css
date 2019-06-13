@@ -217,6 +217,10 @@ html, body {
   box-shadow: 10px 10px 5px grey;
 }
 
+.actSelected {
+  box-shadow: 10px 10px 5px grey;
+}
+
 table.table-bordered > thead > tr > th{
   border:1px solid black;
 }
@@ -225,9 +229,14 @@ table.table-bordered > tbody > tr > td{
 }
 
 .dragContainer {
-  min-height: 300px;
+  min-height: 200px;
   width: 100%;
   background-color: #f7d262;
+}
+.dragContainer2 {
+  min-height: 200px;
+  width: 100%;
+  background-color: #e29b4a;
 }
 
 .scheduleContainer {
@@ -271,3 +280,12 @@ table.table-bordered > tbody > tr > td{
   color: white;
 }
 
+.foodStyle {
+  min-height: 50px;
+}
+
+.eventStyle {
+  display: block;
+  min-height: 150px;
+  white-space: nowrap;
+}
