@@ -325,7 +325,7 @@ $(document).on("click", ".buttonStart", function () {
   ticketMastAPISearch();
 });
 
-$(document).on("click", ".close", function() {
+$(document).on("click", ".close", function () {
   $(this).parent().remove();
 })
 
@@ -841,7 +841,7 @@ const YelpAPISearch = () => {
     };
   });
 
-//event handler for schedule food
+  //event handler for schedule food
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
@@ -898,13 +898,51 @@ const ticketMastAPISearch = () => {
 
   $.ajax({
     type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?location=" + selectedLocation + "&size=1&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&",//latlong=" + latlon,
     async: true,
     dataType: "json",
     success: function (json) {
 
-      var events = json._embedded.events[0]._embedded.venues[0].city;
-      console.log(events);
+      ticketMasterRespondObjects = [];
+      for (var i = 0; i < 10; i++) {
+
+        var responseObject = {
+          playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
+          latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
+          longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
+          segment: json._embedded.events[i].classifications[0].segment.name,
+          genre: json._embedded.events[i].classifications[0].genre.name,
+          date: json._embedded.events[i].dates.start.localDate,
+          name: json._embedded.events[i].name,
+          image: json._embedded.events[i].images[0].url,
+          ticketPurchase: json._embedded.events[i].url
+        };
+
+        console.log("ticket master objects: ");
+        console.log(responseObject);
+
+        ticketMasterRespondObjects.push(responseObject);
+      }
+
+
+
+      // Define address to center map to
+      // let address = selectedLocation;
+      // geocoder.geocode({
+      //   'address': address
+      // }, function (results) {
+
+      //   var lat = results[0].geometry.location.lat;
+      //   var lon = results[0].geometry.location.lng;
+      //   // Add marker on location
+      //   var latlon = lat + "," + lon;
+      //   console.log(latlon);
+      //   let marker = new google.maps.Marker({
+      //     map: map,
+      //     position: results[0].geometry.location
+      //   });
+
+      // });
 
 
       // for (let i = 0; i <= events.length; i++) {
