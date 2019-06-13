@@ -326,9 +326,10 @@ $(document).on("click", ".buttonStart", function () {
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
   ticketMastAPISearch();
+
 });
 
-$(document).on("click", ".close", function() {
+$(document).on("click", ".close", function () {
   $(this).parent().remove();
 })
 
@@ -435,7 +436,6 @@ function generateDestination() {
       };
     };
   };
-  console.log(usersPool);
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -460,7 +460,6 @@ function defaultDestination() {
   for (let i = 0; i < genDestinations.length; i++) {
     usersPool.push(genDestinations[i].name);
   };
-  console.log(usersPool);
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -471,7 +470,7 @@ function defaultDestination() {
     selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
     pickedPool.push(selectedLocation);
     $(".genDes").text(selectedLocation);
-    console.log(selectedLocation);
+
   } else {
     alert("You've exhausted cities with your slide options, adjust the sliders!");
   };
@@ -512,6 +511,7 @@ function genMap() {
       });
     }
   });
+
 };//end MAP section
 
 //start LOCATION DESCRIPTION section
@@ -846,8 +846,7 @@ const YelpAPISearch = () => {
     };
   });
 
-  
-//event handler for schedule food
+
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
@@ -927,49 +926,34 @@ $(document).on("click", ".actScheduleB", function () {
 
 const ticketMastAPISearch = () => {
 
+
   console.log("Ticketmaster: " + selectedLocation);
+
   $.ajax({
     type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?location=" + selectedLocation + "&size=1&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
     async: true,
     dataType: "json",
     success: function (json) {
-      console.log(json);
-      var events = json._embedded.events[0]._embedded.venues[0].city;
-      console.log(events);
 
+      ticketMasterRespondObjects = [];
 
-      // for (let i = 0; i <= events.length; i++) {
-      //   x = events[i]._embedded.venues;
+      for (var i = 0; i < 10; i++) {
+        var responseObject = {
+          playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
+          latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
+          longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
+          segment: json._embedded.events[i].classifications[0].segment.name,
+          genre: json._embedded.events[i].classifications[0].genre.name,
+          date: json._embedded.events[i].dates.start.localDate,
+          name: json._embedded.events[i].name,
+          image: json._embedded.events[i].images[0].url,
+          ticketPurchase: json._embedded.events[i].url
+        };
 
-      // }
-
-
-
-
-
-      // let address = events[i].name
-      // geocoder.geocode({
-      //   'address': address
-      // }, function (results, status) {
-      //   if (status == google.maps.GeocoderStatus.OK) {
-
-      //     // Center map on location
-      //     map.setCenter(results[0].geometry.location);
-
-      //     // Add marker on location
-      //     let marker = new google.maps.Marker({
-      //       map: map,
-      //       position: results[0].geometry.location
-      //     });
-      //   }
-      // });
-
-
-      // Parse the response.
-
-
-      // Do other things.
+        ticketMasterRespondObjects.push(responseObject);
+      }
+      console.log(ticketMasterRespondObjects);
     },
     error: function (xhr, status, err) {
 
@@ -1084,15 +1068,16 @@ function dragstart_handler(ev) {
 $(document).on("dragstart", ".fudStyle", function(event) {
   // console.log(event.target.id);
   // console.log("dataTransfer: " + event.originalEvent.dataTransfer);
+
   event.originalEvent.dataTransfer.setData("src", event.target.id);
   $(".eventStyle").parent("td").attr("rowspan", 1);
 });
 
-$(document).on("dragover", ".drop", function(event) {
+$(document).on("dragover", ".drop", function (event) {
   event.preventDefault();
 });
 
-$(document).on("drop", ".drop", function(event) {
+$(document).on("drop", ".drop", function (event) {
   event.preventDefault();
   const src = event.originalEvent.dataTransfer.getData("src")
   // console.log(src);
@@ -1100,5 +1085,6 @@ $(document).on("drop", ".drop", function(event) {
 
   // let eventVar = document.getElementById(src);
   $(".eventStyle").parent("td").attr("rowspan", 2);
+
 
 });
