@@ -286,7 +286,7 @@ table.table-bordered > tbody > tr > td{
 
 .eventStyle {
   display: block;
-  min-height: 150px;
+  min-height: 80px;
   white-space: nowrap;
 }
 
