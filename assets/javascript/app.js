@@ -10,6 +10,7 @@ const apiKeys = [
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
 let pageDisplayBool = [true, false, false, false, false];
+let clickId = 0;
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -316,14 +317,18 @@ $(document).on("click", ".buttonStart", function () {
   displayer();
   decideSort();
   initMap();
-  //YelpAPISearch();
+  YelpAPISearch();
   getBackground();
   genDescription();
-//backgroundtest
- // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
-      //document.body.style.backgroundSize = "cover"; 
+  //backgroundtest
+  // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
+  //document.body.style.backgroundSize = "cover"; 
   ticketMastAPISearch();
 });
+
+$(document).on("click", ".close", function() {
+  $(this).parent().remove();
+})
 
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
 //certain flights don't have a prefill option but in that scenario the user can just click on flights and enter it themselves
@@ -362,6 +367,7 @@ $(document).on("click", ".restartButton", function () {
   $('#tripInfo').empty();
   $('body').css('background', "none");
   scheduleFirstVisit = true;
+  clickId = 0;
 });
 
 //make a new array of objects to hold the arrays that match  
@@ -506,32 +512,32 @@ function genMap() {
 
 //start LOCATION DESCRIPTION section
 function genDescription() {
-    let cors = "https://cors-anywhere.herokuapp.com/";
-    let desDiv = " div.common-text-ReadMore__content--2X4LR";  
-    //setTimeout(function () { 
-    for (let i=0; i<genDestinations.length; i++) {
-      
-        if (selectedLocation === genDestinations[i].name) {
-          let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
-        //  setTimeout(function () { 
-          $('#tripInfo').load(combo); 
-        //}, 2000)
-        }
-    }; 
- // }, 4000) 
+  let cors = "https://cors-anywhere.herokuapp.com/";
+  let desDiv = " div.common-text-ReadMore__content--2X4LR";
+  //setTimeout(function () { 
+  for (let i = 0; i < genDestinations.length; i++) {
+
+    if (selectedLocation === genDestinations[i].name) {
+      let combo = (cors + genDestinations[i].tripAdvisorLink + desDiv);
+      //  setTimeout(function () { 
+      $('#tripInfo').load(combo);
+      //}, 2000)
+    }
+  };
+  // }, 4000) 
 };
 //end LOCATION DESCRIPTION section
 
 //start 2NDPGBG section
 function getBackground() {
-  for (let i=0; i<genDestinations.length; i++) {
+  for (let i = 0; i < genDestinations.length; i++) {
     if (selectedLocation === genDestinations[i].name) {
       let bgPick = genDestinations[i].name;
       bgPick = bgPick.replace(/\s+/g, '-');//replacing spaces with dashes
-      document.body.style.background = "url(assets/images/"+bgPick+".jpg) no-repeat center center fixed"; 
-      document.body.style.backgroundSize = "cover"; 
+      document.body.style.background = "url(assets/images/" + bgPick + ".jpg) no-repeat center center fixed";
+      document.body.style.backgroundSize = "cover";
     }
-  }; 
+  };
 };//end 2NDPGBG section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
@@ -837,6 +843,8 @@ const YelpAPISearch = () => {
     };
   });
 
+  
+//event handler for schedule food
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
@@ -845,14 +853,16 @@ const YelpAPISearch = () => {
     }, 3000);
     let selectedFood = $(this).siblings("a").find(".restaurantName").text();
     let btnColor = ["btn-success", "btn-primary", "btn-danger", "btn-secondary", "btn-light", "btn-warning", "btn-info"]
-    let foodBlock = $(`<div class="fudStyle col-sm rounded text-center">`);
+    let foodBlock = $(`<div draggable="true" class="fudStyle col-sm rounded text-center" id="chosen${clickId}">`);
     foodBlock.append(`<h5>${selectedFood}</h5>`);
     $(".dragContainer").append(foodBlock);
     let color = btnColor[Math.floor(Math.random() * btnColor.length)];
     foodBlock.addClass(`${color}`);
+    foodBlock.append(`<span class="close">×<span>`);
     selectedFood = "";
     foodBlock = "";
-
+    clickId++;
+    console.log("clickId counter: " + clickId);
   });
 
   $(document).on("click", ".eventButton", function () {
@@ -892,12 +902,41 @@ const ticketMastAPISearch = () => {
 
   $.ajax({
     type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + selectedLocation + "&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?location=" + selectedLocation + "&size=1&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ",
     async: true,
     dataType: "json",
     success: function (json) {
 
-      console.log(json);
+      var events = json._embedded.events[0]._embedded.venues[0].city;
+      console.log(events);
+
+
+      // for (let i = 0; i <= events.length; i++) {
+      //   x = events[i]._embedded.venues;
+
+      // }
+
+
+
+
+
+      // let address = events[i].name
+      // geocoder.geocode({
+      //   'address': address
+      // }, function (results, status) {
+      //   if (status == google.maps.GeocoderStatus.OK) {
+
+      //     // Center map on location
+      //     map.setCenter(results[0].geometry.location);
+
+      //     // Add marker on location
+      //     let marker = new google.maps.Marker({
+      //       map: map,
+      //       position: results[0].geometry.location
+      //     });
+      //   }
+      // });
+
 
       // Parse the response.
 
@@ -963,7 +1002,8 @@ const scheduleMaker = () => {
       fud = dinnerObj.businesses[randomNum[i]].name
       fudURL = dinnerObj.businesses[randomNum[i]].url
     };
-    let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodBlock${i}">`)
+
+    let foodBlock = $(`<div draggable="true" class="fudStyle col-sm rounded text-center foodBlock${i}" id="random${i}">`)
     foodBlock.append($(`<a class="foodRandom${i}" href="${fudURL}" target="_blank">`));
     foodBlock.append(`<h5>${fud}</h5>`);
     $(`#${scheduleArr[i]}`).append(foodBlock);
@@ -975,6 +1015,41 @@ const scheduleMaker = () => {
     } else if (i >= 6 && i < 9) {
       $(`.foodBlock${i}`).addClass("btn-info")
     };
+    $(`.foodBlock${i}`).append(`<span class="close">×<span>`);
   };
 
 }; //end scheduleMaker function
+
+// ---------------------------------drag and drop handler --------------------------------------------------
+function dragstart_handler(ev) {
+  // Add the drag data
+  ev.dataTransfer.setData("text/plain", ev.target.id);
+  ev.dataTransfer.setData("text/html", "<p>Example paragraph</p>");
+  ev.dataTransfer.setData("text/uri-list", "http://developer.mozilla.org");
+}
+
+function dragstart_handler(ev) {
+  // Set the drag effect to copy
+  ev.dataTransfer.dropEffect = "copy";
+}
+
+$(document).on("dragstart", ".fudStyle", function(event) {
+  console.log(event.target.id);
+  console.log("dataTransfer: " + event.originalEvent.dataTransfer);
+  event.originalEvent.dataTransfer.setData("src", event.target.id);
+})
+
+$(document).on("dragover", ".drop", function(event) {
+  event.preventDefault();
+
+})
+
+$(document).on("drop", ".drop", function(event) {
+  event.preventDefault();
+  const src = event.originalEvent.dataTransfer.getData("src")
+  console.log(src);
+  event.target.append(document.getElementById(src));
+  console.log($("#"+src).html());
+  console.log("im hit");
+
+});
