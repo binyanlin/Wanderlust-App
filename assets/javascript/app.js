@@ -10,6 +10,7 @@ const apiKeys = [
 
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
 let pageDisplayBool = [true, false, false, false, false];
+let clickId = 0;
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -316,7 +317,7 @@ $(document).on("click", ".buttonStart", function () {
   displayer();
   decideSort();
   initMap();
-  //YelpAPISearch();
+  YelpAPISearch();
   getBackground();
   genDescription();
   //backgroundtest
@@ -366,6 +367,7 @@ $(document).on("click", ".restartButton", function () {
   $('#tripInfo').empty();
   $('body').css('background', "none");
   scheduleFirstVisit = true;
+  clickId = 0;
 });
 
 //make a new array of objects to hold the arrays that match  
@@ -841,6 +843,7 @@ const YelpAPISearch = () => {
     };
   });
 
+  
 //event handler for schedule food
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
@@ -850,7 +853,7 @@ const YelpAPISearch = () => {
     }, 3000);
     let selectedFood = $(this).siblings("a").find(".restaurantName").text();
     let btnColor = ["btn-success", "btn-primary", "btn-danger", "btn-secondary", "btn-light", "btn-warning", "btn-info"]
-    let foodBlock = $(`<div class="fudStyle col-sm rounded text-center">`);
+    let foodBlock = $(`<div draggable="true" class="fudStyle col-sm rounded text-center" id="chosen${clickId}">`);
     foodBlock.append(`<h5>${selectedFood}</h5>`);
     $(".dragContainer").append(foodBlock);
     let color = btnColor[Math.floor(Math.random() * btnColor.length)];
@@ -858,7 +861,8 @@ const YelpAPISearch = () => {
     foodBlock.append(`<span class="close">×<span>`);
     selectedFood = "";
     foodBlock = "";
-
+    clickId++;
+    console.log("clickId counter: " + clickId);
   });
 
   $(document).on("click", ".eventButton", function () {
@@ -999,12 +1003,7 @@ const scheduleMaker = () => {
       fudURL = dinnerObj.businesses[randomNum[i]].url
     };
 
-    // // TEST LINE ONLY
-    // fud = [1,2,3,4,5,6,7,8,9,10]
-    // fudURL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
-    // // END TEST LINE
-
-    let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodBlock${i}">`)
+    let foodBlock = $(`<div draggable="true" class="fudStyle col-sm rounded text-center foodBlock${i}" id="random${i}">`)
     foodBlock.append($(`<a class="foodRandom${i}" href="${fudURL}" target="_blank">`));
     foodBlock.append(`<h5>${fud}</h5>`);
     $(`#${scheduleArr[i]}`).append(foodBlock);
@@ -1021,6 +1020,36 @@ const scheduleMaker = () => {
 
 }; //end scheduleMaker function
 
-// //TEST LINE ONLY
-// scheduleMaker();
-// // END TEST LINE
+// ---------------------------------drag and drop handler --------------------------------------------------
+function dragstart_handler(ev) {
+  // Add the drag data
+  ev.dataTransfer.setData("text/plain", ev.target.id);
+  ev.dataTransfer.setData("text/html", "<p>Example paragraph</p>");
+  ev.dataTransfer.setData("text/uri-list", "http://developer.mozilla.org");
+}
+
+function dragstart_handler(ev) {
+  // Set the drag effect to copy
+  ev.dataTransfer.dropEffect = "copy";
+}
+
+$(document).on("dragstart", ".fudStyle", function(event) {
+  console.log(event.target.id);
+  console.log("dataTransfer: " + event.originalEvent.dataTransfer);
+  event.originalEvent.dataTransfer.setData("src", event.target.id);
+})
+
+$(document).on("dragover", ".drop", function(event) {
+  event.preventDefault();
+
+})
+
+$(document).on("drop", ".drop", function(event) {
+  event.preventDefault();
+  const src = event.originalEvent.dataTransfer.getData("src")
+  console.log(src);
+  event.target.append(document.getElementById(src));
+  console.log($("#"+src).html());
+  console.log("im hit");
+
+});
