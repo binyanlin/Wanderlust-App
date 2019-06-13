@@ -324,6 +324,7 @@ $(document).on("click", ".buttonStart", function () {
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
   ticketMastAPISearch();
+
 });
 
 $(document).on("click", ".close", function () {
@@ -431,7 +432,6 @@ function generateDestination() {
       };
     };
   };
-  console.log(usersPool);
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -456,7 +456,6 @@ function defaultDestination() {
   for (let i = 0; i < genDestinations.length; i++) {
     usersPool.push(genDestinations[i].name);
   };
-  console.log(usersPool);
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -467,7 +466,7 @@ function defaultDestination() {
     selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
     pickedPool.push(selectedLocation);
     $(".genDes").text(selectedLocation);
-    console.log(selectedLocation);
+
   } else {
     alert("You've exhausted cities with your slide options, adjust the sliders!");
   };
@@ -508,6 +507,7 @@ function genMap() {
       });
     }
   });
+
 };//end MAP section
 
 //start LOCATION DESCRIPTION section
@@ -897,18 +897,16 @@ const YelpAPISearch = () => {
 //----------------------------------------start Ticketmaster API----------------------------------------------
 
 const ticketMastAPISearch = () => {
-
-
   $.ajax({
     type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&",//latlong=" + latlon,
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
     async: true,
     dataType: "json",
     success: function (json) {
 
       ticketMasterRespondObjects = [];
-      for (var i = 0; i < 10; i++) {
 
+      for (var i = 0; i < 10; i++) {
         var responseObject = {
           playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
           latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
@@ -921,64 +919,9 @@ const ticketMastAPISearch = () => {
           ticketPurchase: json._embedded.events[i].url
         };
 
-        console.log("ticket master objects: ");
-        console.log(responseObject);
-
         ticketMasterRespondObjects.push(responseObject);
       }
-
-
-
-      // Define address to center map to
-      // let address = selectedLocation;
-      // geocoder.geocode({
-      //   'address': address
-      // }, function (results) {
-
-      //   var lat = results[0].geometry.location.lat;
-      //   var lon = results[0].geometry.location.lng;
-      //   // Add marker on location
-      //   var latlon = lat + "," + lon;
-      //   console.log(latlon);
-      //   let marker = new google.maps.Marker({
-      //     map: map,
-      //     position: results[0].geometry.location
-      //   });
-
-      // });
-
-
-      // for (let i = 0; i <= events.length; i++) {
-      //   x = events[i]._embedded.venues;
-
-      // }
-
-
-
-
-
-      // let address = events[i].name
-      // geocoder.geocode({
-      //   'address': address
-      // }, function (results, status) {
-      //   if (status == google.maps.GeocoderStatus.OK) {
-
-      //     // Center map on location
-      //     map.setCenter(results[0].geometry.location);
-
-      //     // Add marker on location
-      //     let marker = new google.maps.Marker({
-      //       map: map,
-      //       position: results[0].geometry.location
-      //     });
-      //   }
-      // });
-
-
-      // Parse the response.
-
-
-      // Do other things.
+      console.log(ticketMasterRespondObjects);
     },
     error: function (xhr, status, err) {
 
@@ -1070,23 +1013,23 @@ function dragstart_handler(ev) {
   ev.dataTransfer.dropEffect = "copy";
 }
 
-$(document).on("dragstart", ".fudStyle", function(event) {
+$(document).on("dragstart", ".fudStyle", function (event) {
   console.log(event.target.id);
   console.log("dataTransfer: " + event.originalEvent.dataTransfer);
   event.originalEvent.dataTransfer.setData("src", event.target.id);
 })
 
-$(document).on("dragover", ".drop", function(event) {
+$(document).on("dragover", ".drop", function (event) {
   event.preventDefault();
 
 })
 
-$(document).on("drop", ".drop", function(event) {
+$(document).on("drop", ".drop", function (event) {
   event.preventDefault();
   const src = event.originalEvent.dataTransfer.getData("src")
   console.log(src);
   event.target.append(document.getElementById(src));
-  console.log($("#"+src).html());
+  console.log($("#" + src).html());
   console.log("im hit");
 
 });
