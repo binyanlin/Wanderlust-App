@@ -1070,7 +1070,7 @@ $(document).on("dragstart", ".fudStyle", function(event) {
   // console.log("dataTransfer: " + event.originalEvent.dataTransfer);
 
   event.originalEvent.dataTransfer.setData("src", event.target.id);
-  $(".eventStyle").parent("td").attr("rowspan", 1);
+  // $(".eventStyle").parent("td").attr("rowspan", 1);
 });
 
 $(document).on("dragover", ".drop", function (event) {
@@ -1084,7 +1084,6 @@ $(document).on("drop", ".drop", function (event) {
   event.target.append(document.getElementById(src));
 
   // let eventVar = document.getElementById(src);
-  $(".eventStyle").parent("td").attr("rowspan", 2);
-
+  // $(".eventStyle").parent("td").attr("rowspan", 2);
 
 });
