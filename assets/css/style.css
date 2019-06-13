@@ -97,20 +97,31 @@ label {
 .eventsB {
   background-color: #D3EDDA;
   min-height: 300px;
-}
-
-.flightsB {
-  margin: 0%;
+  min-width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .foodPlacesB {
   background-color: #CCE5FF;
   min-height: 300px;
+  min-width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .destinationB {
   background-color: #D1ECF1;
   min-height: 300px;
+  min-width: 50%;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #tripInfo {
@@ -131,16 +142,7 @@ label {
   transition: opacity .2s;
 }
 
-#map{
-    /* Safari 3-4, iOS 1-3.2, Android 1.6- */
-    -webkit-border-radius: 12px; 
-  
-    /* Firefox 1-3.6 */
-    -moz-border-radius: 12px; 
-    
-    /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
-    border-radius: 12px; 
-}
+
 
 .slider:hover {
   opacity: 1;
@@ -194,18 +196,12 @@ input[id=socialLvl]::-webkit-slider-thumb:active {
   background-size: 50px;
 }
 
-#map {
-    display: block;
-    width: 95%;
-    height: 20%;
-    margin-bottom: 2%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5%;
+html, body {
+  height: 100%;
 }
 
-html, body {
-    height: 100%;
+.row {
+  align-content: center;
 }
 
 .genDes
@@ -260,6 +256,7 @@ table.table-bordered > tbody > tr > td{
   width: 75%;
   margin-left: auto;
   margin-right: auto;
+  opacity: .90;
 }
 
 .close {
@@ -271,3 +268,85 @@ table.table-bordered > tbody > tr > td{
   color: white;
 }
 
+.secondPage {
+  opacity: .90;
+}
+
+.btn {
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+}
+
+.mainContent {
+  align-content: center;
+  margin: .5%;
+  padding: 1%;
+}
+
+.destination {
+  height: 225px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 48%;
+}
+
+.flightsB {
+  height: 225px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#map {
+  height: 225px;
+  width: 48%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+}
+
+.restartButton {
+  margin: .5%;
+  padding: 1%;
+}
+
+.btn:hover{
+  -webkit-transform: translateX(-3px);
+  transform: translateX(-3px);
+  opacity: 1;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.flightsB:hover {
+  box-shadow:
+  1px 1px #8a4a5a,
+  2px 2px #8a4a5a,
+  3px 3px #8a4a5a;
+}
+
+.restartButton:hover {
+  box-shadow:
+  1px 1px #ad1f43,
+  2px 2px #ad1f43,
+  3px 3px #ad1f43;
+}
+
+.eventsB:hover {
+  box-shadow:
+  1px 1px #059b75,
+  2px 2px #059b75,
+  3px 3px #059b75;
+}
+
+.foodPlacesB:hover {
+  box-shadow:
+  1px 1px #453a70,
+  2px 2px #453a70,
+  3px 3px #453a70;
+}

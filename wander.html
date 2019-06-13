@@ -71,30 +71,34 @@
 <!-----------------------------------------end Opening Page---------------------------------------------->
 <!-----------------------------------------start Main About Page----------------------------------------------->
 <div class="secondPage m-3">
-  <div class="destination text-center py-4 m-3">
+  <div class = row>
+  <div class="destination text-center col-xs-6 col-md-xs-6">
     <button class="jumbotron flightsB btn">
     <h1 class = genDes>Generated Destination</h1>
     <h3>Click here to book your flight!</h3>
   </button>
   </div>
-  <div class="map" id ="map"></div>
+  <div class="map col-xs-6 col-md-xs-6" id ="map"></div>
+</div>
+
   <div class="row mainContent mx-4">
  
-    <div class="col-sm my-5 btn">
+    <div class="col-xs-12 col-md-3 my-5">
       <button class="jumbotron eventsB btn">
         <h3 class="text-center">Events</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit culpa accusamus ut necessitatibus id perspiciatis quas delectus repellat quis molestias!</p>
       </button>
     </div>
 
-    <div class="col-sm-5 destinationInfo">
+    <div class="col-xs-12 col-md-6 destinationInfo">
       <div class="jumbotron destinationB" id="destinationB">
         <h3 class="text-center">Destination Info</h3>
-          <p id = "tripInfo"></p>
+        <br>
+        <p id = "tripInfo"></p>
       </div>
     </div>
 
-    <div class="col-sm my-5">
+    <div class="col-xs-12 col-md-3 my-5">
       <button class="jumbotron foodPlacesB btn">
         <h3 class="text-center">Food Places</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit culpa accusamus ut necessitatibus id perspiciatis quas delectus repellat quis molestias!</p>
