@@ -325,6 +325,10 @@ $(document).on("click", ".buttonStart", function () {
   ticketMastAPISearch();
 });
 
+$(document).on("click", ".close", function() {
+  $(this).parent().remove();
+})
+
 //using momondo to search flights, taking the location and prefilling as search condition, and opening in a new tab
 //certain flights don't have a prefill option but in that scenario the user can just click on flights and enter it themselves
 $('.flightsB').click(function () {
@@ -837,6 +841,7 @@ const YelpAPISearch = () => {
     };
   });
 
+//event handler for schedule food
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
@@ -850,6 +855,7 @@ const YelpAPISearch = () => {
     $(".dragContainer").append(foodBlock);
     let color = btnColor[Math.floor(Math.random() * btnColor.length)];
     foodBlock.addClass(`${color}`);
+    foodBlock.append(`<span class="close">×<span>`);
     selectedFood = "";
     foodBlock = "";
 
@@ -963,6 +969,12 @@ const scheduleMaker = () => {
       fud = dinnerObj.businesses[randomNum[i]].name
       fudURL = dinnerObj.businesses[randomNum[i]].url
     };
+
+    // // TEST LINE ONLY
+    // fud = [1,2,3,4,5,6,7,8,9,10]
+    // fudURL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
+    // // END TEST LINE
+
     let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodBlock${i}">`)
     foodBlock.append($(`<a class="foodRandom${i}" href="${fudURL}" target="_blank">`));
     foodBlock.append(`<h5>${fud}</h5>`);
@@ -975,6 +987,11 @@ const scheduleMaker = () => {
     } else if (i >= 6 && i < 9) {
       $(`.foodBlock${i}`).addClass("btn-info")
     };
+    $(`.foodBlock${i}`).append(`<span class="close">×<span>`);
   };
 
 }; //end scheduleMaker function
+
+// //TEST LINE ONLY
+// scheduleMaker();
+// // END TEST LINE
