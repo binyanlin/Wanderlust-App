@@ -37,9 +37,12 @@ const displayer = () => {
 displayer();
 
 //Functions for scheduler
-const scheduleFoodBreakfast = [];
-const scheduleFoodLunch = [];
-const scheduleFoodDinner = [];
+let breakfastObj;
+let lunchObj;
+let dinnerObj;
+let scheduleFoodBreakfast = [];
+let scheduleFoodLunch = [];
+let scheduleFoodDinner = [];
 
 //SLIDERS input functions to display a string at each range
 $('#safetyLvl').on("input", function () {
@@ -555,7 +558,6 @@ const YelpAPISearch = () => {
   price = "&price=1,2"; //1 = $, 2 = $$ etc
 
   // breakfast ajax
-  let breakfastObj;
 
   query = term + locationYelp + limit + radius + price;
   queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query}`;
@@ -624,7 +626,6 @@ const YelpAPISearch = () => {
   });
 
   // lunch ajax
-  let lunchObj;
   query2 = term2 + locationYelp + limit + radius + price;
   queryURLyelp2 = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query2}`;
 
@@ -693,7 +694,6 @@ const YelpAPISearch = () => {
     };
   });
 
-  let dinnerObj;
   // dinner ajax
   query3 = term3 + locationYelp + limit + radius + price;
   queryURLyelp3 = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query3}`;
@@ -848,27 +848,60 @@ const YelpAPISearch = () => {
     $(this).find("img").toggleClass("foodSelected");
   });
 
-  $(document).on("click", ".foodSubmitB", function () {
 
-    let selectedFoodB = $(".foodSelected").parent().siblings("a").find(".restaurantNameB").text();
-    let selectedFoodL = $(".foodSelected").parent().siblings("a").find(".restaurantNameL").text();
-    let selectedFoodD = $(".foodSelected").parent().siblings("a").find(".restaurantNameD").text();
+$(document).on("click", ".foodSubmitB", function() {
 
-    scheduleFoodBreakfast.push(selectedFoodB);
-    scheduleFoodLunch.push(selectedFoodL);
-    scheduleFoodDinner.push(selectedFoodD);
-    console.log("breakfast " + scheduleFoodBreakfast + " lunch: " + scheduleFoodLunch + " dinner: " + scheduleFoodDinner);
-    $(".foodScheduleB").find("img").removeClass("foodSelected");
-    //will have to make a function to split restaurant names in array by using if lowercase + next one is capital,
-    //split into 2 
-  });
+  let selectedFoodB = $(".foodSelected").parent().siblings("a").find(".restaurantNameB").text();
+  let selectedFoodL = $(".foodSelected").parent().siblings("a").find(".restaurantNameL").text();
+  let selectedFoodD = $(".foodSelected").parent().siblings("a").find(".restaurantNameD").text();
+  
+  scheduleFoodBreakfast.push(selectedFoodB);
+  scheduleFoodLunch.push(selectedFoodL);
+  scheduleFoodDinner.push(selectedFoodD);
+  console.log("breakfast: " + scheduleFoodBreakfast + " lunch: " + scheduleFoodLunch + " dinner: " + scheduleFoodDinner);
+  $(".foodScheduleB").find("img").removeClass("foodSelected");
 
-  $(document).on("click", ".eventButton", function () {
-    pageDisplayBool[2] = true;
-    pageDisplayBool[3] = false;
-    displayer();
-  });
+  const foodBlockMaker = (arr) => {
+  if (arr.length > 0) {
+    for (let i=0; i<arr.length; i++) {
+      let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodChosen${i}">`);
+      foodBlock.append(`<h5>${arr[i]}</h5>`);
+      $(".dragContainer").append(foodBlock);
+      };
+    arr.length = 0;
+    };
+  };
 
+  foodBlockMaker(scheduleFoodBreakfast);
+  foodBlockMaker(scheduleFoodLunch);
+  foodBlockMaker(scheduleFoodDinner);
+
+//will have to make a function to split restaurant names in array by using if lowercase + next one is capital,
+//split into 2 
+});
+
+$(document).on("click", ".eventButton", function() {
+  pageDisplayBool[2] = true;
+  pageDisplayBool[3] = false;
+  pageDisplayBool[4] = false;
+  displayer();
+});
+
+$(document).on("click", ".foodButton", function() {
+  pageDisplayBool[2] = false;
+  pageDisplayBool[3] = true;
+  pageDisplayBool[4] = false;
+  displayer();
+});
+
+$(document).on("click", ".scheduleButton", function() {
+  pageDisplayBool[2] = false;
+  pageDisplayBool[3] = false;
+  pageDisplayBool[4] = true;
+  scheduleMaker();
+  displayer();
+  //function that starts running the scheduler for you 
+});
 
 
 }; //end "yelpAPIsearch"
@@ -894,3 +927,69 @@ const YelpAPISearch = () => {
 // request.send();
 
 //---------------------------------------- end event API section ---------------------------------------------
+
+
+//---------------------------------------- start Scheduler section -----------------------------------------------
+
+const scheduleMaker = () => {
+  // select 3 food places from each yelp obj for breakfast, lunch, dinner
+  let randomNum = [];
+  let scheduleArr = ["t1a", "t1b", "t1c", "t5a", "t5b", "t5c", "t11a", "t11b", "t11c"];
+  
+  const numGen = () => {
+    randomNum = [];
+    for (let i=0; i<9; i++) {
+      let currentNum = (Math.floor(Math.random()*25));
+      if (i < 3) {
+        if (randomNum.indexOf(currentNum) === -1) {
+          randomNum.push(currentNum);
+        } else {
+          i--;
+        }
+      } else if (i >= 3 && i < 6) {
+          if (randomNum.indexOf(currentNum) <= 2) {
+          randomNum.push(currentNum);
+        } else {
+          i--;
+        }
+      } else if (i >= 6 && i < 9) {
+          if (randomNum.indexOf(currentNum) <= 6) {
+          randomNum.push(currentNum)
+        } else {
+          i--;
+        };
+      };
+    };
+    console.log(randomNum);
+  };
+
+  numGen();
+
+  for (let i=0; i<randomNum.length; i++) {
+    let fud;
+    let fudURL;
+    if (i < 3) {
+      fud = breakfastObj.businesses[randomNum[i]].name
+      fudURL = breakfastObj.businesses[randomNum[i]].url
+    } else if (i >= 3 && i < 6) {
+      fud = lunchObj.businesses[randomNum[i]].name
+      fudURL = lunchObj.businesses[randomNum[i]].url
+    } else if (i >= 6 && i < 9) {
+      fud = dinnerObj.businesses[randomNum[i]].name
+      fudURL = dinnerObj.businesses[randomNum[i]].url
+    };
+    let foodBlock = $(`<div class="fudStyle col-sm rounded text-center foodBlock${i}">`)
+    foodBlock.append($(`<a class="foodRandom${i}" href="${fudURL}" target="_blank">`));
+    foodBlock.append(`<h5>${fud}</h5>`);
+    $(`#${scheduleArr[i]}`).append(foodBlock);
+    // $(".dragContainer").append(foodBlock);
+    if (i < 3) {
+      $(`.foodBlock${i}`).addClass("btn-success");
+    } else if (i >= 3 && i < 6) {
+      $(`.foodBlock${i}`).addClass("btn-primary");
+    } else if (i >= 6 && i < 9) {
+      $(`.foodBlock${i}`).addClass("btn-info")
+    };
+  };
+  
+}; //end scheduleMaker function

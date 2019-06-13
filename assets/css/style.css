@@ -30,6 +30,11 @@
   width: 100%;
   background-color: #83db99;
 }
+
+.scheduleTitle {
+  width: 100%;
+  background-color: #f7d262;
+}
 .foodContainer {
   width: 100% !important; 
 }
@@ -145,5 +150,27 @@ html, body {
 
 .foodSelected {
   box-shadow: 10px 10px 5px grey;
+}
+
+table.table-bordered > thead > tr > th{
+  border:1px solid black;
+}
+table.table-bordered > tbody > tr > td{
+  border:1px solid black;
+}
+
+.dragContainer {
+  min-height: 300px;
+  width: 100%;
+  background-color: #f7d262;
+}
+
+.scheduleContainer {
+  width: 100%;
+}
+
+.fudStyle {
+  width: 100%;
+  height: 100%;
 }
 
