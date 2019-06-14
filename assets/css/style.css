@@ -390,3 +390,20 @@ table.table-bordered > tbody > tr > td{
 .top{
   align-content: center;
 }
+
+.revealButton {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  margin: .5%;
+  padding: 1%;
+  opacity: .90;
+}
+
+
+.revealButton:hover {
+  box-shadow:
+  1px 1px #8a4a5a,
+  2px 2px #8a4a5a,
+  3px 3px #8a4a5a;
+}

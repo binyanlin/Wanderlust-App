@@ -12,6 +12,7 @@ const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", "
 let pageDisplayBool = [true, false, false, false, false];
 let clickId = 0;
 let eventClickId = 0;
+let pageHide = false;
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -353,11 +354,17 @@ $(document).on("click", ".foodPlacesB", function () {
   displayer();
 });
 
-$(document).on("click", ".backButton", function () {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = false;
+
+$(document).on("click", ".destinationB", function () {
+  pageDisplayBool[1] = false;
+  displayer();
+  // pageHide = true;
+  $(".revealButton").append(`<button class="btn btn-light"><h3>Back To My Trip!</h3></button>`);
+});
+
+$(document).on("click", ".revealButton", function () {
   pageDisplayBool[1] = true;
+  $(".revealButton").empty();
   displayer();
 });
 
@@ -879,7 +886,7 @@ $(document).on("click", ".actScheduleB", function () {
   }, 3000);
   let selectedAct = $(this).siblings("a").find(".actName").text();
   console.log(selectedAct);
-  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-warning", "alert-info"]
+  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
   let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
   actBlock.append(`<h5>${selectedAct}</h5>`);
   $(".dragContainer2").append(actBlock);
@@ -918,6 +925,13 @@ $(document).on("click", ".actScheduleB", function () {
     //function that starts running the scheduler for you 
   });
 
+  $(document).on("click", ".backButton", function () {
+    pageDisplayBool[2] = false;
+    pageDisplayBool[3] = false;
+    pageDisplayBool[4] = false;
+    pageDisplayBool[1] = true;
+    displayer();
+  });
 
 }; //end "yelpAPIsearch"
 
