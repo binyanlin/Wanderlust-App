@@ -327,7 +327,7 @@ $(document).on("click", ".buttonStart", function () {
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
 
-  //ticketMastAPISearch();
+  ticketMastAPISearch();
 
 
 });
@@ -877,29 +877,31 @@ const YelpAPISearch = () => {
     console.log("clickId counter: " + clickId);
   });
 
-//event handler for events
+  //event handler for events
+  $(document).on("click", ".actscheduleX", function () {
 
-$(document).on("click", ".actScheduleB", function () {
-  $(this).find("img").addClass("actSelected");
-  let doop = this;
-  console.log("event button this: " + doop);
-  setTimeout(function () {
-    $(doop).find("img").removeClass("actSelected");
-  }, 3000);
-  let selectedAct = $(this).siblings("a").find(".actName").text();
-  console.log(selectedAct);
-  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
-  let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
-  actBlock.append(`<h5>${selectedAct}</h5>`);
-  $(".dragContainer2").append(actBlock);
-  let color = btnColor[Math.floor(Math.random() * btnColor.length)];
-  actBlock.addClass(`${color}`);
-  actBlock.append(`<span class="close">×<span>`);
-  selectedact = "";
-  actBlock = "";
-  eventClickId++;
-  console.log("clickId counter: " + clickId);
-});
+  })
+  $(document).on("click", ".actScheduleB", function () {
+    $(this).find("img").addClass("actSelected");
+    let doop = this;
+    console.log("event button this: " + doop);
+    setTimeout(function () {
+      $(doop).find("img").removeClass("actSelected");
+    }, 3000);
+    let selectedAct = $(this).siblings("a").find(".actName").text();
+    console.log(selectedAct);
+    let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
+    let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
+    actBlock.append(`<h5>${selectedAct}</h5>`);
+    $(".dragContainer2").append(actBlock);
+    let color = btnColor[Math.floor(Math.random() * btnColor.length)];
+    actBlock.addClass(`${color}`);
+    actBlock.append(`<span class="close">×<span>`);
+    selectedact = "";
+    actBlock = "";
+    eventClickId++;
+    console.log("clickId counter: " + clickId);
+  });
 
   $(document).on("click", ".eventButton", function () {
     pageDisplayBool[2] = true;
@@ -937,49 +939,40 @@ $(document).on("click", ".actScheduleB", function () {
 
 }; //end "yelpAPIsearch"
 
-
 //----------------------------------------start Ticketmaster API----------------------------------------------
 
-// const ticketMastAPISearch = () => {
+// $(document).on("click", ".")
+
+const ticketMastAPISearch = () => {
+  console.log("Ticketmaster: " + selectedLocation);
+  $.ajax({
+    type: "GET",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=3&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
+    async: true,
+    dataType: "json",
+  }).then(function (json) {
+    ticketMasterRespondObjects = [];
 
 
-//   console.log("Ticketmaster: " + selectedLocation);
 
-//   $.ajax({
-//     type: "GET",
-//     url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
-//     async: true,
-//     dataType: "json",
-//     success: function (json) {
-
-//       ticketMasterRespondObjects = [];
-
-//       for (var i = 0; i < 10; i++) {
-//         var responseObject = {
-//           playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
-//           latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
-//           longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
-//           segment: json._embedded.events[i].classifications[0].segment.name,
-//           genre: json._embedded.events[i].classifications[0].genre.name,
-//           date: json._embedded.events[i].dates.start.localDate,
-//           name: json._embedded.events[i].name,
-//           image: json._embedded.events[i].images[0].url,
-//           ticketPurchase: json._embedded.events[i].url
-//         };
-
-//         ticketMasterRespondObjects.push(responseObject);
-//       }
-//       console.log(ticketMasterRespondObjects);
-//     },
-//     error: function (xhr, status, err) {
-
-//     }
-//   });
-// }
-
-
+    for (var i = 0; i < 3; i++) {
+      var responseObject = {
+        playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
+        latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
+        longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
+        segment: json._embedded.events[i].classifications[0].segment.name,
+        genre: json._embedded.events[i].classifications[0].genre.name,
+        date: json._embedded.events[i].dates.start.localDate,
+        name: json._embedded.events[i].name,
+        image: json._embedded.events[i].images[0].url,
+        ticketPurchase: json._embedded.events[i].url
+      };
+      ticketMasterRespondObjects.push(responseObject);
+    }
+    console.log(ticketMasterRespondObjects);
+  }).catch(function (xhr, status, err) { });
+};
 //---------------------------------------- end event API section ---------------------------------------------
-
 
 //---------------------------------------- start Scheduler section -----------------------------------------------
 
@@ -1081,7 +1074,7 @@ function dragstart_handler(ev) {
   ev.dataTransfer.dropEffect = "copy";
 };
 
-$(document).on("dragstart", ".fudStyle", function(event) {
+$(document).on("dragstart", ".fudStyle", function (event) {
   // console.log(event.target.id);
   // console.log("dataTransfer: " + event.originalEvent.dataTransfer);
 
