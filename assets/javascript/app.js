@@ -12,6 +12,7 @@ const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", "
 let pageDisplayBool = [true, false, false, false, false];
 let clickId = 0;
 let eventClickId = 0;
+let pageHide = false;
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -325,7 +326,9 @@ $(document).on("click", ".buttonStart", function () {
   //backgroundtest
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
+
   //ticketMastAPISearch();
+
 
 });
 
@@ -353,11 +356,17 @@ $(document).on("click", ".foodPlacesB", function () {
   displayer();
 });
 
-$(document).on("click", ".backButton", function () {
-  pageDisplayBool[2] = false;
-  pageDisplayBool[3] = false;
-  pageDisplayBool[4] = false;
+
+$(document).on("click", ".destinationB", function () {
+  pageDisplayBool[1] = false;
+  displayer();
+  // pageHide = true;
+  $(".revealButton").append(`<button class="btn btn-light"><h3>Back To My Trip!</h3></button>`);
+});
+
+$(document).on("click", ".revealButton", function () {
   pageDisplayBool[1] = true;
+  $(".revealButton").empty();
   displayer();
 });
 
@@ -879,7 +888,7 @@ $(document).on("click", ".actScheduleB", function () {
   }, 3000);
   let selectedAct = $(this).siblings("a").find(".actName").text();
   console.log(selectedAct);
-  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-warning", "alert-info"]
+  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
   let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
   actBlock.append(`<h5>${selectedAct}</h5>`);
   $(".dragContainer2").append(actBlock);
@@ -918,48 +927,55 @@ $(document).on("click", ".actScheduleB", function () {
     //function that starts running the scheduler for you 
   });
 
+  $(document).on("click", ".backButton", function () {
+    pageDisplayBool[2] = false;
+    pageDisplayBool[3] = false;
+    pageDisplayBool[4] = false;
+    pageDisplayBool[1] = true;
+    displayer();
+  });
 
 }; //end "yelpAPIsearch"
 
 
 //----------------------------------------start Ticketmaster API----------------------------------------------
 
-const ticketMastAPISearch = () => {
+// const ticketMastAPISearch = () => {
 
 
-  console.log("Ticketmaster: " + selectedLocation);
+//   console.log("Ticketmaster: " + selectedLocation);
 
-  $.ajax({
-    type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
-    async: true,
-    dataType: "json",
-    success: function (json) {
+//   $.ajax({
+//     type: "GET",
+//     url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
+//     async: true,
+//     dataType: "json",
+//     success: function (json) {
 
-      ticketMasterRespondObjects = [];
+//       ticketMasterRespondObjects = [];
 
-      for (var i = 0; i < 10; i++) {
-        var responseObject = {
-          playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
-          latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
-          longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
-          segment: json._embedded.events[i].classifications[0].segment.name,
-          genre: json._embedded.events[i].classifications[0].genre.name,
-          date: json._embedded.events[i].dates.start.localDate,
-          name: json._embedded.events[i].name,
-          image: json._embedded.events[i].images[0].url,
-          ticketPurchase: json._embedded.events[i].url
-        };
+//       for (var i = 0; i < 10; i++) {
+//         var responseObject = {
+//           playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
+//           latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
+//           longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
+//           segment: json._embedded.events[i].classifications[0].segment.name,
+//           genre: json._embedded.events[i].classifications[0].genre.name,
+//           date: json._embedded.events[i].dates.start.localDate,
+//           name: json._embedded.events[i].name,
+//           image: json._embedded.events[i].images[0].url,
+//           ticketPurchase: json._embedded.events[i].url
+//         };
 
-        ticketMasterRespondObjects.push(responseObject);
-      }
-      console.log(ticketMasterRespondObjects);
-    },
-    error: function (xhr, status, err) {
+//         ticketMasterRespondObjects.push(responseObject);
+//       }
+//       console.log(ticketMasterRespondObjects);
+//     },
+//     error: function (xhr, status, err) {
 
-    }
-  });
-}
+//     }
+//   });
+// }
 
 
 //---------------------------------------- end event API section ---------------------------------------------
