@@ -433,6 +433,7 @@ html, body {
   height: 400px;
   overflow:overlay;
   margin-bottom: 0%;
+  font-size: 22px;
 }
 
 #map {
