@@ -43,13 +43,6 @@
   background-color: rgba(99, 248, 156, 0.5);
 }
 
-.scheduleTitle {
-  object-fit: cover;
-  display:block; 
-  width: 100%;
-  margin: 0 auto;
-  background-color: rgba(208, 248, 99, 0.5);
-}
 .foodContainer {
   width: 100% !important; 
 }
@@ -204,7 +197,7 @@ html, body {
 
 .table {
   display: block;
-  width: 100%;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -248,21 +241,14 @@ html, body {
 
 .containerWrap3 {
   border: 5px solid rgba(68, 58, 126, 0.7);
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   width: 95%;
 }
 
 .containerWrap4 {
   border: 5px solid rgba(9, 66, 66, 0.7);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  width: 95%;
-}
-
-.containerWrap5 {
-  border: 5px solid rgba(113, 126, 58, 0.7);
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   width: 95%;
 }
@@ -293,7 +279,7 @@ html, body {
 }
 
 .foodPage, .eventPage, .scheduler {
-  opacity: .95;
+  opacity: .92;
   font-size: 18px;
 }
 
@@ -333,21 +319,21 @@ html, body {
   3px 3px #ad1f43;
 }
 
-.eventsB:hover, .eventButton:hover {
+.eventsB:hover, .eventButton:hover, .actScheduleB:hover {
   box-shadow:
   1px 1px #059b75,
   2px 2px #059b75,
   3px 3px #059b75;
 }
 
-.foodPlacesB:hover, .foodButton:hover {
+.foodPlacesB:hover, .foodButton:hover, .foodScheduleB:hover {
   box-shadow:
   1px 1px #453a70,
   2px 2px #453a70,
   3px 3px #453a70;
 }
 
-.scheduleButton:hover, .foodScheduleB:hover {
+.scheduleButton:hover{
   box-shadow:
   1px 1px #a3ad0e,
   2px 2px #a3ad0e,
@@ -392,7 +378,7 @@ html, body {
   margin: 1% 1% 0% 1%;
 }
 
-.scheduleButton {
+.scheduleButton, .eventButton, .foodButton {
   height: 130px;
   padding: 1%;
   opacity: .90;
@@ -467,7 +453,7 @@ html, body {
 
 .top{
   align-content: center;
-
+}
 .revealButton {
   position: absolute;
   bottom: 20px;
@@ -485,16 +471,64 @@ html, body {
 }
 
 .food:hover {
-  color: white;
+  color: black;
   font-weight: bold;
 }
 
 .table, .dragContainer, .dragContainer2 {
   display: block;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
 }
 
 .scheduler {
   align-content: center;
+}
+
+.scheduleTitle {
+  display: block;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0%;
+  padding: 0%;
+}
+
+.scheduleContainer {
+  margin-top: 0%;
+}
+table {
+  background: rgba(208, 248, 99, 0.5)
+}
+
+th, tr {
+  color: white;
+  font-weight: bold;
+  max-width: 25%;
+}
+
+.containerWrap5 {
+  border: 5px solid rgba(182, 201, 99, 0.85);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  max-width: 60%;
+}
+
+.dragContainer.hover, .dragContainer2.hover, .dragContainer2.active, .dragContainer.active {
+  -webkit-transform: translateX(-3px);
+  transform: translateX(-3px);
+  opacity: 1;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+table, tbody, tr, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-spacing: 0;
 }
