@@ -94,43 +94,6 @@ label {
   margin-right: auto;
 }
 
-.eventsB {
-  background-color: #D3EDDA;
-  min-width: 25%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 450px;
-  overflow: overlay;
-}
-
-.foodPlacesB {
-  background-color: #CCE5FF;
-  min-width: 50%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 450px;
-  overflow: overlay;
-}
-
-.destinationB {
-  background-color: #D1ECF1;
-  min-width: 25%;
-  -webkit-border-radius: 12px; 
-  -moz-border-radius: 12px; 
-  border-radius: 12px; 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#tripInfo {
-  white-space: normal;
-  height: 450px;
-  overflow:overlay
-}
-
 .slider {
   -webkit-appearance: none;
   width: 100%;
@@ -307,45 +270,6 @@ table.table-bordered > tbody > tr > td{
   border-radius: 12px; 
 }
 
-.mainContent {
-  align-content: center;
-  margin: .5%;
-  padding: 1%;
-}
-
-.destination {
-  height: 225px;
-  display: block;
-  width: 45%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-}
-
-.flightsB {
-  height: 225px;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: .90;
-}
-
-#map {
-  height: 225px;
-  width: 45%;
-  margin-right: 2.5%;
-  margin-left: 2.5%;
-  display: block;
-  -webkit-border-radius: 12px; 
-  -moz-border-radius: 12px; 
-  border-radius: 12px; 
-  opacity: .90;
-}
-
-.restartButton {
-  margin: .5%;
-  padding: 1%;
-  opacity: .90;
-}
-
 .btn:hover{
   -webkit-transform: translateX(-3px);
   transform: translateX(-3px);
@@ -383,7 +307,103 @@ table.table-bordered > tbody > tr > td{
   3px 3px #453a70;
 }
 
+.scheduleButton:hover {
+  box-shadow:
+  1px 1px #a3ad0e,
+  2px 2px #a3ad0e,
+  3px 3px #a3ad0e;
+}
+
 .openingPage {
   color: white;
 }
 
+.destination {
+  position: relative;
+  float: left;
+  display: block;
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0%;
+}
+
+.flightsB {
+  height: 130px;
+  margin: 1% 1% 0% 1%;
+  padding: 1%;
+  opacity: .90;
+}
+
+.restartButton {
+  height: 130px;
+  padding: 1%;
+  opacity: .90;
+  margin: 1% 1% 0% 1%;
+}
+
+.scheduleButton {
+  height: 130px;
+  padding: 1%;
+  opacity: .90;
+  margin: 1% 1% 0% 1%;
+}
+
+.eventsB {
+  background-color: #D3EDDA;
+  min-width: 25%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 550px;
+  overflow: overlay;
+}
+
+.foodPlacesB {
+  background-color: #CCE5FF;
+  min-width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 550px;
+  overflow: overlay;
+}
+
+.destinationB {
+  background-color: #D1ECF1;
+  min-width: 25%;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0%;
+}
+
+#tripInfo {
+  white-space: normal;
+  height: 400px;
+  overflow:overlay;
+  margin-bottom: 0%;
+}
+
+#map {
+  height: 250px;
+  width: 95%;
+  margin: 0% auto 1% auto;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px; 
+  opacity: .90;
+}
+
+.mainContent {
+  align-content: center;
+  margin: 0% .5%;
+  padding: 1%;
+}
+
+.top{
+  align-content: center;
+}
