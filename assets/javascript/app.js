@@ -11,6 +11,7 @@ const apiKeys = [
 const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
 let pageDisplayBool = [true, false, false, false, false];
 let clickId = 0;
+let eventClickId = 0;
 
 const displayer = () => {
   $(".openingPage").hide();
@@ -41,6 +42,7 @@ displayer();
 let breakfastObj;
 let lunchObj;
 let dinnerObj;
+let activityObj;
 let scheduleFirstVisit = true;
 
 //SLIDERS input functions to display a string at each range
@@ -324,6 +326,7 @@ $(document).on("click", ".buttonStart", function () {
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
   ticketMastAPISearch();
+
 });
 
 $(document).on("click", ".close", function () {
@@ -368,6 +371,8 @@ $(document).on("click", ".restartButton", function () {
   $('body').css('background', "none");
   scheduleFirstVisit = true;
   clickId = 0;
+  eventClickId = 0;
+  $(".close").parent().remove();
 });
 
 //make a new array of objects to hold the arrays that match  
@@ -431,7 +436,6 @@ function generateDestination() {
       };
     };
   };
-  console.log(usersPool);
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -456,7 +460,6 @@ function defaultDestination() {
   for (let i = 0; i < genDestinations.length; i++) {
     usersPool.push(genDestinations[i].name);
   };
-  console.log(usersPool);
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -467,7 +470,7 @@ function defaultDestination() {
     selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
     pickedPool.push(selectedLocation);
     $(".genDes").text(selectedLocation);
-    console.log(selectedLocation);
+
   } else {
     alert("You've exhausted cities with your slide options, adjust the sliders!");
   };
@@ -508,6 +511,7 @@ function genMap() {
       });
     }
   });
+
 };//end MAP section
 
 //start LOCATION DESCRIPTION section
@@ -780,7 +784,6 @@ const YelpAPISearch = () => {
   term5 = "?term=activities";
   limit2 = "&limit=50";
   query5 = term5 + locationYelp + limit2;
-  let activityObj;
 
   queryURLyelp = "https://cors-anywhere.herokuapp.com/" + `https://api.yelp.com/v3/businesses/search${query5}`;
   $.ajax({
@@ -800,7 +803,7 @@ const YelpAPISearch = () => {
       // let activityLongitude = reponse.businesses[i].coordinates.longitude;
       $(`.activitiesImage${[i + 1]}`).attr("src", imageURL);
       $(`.activitiesLink${[i + 1]}`).attr("href", yelpURL);
-      let activityInfo = $(`<p class="text-center">`).text(name);
+      let activityInfo = $(`<p class="text-center actName">`).text(name);
       $(`.activities${i + 1}`).append(activityInfo);
     };
   });
@@ -815,7 +818,7 @@ const YelpAPISearch = () => {
         for (let i = 0; i < 10; i++) {
           $(`.activitiesImage${[i + 1]}`).attr("src", activityObj.businesses[i + activitiesIndex * 10].image_url);
           $(`.activitiesLink${[i + 1]}`).attr("href", activityObj.businesses[i + activitiesIndex * 10].url);
-          let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i + activitiesIndex * 10].name);
+          let activityInfo = $(`<p class="text-center actName">`).text(activityObj.businesses[i + activitiesIndex * 10].name);
           // let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*10].price + "  Rating " + activityObj.businesses[i+activitiesIndex*10].rating + " ★");
           $(`.activities${i + 1}`).empty();
           $(`.activities${i + 1}`).append(activityInfo);
@@ -833,7 +836,7 @@ const YelpAPISearch = () => {
         for (let i = 0; i < 10; i++) {
           $(`.activitiesImage${[i + 1]}`).attr("src", activityObj.businesses[i + activitiesIndex * 10].image_url);
           $(`.activitiesLink${[i + 1]}`).attr("href", activityObj.businesses[i + activitiesIndex * 10].url);
-          let activityInfo = $(`<p class="text-center">`).text(activityObj.businesses[i + activitiesIndex * 10].name);
+          let activityInfo = $(`<p class="text-center actName">`).text(activityObj.businesses[i + activitiesIndex * 10].name);
           // let activityInfo2 = $(`<p class="text-center">`).text("Price " + activityObj.businesses[i+activitiesIndex*10].price + "  Rating " + activityObj.businesses[i+activitiesIndex*10].rating + " ★");
           $(`.activities${i + 1}`).empty();
           $(`.activities${i + 1}`).append(activityInfo);
@@ -847,6 +850,7 @@ const YelpAPISearch = () => {
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
+    console.log("food button this: " + doop);
     setTimeout(function () {
       $(doop).find("img").removeClass("foodSelected");
     }, 3000);
@@ -863,6 +867,30 @@ const YelpAPISearch = () => {
     clickId++;
     console.log("clickId counter: " + clickId);
   });
+
+//event handler for events
+
+$(document).on("click", ".actScheduleB", function () {
+  $(this).find("img").addClass("actSelected");
+  let doop = this;
+  console.log("event button this: " + doop);
+  setTimeout(function () {
+    $(doop).find("img").removeClass("actSelected");
+  }, 3000);
+  let selectedAct = $(this).siblings("a").find(".actName").text();
+  console.log(selectedAct);
+  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-warning", "alert-info"]
+  let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
+  actBlock.append(`<h5>${selectedAct}</h5>`);
+  $(".dragContainer2").append(actBlock);
+  let color = btnColor[Math.floor(Math.random() * btnColor.length)];
+  actBlock.addClass(`${color}`);
+  actBlock.append(`<span class="close">×<span>`);
+  selectedact = "";
+  actBlock = "";
+  eventClickId++;
+  console.log("clickId counter: " + clickId);
+});
 
   $(document).on("click", ".eventButton", function () {
     pageDisplayBool[2] = true;
@@ -899,16 +927,18 @@ const YelpAPISearch = () => {
 const ticketMastAPISearch = () => {
 
 
+  console.log("Ticketmaster: " + selectedLocation);
+
   $.ajax({
     type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&",//latlong=" + latlon,
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
     async: true,
     dataType: "json",
     success: function (json) {
 
       ticketMasterRespondObjects = [];
-      for (var i = 0; i < 10; i++) {
 
+      for (var i = 0; i < 10; i++) {
         var responseObject = {
           playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
           latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
@@ -921,64 +951,9 @@ const ticketMastAPISearch = () => {
           ticketPurchase: json._embedded.events[i].url
         };
 
-        console.log("ticket master objects: ");
-        console.log(responseObject);
-
         ticketMasterRespondObjects.push(responseObject);
       }
-
-
-
-      // Define address to center map to
-      // let address = selectedLocation;
-      // geocoder.geocode({
-      //   'address': address
-      // }, function (results) {
-
-      //   var lat = results[0].geometry.location.lat;
-      //   var lon = results[0].geometry.location.lng;
-      //   // Add marker on location
-      //   var latlon = lat + "," + lon;
-      //   console.log(latlon);
-      //   let marker = new google.maps.Marker({
-      //     map: map,
-      //     position: results[0].geometry.location
-      //   });
-
-      // });
-
-
-      // for (let i = 0; i <= events.length; i++) {
-      //   x = events[i]._embedded.venues;
-
-      // }
-
-
-
-
-
-      // let address = events[i].name
-      // geocoder.geocode({
-      //   'address': address
-      // }, function (results, status) {
-      //   if (status == google.maps.GeocoderStatus.OK) {
-
-      //     // Center map on location
-      //     map.setCenter(results[0].geometry.location);
-
-      //     // Add marker on location
-      //     let marker = new google.maps.Marker({
-      //       map: map,
-      //       position: results[0].geometry.location
-      //     });
-      //   }
-      // });
-
-
-      // Parse the response.
-
-
-      // Do other things.
+      console.log(ticketMasterRespondObjects);
     },
     error: function (xhr, status, err) {
 
@@ -1026,6 +1001,7 @@ const scheduleMaker = () => {
 
   numGen();
 
+  //generating food elements 
   for (let i = 0; i < randomNum.length; i++) {
     let fud;
     let fudURL;
@@ -1055,6 +1031,25 @@ const scheduleMaker = () => {
     $(`.foodBlock${i}`).append(`<span class="close">×<span>`);
   };
 
+  //generating event elements 
+  let activity;
+  let activityURL;
+  let scheduleArr2 = ["t7a", "t7b", "t7c", "t13a", "t13b", "t13c"];
+  numGen();
+  for (let i = 0; i < 6; i++) {
+    activity = activityObj.businesses[randomNum[i]].name;
+    activityURL = activityObj.businesses[randomNum[i]].url;
+    let actBlock = $(`<div draggable="true" class="eventStyle fudStyle col-sm rounded text-center actBlock${i}" id="randomAct${i}">`)
+    actBlock.append($(`<a class="actRandom${i}" href="${activityURL}" target="_blank">`));
+    actBlock.append(`<h5 class="transform">${activity}</h5>`);
+    $(`#${scheduleArr2[i]}`).append(actBlock);
+    if (i < 3) {
+      $(`.actBlock${i}`).addClass("alert-info");
+    } else if (i >= 3 && i < 6) {
+      $(`.actBlock${i}`).addClass("alert-success");
+    };
+    $(`.actBlock${i}`).append(`<span class="close">×<span>`);
+  };
 }; //end scheduleMaker function
 
 // ---------------------------------drag and drop handler --------------------------------------------------
@@ -1063,30 +1058,32 @@ function dragstart_handler(ev) {
   ev.dataTransfer.setData("text/plain", ev.target.id);
   ev.dataTransfer.setData("text/html", "<p>Example paragraph</p>");
   ev.dataTransfer.setData("text/uri-list", "http://developer.mozilla.org");
-}
+};
 
 function dragstart_handler(ev) {
   // Set the drag effect to copy
   ev.dataTransfer.dropEffect = "copy";
-}
+};
 
 $(document).on("dragstart", ".fudStyle", function(event) {
-  console.log(event.target.id);
-  console.log("dataTransfer: " + event.originalEvent.dataTransfer);
+  // console.log(event.target.id);
+  // console.log("dataTransfer: " + event.originalEvent.dataTransfer);
+
   event.originalEvent.dataTransfer.setData("src", event.target.id);
-})
+  // $(".eventStyle").parent("td").attr("rowspan", 1);
+});
 
-$(document).on("dragover", ".drop", function(event) {
+$(document).on("dragover", ".drop", function (event) {
   event.preventDefault();
+});
 
-})
-
-$(document).on("drop", ".drop", function(event) {
+$(document).on("drop", ".drop", function (event) {
   event.preventDefault();
   const src = event.originalEvent.dataTransfer.getData("src")
-  console.log(src);
+  // console.log(src);
   event.target.append(document.getElementById(src));
-  console.log($("#"+src).html());
-  console.log("im hit");
+
+  // let eventVar = document.getElementById(src);
+  // $(".eventStyle").parent("td").attr("rowspan", 2);
 
 });
