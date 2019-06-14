@@ -326,7 +326,9 @@ $(document).on("click", ".buttonStart", function () {
   //backgroundtest
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
-  // ticketMastAPISearch();
+
+  //ticketMastAPISearch();
+
 
 });
 
