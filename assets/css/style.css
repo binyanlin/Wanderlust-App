@@ -1,10 +1,6 @@
-.foodpage {
-  width: 100%;
-}
-
 .foodTitle {
   width: 100%;
-  background-color: #77b6f4;
+  background-color: rgba(71, 151, 255, 0.5);
 }
 
 .buttonStart {
@@ -27,27 +23,37 @@
   width: 95%;
 }
 
+.arrowButton {
+  width: 80px;
+  height: auto;
+  opacity: .9;
+}
+
+.arrowButton:hover {
+  opacity: 1
+}
+
+
 .aboutMe {
   text-align: center;
 }
 
 .eventTitle {
   width: 100%;
-  background-color: #83db99;
+  background-color: rgba(99, 248, 156, 0.5);
 }
 
 .scheduleTitle {
+  object-fit: cover;
+  display:block; 
   width: 100%;
-  background-color: #f7d262;
+  margin: 0 auto;
+  background-color: rgba(208, 248, 99, 0.5);
 }
 .foodContainer {
   width: 100% !important; 
 }
 
-.arrowButton {
-  width: 80px;
-  height: auto;
-}
 .foodCSS {
   /* width: 200px;
   height: 300px; */
@@ -179,13 +185,6 @@ html, body {
   box-shadow: 10px 10px 5px grey;
 }
 
-table.table-bordered > thead > tr > th{
-  border:1px solid black;
-}
-table.table-bordered > tbody > tr > td{
-  border:1px solid black;
-}
-
 .dragContainer {
   min-height: 200px;
   width: 100%;
@@ -198,7 +197,15 @@ table.table-bordered > tbody > tr > td{
 }
 
 .scheduleContainer {
+  display:block;
   width: 100%;
+  margin: 0 auto;
+}
+
+.table {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .fudStyle {
@@ -217,8 +224,7 @@ table.table-bordered > tbody > tr > td{
   border-radius: 12px; 
 }
 
-.containerWrap, .containerWrap2 {
-  border: 5px solid rgba(126, 58, 58, 0.7);
+.containerWrap, .containerWrap2, .containerWrap3, .containerWrap4, .containerWrap5 {
   border-style: groove; 
   -webkit-border-radius: 12px; 
   -moz-border-radius: 12px; 
@@ -229,15 +235,37 @@ table.table-bordered > tbody > tr > td{
 }
 
 .containerWrap {
+  border: 5px solid rgba(126, 58, 58, 0.7);
   background: rgba(0, 0, 0, 0.4);
   width: 75%;
 }
 
 .containerWrap2 {
+  border: 5px solid rgba(126, 58, 58, 0.7);
   background: rgba(225, 225, 225, 0.2);
   width: 100%;
 }
 
+.containerWrap3 {
+  border: 5px solid rgba(68, 58, 126, 0.7);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  width: 95%;
+}
+
+.containerWrap4 {
+  border: 5px solid rgba(9, 66, 66, 0.7);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  width: 95%;
+}
+
+.containerWrap5 {
+  border: 5px solid rgba(113, 126, 58, 0.7);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  width: 95%;
+}
 
 .close {
   cursor: pointer;
@@ -264,7 +292,19 @@ table.table-bordered > tbody > tr > td{
   font-size: 18px;
 }
 
-.btn {
+.foodPage, .eventPage, .scheduler {
+  opacity: .85;
+  font-size: 18px;
+}
+
+.scheduler {
+  object-fit: cover;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btn, table, .dragContainer, .dragContainer2 {
   -webkit-border-radius: 12px; 
   -moz-border-radius: 12px; 
   border-radius: 12px; 
@@ -293,25 +333,35 @@ table.table-bordered > tbody > tr > td{
   3px 3px #ad1f43;
 }
 
-.eventsB:hover {
+.eventsB:hover, .eventButton:hover {
   box-shadow:
   1px 1px #059b75,
   2px 2px #059b75,
   3px 3px #059b75;
 }
 
-.foodPlacesB:hover {
+.foodPlacesB:hover, .foodButton:hover {
   box-shadow:
   1px 1px #453a70,
   2px 2px #453a70,
   3px 3px #453a70;
 }
 
-.scheduleButton:hover {
+.scheduleButton:hover, .foodScheduleB:hover {
   box-shadow:
   1px 1px #a3ad0e,
   2px 2px #a3ad0e,
   3px 3px #a3ad0e;
+}
+
+.destinationB:hover {
+  box-shadow:
+  1px 1px #1f806b,
+  2px 2px #1f806b,
+  3px 3px #1f806b;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 .openingPage {
@@ -358,6 +408,9 @@ table.table-bordered > tbody > tr > td{
   height: 550px;
   overflow: overlay;
 }
+.eventsB:active {
+  background-color: rgb(211, 237, 218, .2);
+}
 
 .foodPlacesB {
   background-color: #CCE5FF;
@@ -367,6 +420,10 @@ table.table-bordered > tbody > tr > td{
   margin-right: auto;
   height: 550px;
   overflow: overlay;
+}
+
+.foodPlacesB:active {
+  background-color: rgb(204, 229, 255, .2);
 }
 
 .destinationB {
@@ -379,6 +436,10 @@ table.table-bordered > tbody > tr > td{
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0%;
+}
+
+.destinationB:active {
+  background-color: rgb(209, 236, 241, .2);
 }
 
 #tripInfo {
@@ -421,3 +482,19 @@ table.table-bordered > tbody > tr > td{
   1px 1px #8a4a5a,
   2px 2px #8a4a5a,
   3px 3px #8a4a5a;
+}
+
+.food:hover {
+  color: white;
+  font-weight: bold;
+}
+
+.table, .dragContainer, .dragContainer2 {
+  display: block;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.scheduler {
+  align-content: center;
+}
