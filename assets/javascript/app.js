@@ -325,7 +325,7 @@ $(document).on("click", ".buttonStart", function () {
   //backgroundtest
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
-  ticketMastAPISearch();
+  // ticketMastAPISearch();
 
 });
 
@@ -924,42 +924,42 @@ $(document).on("click", ".actScheduleB", function () {
 
 //----------------------------------------start Ticketmaster API----------------------------------------------
 
-const ticketMastAPISearch = () => {
+// const ticketMastAPISearch = () => {
 
 
-  console.log("Ticketmaster: " + selectedLocation);
+//   console.log("Ticketmaster: " + selectedLocation);
 
-  $.ajax({
-    type: "GET",
-    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
-    async: true,
-    dataType: "json",
-    success: function (json) {
+//   $.ajax({
+//     type: "GET",
+//     url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
+//     async: true,
+//     dataType: "json",
+//     success: function (json) {
 
-      ticketMasterRespondObjects = [];
+//       ticketMasterRespondObjects = [];
 
-      for (var i = 0; i < 10; i++) {
-        var responseObject = {
-          playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
-          latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
-          longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
-          segment: json._embedded.events[i].classifications[0].segment.name,
-          genre: json._embedded.events[i].classifications[0].genre.name,
-          date: json._embedded.events[i].dates.start.localDate,
-          name: json._embedded.events[i].name,
-          image: json._embedded.events[i].images[0].url,
-          ticketPurchase: json._embedded.events[i].url
-        };
+//       for (var i = 0; i < 10; i++) {
+//         var responseObject = {
+//           playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
+//           latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
+//           longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
+//           segment: json._embedded.events[i].classifications[0].segment.name,
+//           genre: json._embedded.events[i].classifications[0].genre.name,
+//           date: json._embedded.events[i].dates.start.localDate,
+//           name: json._embedded.events[i].name,
+//           image: json._embedded.events[i].images[0].url,
+//           ticketPurchase: json._embedded.events[i].url
+//         };
 
-        ticketMasterRespondObjects.push(responseObject);
-      }
-      console.log(ticketMasterRespondObjects);
-    },
-    error: function (xhr, status, err) {
+//         ticketMasterRespondObjects.push(responseObject);
+//       }
+//       console.log(ticketMasterRespondObjects);
+//     },
+//     error: function (xhr, status, err) {
 
-    }
-  });
-}
+//     }
+//   });
+// }
 
 
 //---------------------------------------- end event API section ---------------------------------------------
