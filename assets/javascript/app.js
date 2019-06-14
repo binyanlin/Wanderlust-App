@@ -360,7 +360,7 @@ $(document).on("click", ".foodPlacesB", function () {
 $(document).on("click", ".destinationB", function () {
   pageDisplayBool[1] = false;
   displayer();
-  // pageHide = true;
+  pageHide = true;
   $(".revealButton").append(`<button class="btn btn-light"><h3>Back To My Trip!</h3></button>`);
 });
 
@@ -916,6 +916,7 @@ $(document).on("click", ".actScheduleB", function () {
   });
 
   $(document).on("click", ".scheduleButton", function () {
+    pageDisplayBool[1] = false;
     pageDisplayBool[2] = false;
     pageDisplayBool[3] = false;
     pageDisplayBool[4] = true;
