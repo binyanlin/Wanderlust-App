@@ -44,6 +44,7 @@ let breakfastObj;
 let lunchObj;
 let dinnerObj;
 let activityObj;
+let eventObj;
 let scheduleFirstVisit = true;
 
 //SLIDERS input functions to display a string at each range
@@ -327,7 +328,7 @@ $(document).on("click", ".buttonStart", function () {
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
 
-  //ticketMastAPISearch();
+  ticketMastAPISearch();
 
 
 });
@@ -855,6 +856,40 @@ const YelpAPISearch = () => {
     };
   });
 
+  let eventIndex = 0;
+  $(document).on("click", ".btnRightGreen2", function () {
+    if (eventObj) {
+      if (eventIndex >= 0 && eventIndex <= 2) {
+        eventIndex += 1;
+        for (let i = 0; i < 3; i++) {
+          $(`.eventImage${[i + 1]}`).attr("src", eventObj._embedded.events[i + eventIndex * 3].images[0].url);
+          $(`.eventLink${[i + 1]}`).attr("href", eventObj._embedded.events[i + eventIndex * 3].url);
+          let eventInfo = $(`<p class="text-center actName eventName">`).text(eventObj._embedded.events[i + eventIndex * 3].name);
+          // let eventInfo2 = $(`<p class="text-center">`).text("Price " + eventObj.businesses[i+eventIndex*10].price + "  Rating " + eventObj.businesses[i+eventIndex*10].rating + " ★");
+          $(`.events${i + 1}`).empty();
+          $(`.events${i + 1}`).append(eventInfo);
+          // $(`.events${i + 1}`).append(eventInfo2);
+        };
+      };
+    };
+  });
+
+  $(document).on("click", ".btnLeftGreen2", function () {
+    if (eventObj) {
+      if (eventIndex >= 1 && eventIndex <= 3) {
+        eventIndex -= 1;
+        for (let i = 0; i < 3; i++) {
+          $(`.eventImage${[i + 1]}`).attr("src", eventObj._embedded.events[i + eventIndex * 3].images[0].url);
+          $(`.eventLink${[i + 1]}`).attr("href", eventObj._embedded.events[i + eventIndex * 3].url);
+          let eventInfo = $(`<p class="text-center actName eventName">`).text(eventObj._embedded.events[i + eventIndex * 3].name);
+          // let eventInfo2 = $(`<p class="text-center">`).text("Price " + eventObj.businesses[i+eventIndex*10].price + "  Rating " + eventObj.businesses[i+eventIndex*10].rating + " ★");
+          $(`.events${i + 1}`).empty();
+          $(`.events${i + 1}`).append(eventInfo);
+          // $(`.events${i + 1}`).append(eventInfo2);
+        };
+      };
+    };
+  });
 
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
@@ -941,43 +976,29 @@ $(document).on("click", ".actScheduleB", function () {
 
 //----------------------------------------start Ticketmaster API----------------------------------------------
 
-// const ticketMastAPISearch = () => {
+const ticketMastAPISearch = () => {
 
+  console.log("Ticketmaster: " + selectedLocation);
 
-//   console.log("Ticketmaster: " + selectedLocation);
-
-//   $.ajax({
-//     type: "GET",
-//     url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
-//     async: true,
-//     dataType: "json",
-//     success: function (json) {
-
-//       ticketMasterRespondObjects = [];
-
-//       for (var i = 0; i < 10; i++) {
-//         var responseObject = {
-//           playingAtVenue: json._embedded.events[i]._embedded.venues[0].name,
-//           latitude: json._embedded.events[i]._embedded.venues[0].location.latitude,
-//           longitude: json._embedded.events[i]._embedded.venues[0].location.longitude,
-//           segment: json._embedded.events[i].classifications[0].segment.name,
-//           genre: json._embedded.events[i].classifications[0].genre.name,
-//           date: json._embedded.events[i].dates.start.localDate,
-//           name: json._embedded.events[i].name,
-//           image: json._embedded.events[i].images[0].url,
-//           ticketPurchase: json._embedded.events[i].url
-//         };
-
-//         ticketMasterRespondObjects.push(responseObject);
-//       }
-//       console.log(ticketMasterRespondObjects);
-//     },
-//     error: function (xhr, status, err) {
-
-//     }
-//   });
-// }
-
+  $.ajax({
+    method: "GET",
+    url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
+    async: true,
+    dataType: "json",
+  }).then(function(response) {
+    console.log(response);
+    eventObj = response;
+    for (let i=0; i < 3; i++) {
+      let eventImage = response._embedded.events[i].images[0].url;
+      let eventName = response._embedded.events[i].name;
+      let ticketMasterURL = response._embedded.events[i].url;
+      $(`.eventImage${i+1}`).attr("src", eventImage);
+      $(`.eventLink${i+1}`).attr("href", ticketMasterURL);
+      let eventInfo = $(`<p class="text-center actName eventName">`).text(eventName);
+      $(`.events${i+1}`).append(eventInfo);
+    };
+  });
+};  
 
 //---------------------------------------- end event API section ---------------------------------------------
 
