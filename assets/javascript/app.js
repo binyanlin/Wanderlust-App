@@ -383,6 +383,7 @@ $(document).on("click", ".restartButton", function () {
   clickId = 0;
   eventClickId = 0;
   $(".close").parent().remove();
+  confirm("Are you sure you want a new destination?");
 });
 
 //make a new array of objects to hold the arrays that match  
