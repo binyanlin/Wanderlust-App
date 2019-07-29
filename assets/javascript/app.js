@@ -969,6 +969,7 @@ const YelpAPISearch = () => {
     pageDisplayBool[2] = false;
     pageDisplayBool[3] = false;
     pageDisplayBool[4] = true;
+    pageDisplayBool[5] = false;
     if (scheduleFirstVisit) {
       scheduleMaker();
       scheduleFirstVisit = false;
