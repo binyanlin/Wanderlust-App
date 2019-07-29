@@ -119,17 +119,17 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[id=safetyLvl]::-webkit-slider-thumb {
-  background: url('../images/slider1icon.png') no-repeat;
+  background: url('../images/slider1.png') no-repeat;
   background-size: 40px;
 }
 
 input[id=moneyLvl]::-webkit-slider-thumb {
-  background: url('../images/slider2icon.png') no-repeat;
+  background: url('../images/slider2.png') no-repeat;
   background-size: 40px;
 }
 
 input[id=socialLvl]::-webkit-slider-thumb {
-  background: url('../images/slider3icon.png') no-repeat;
+  background: url('../images/slider3.png') no-repeat;
   background-size: 40px;
 }
 
@@ -534,8 +534,8 @@ table, tbody, tr, td {
   border-spacing: 0;
 }
 
-.spinner-grow{
-  display: block;
+.preL{
+  display:block;
   margin: 25% auto 0;
   color: white;
 }

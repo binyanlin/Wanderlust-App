@@ -8,7 +8,7 @@ const apiKeys = [
 // Yelp Client ID
 // 7vmrY-xkHwlI8QAWACW6dg
 
-const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler", ".spinner-grow"];
+const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler", ".preL"];
 let pageDisplayBool = [true, false, false, false, false, false];
 let clickId = 0;
 let eventClickId = 0;
@@ -16,7 +16,7 @@ let pageHide = false;
 
 const displayer = () => {
   $(".openingPage").hide();
-  $(".spinner-grow").hide();
+  $(".preL").hide();
   $(".secondPage").hide();
   $(".eventPage").hide();
   $(".foodPage").hide();
@@ -36,7 +36,7 @@ const displayer = () => {
   } if (pageDisplayBool[4]) {
     $(".scheduler").show();
   } if (pageDisplayBool[5]) {
-    $(".spinner-grow").show();
+    $(".preL").show();
   }
 
 
@@ -324,7 +324,7 @@ $(document).on("click", ".buttonStart", function () {
   pageDisplayBool[0] = false;
   pageDisplayBool[5] = true;
   setTimeout(function () {
-    $(".spinner-grow").hide();
+    $(".preL").hide();
     $(".secondPage").show();
     $(".map").show();
   }, 3000);
