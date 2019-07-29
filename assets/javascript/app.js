@@ -8,14 +8,15 @@ const apiKeys = [
 // Yelp Client ID
 // 7vmrY-xkHwlI8QAWACW6dg
 
-const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
-let pageDisplayBool = [true, false, false, false, false];
+const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler", ".spinner-grow"];
+let pageDisplayBool = [true, false, false, false, false, false];
 let clickId = 0;
 let eventClickId = 0;
 let pageHide = false;
 
 const displayer = () => {
   $(".openingPage").hide();
+  $(".spinner-grow").hide();
   $(".secondPage").hide();
   $(".eventPage").hide();
   $(".foodPage").hide();
@@ -34,7 +35,11 @@ const displayer = () => {
     $(".foodPage").show();
   } if (pageDisplayBool[4]) {
     $(".scheduler").show();
+  } if (pageDisplayBool[5]) {
+    $(".spinner-grow").show();
   }
+
+
 };
 
 displayer();
@@ -317,7 +322,12 @@ let selectedLocation = "" //a string to hold final location
 
 $(document).on("click", ".buttonStart", function () {
   pageDisplayBool[0] = false;
-  pageDisplayBool[1] = true;
+  pageDisplayBool[5] = true;
+  setTimeout(function () {
+    $(".spinner-grow").hide();
+    $(".secondPage").show();
+    $(".map").show();
+  }, 3000);
   displayer();
   decideSort();
   initMap();
@@ -327,10 +337,7 @@ $(document).on("click", ".buttonStart", function () {
   //backgroundtest
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
-
   ticketMastAPISearch();
-
-
 });
 
 $(document).on("click", ".close", function () {
@@ -348,18 +355,21 @@ $('.flightsB').click(function () {
 $(document).on("click", ".eventsB", function () {
   pageDisplayBool[1] = false;
   pageDisplayBool[2] = true;
+  pageDisplayBool[5] = false;
   displayer();
 });
 
 $(document).on("click", ".foodPlacesB", function () {
   pageDisplayBool[1] = false;
   pageDisplayBool[3] = true;
+  pageDisplayBool[5] = false;
   displayer();
 });
 
 
 $(document).on("click", ".destinationB", function () {
   pageDisplayBool[1] = false;
+  pageDisplayBool[5] = false;
   displayer();
   pageHide = true;
   $(".revealButton").append(`<button class="btn btn-light"><h3>Back To My Trip!</h3></button>`);
@@ -367,6 +377,7 @@ $(document).on("click", ".destinationB", function () {
 
 $(document).on("click", ".revealButton", function () {
   pageDisplayBool[1] = true;
+  pageDisplayBool[5] = false;
   $(".revealButton").empty();
   displayer();
 });
@@ -374,6 +385,7 @@ $(document).on("click", ".revealButton", function () {
 $(document).on("click", ".restartButton", function () {
   pageDisplayBool[1] = false;
   pageDisplayBool[0] = true;
+  pageDisplayBool[5] = false;
   displayer();
   empty();
   selectedLocation = "";
@@ -411,6 +423,7 @@ function decideSort() {
     generateDestination();
   }
 }
+
 //start FUNCTION GENERATEDESTINATION section
 function generateDestination() {
 
@@ -913,29 +926,29 @@ const YelpAPISearch = () => {
     //console.log("clickId counter: " + clickId);
   });
 
-//event handler for events
+  //event handler for events
 
-$(document).on("click", ".actScheduleB", function () {
-  $(this).find("img").addClass("actSelected");
-  let doop = this;
-  //console.log("event button this: " + doop);
-  setTimeout(function () {
-    $(doop).find("img").removeClass("actSelected");
-  }, 3000);
-  let selectedAct = $(this).siblings("a").find(".actName").text();
-  //console.log(selectedAct);
-  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
-  let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
-  actBlock.append(`<h5>${selectedAct}</h5>`);
-  $(".dragContainer2").append(actBlock);
-  let color = btnColor[Math.floor(Math.random() * btnColor.length)];
-  actBlock.addClass(`${color}`);
-  actBlock.append(`<span class="close">×<span>`);
-  selectedact = "";
-  actBlock = "";
-  eventClickId++;
-  //console.log("clickId counter: " + clickId);
-});
+  $(document).on("click", ".actScheduleB", function () {
+    $(this).find("img").addClass("actSelected");
+    let doop = this;
+    //console.log("event button this: " + doop);
+    setTimeout(function () {
+      $(doop).find("img").removeClass("actSelected");
+    }, 3000);
+    let selectedAct = $(this).siblings("a").find(".actName").text();
+    //console.log(selectedAct);
+    let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
+    let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
+    actBlock.append(`<h5>${selectedAct}</h5>`);
+    $(".dragContainer2").append(actBlock);
+    let color = btnColor[Math.floor(Math.random() * btnColor.length)];
+    actBlock.addClass(`${color}`);
+    actBlock.append(`<span class="close">×<span>`);
+    selectedact = "";
+    actBlock = "";
+    eventClickId++;
+    //console.log("clickId counter: " + clickId);
+  });
 
   $(document).on("click", ".eventButton", function () {
     pageDisplayBool[2] = true;
@@ -986,20 +999,20 @@ const ticketMastAPISearch = () => {
     url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
     async: true,
     dataType: "json",
-  }).then(function(response) {
+  }).then(function (response) {
     //console.log(response);
     eventObj = response;
-    for (let i=0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       let eventImage = response._embedded.events[i].images[0].url;
       let eventName = response._embedded.events[i].name;
       let ticketMasterURL = response._embedded.events[i].url;
-      $(`.eventImage${i+1}`).attr("src", eventImage);
-      $(`.eventLink${i+1}`).attr("href", ticketMasterURL);
+      $(`.eventImage${i + 1}`).attr("src", eventImage);
+      $(`.eventLink${i + 1}`).attr("href", ticketMasterURL);
       let eventInfo = $(`<p class="text-center actName eventName">`).text(eventName);
-      $(`.events${i+1}`).append(eventInfo);
+      $(`.events${i + 1}`).append(eventInfo);
     }
   });
-};  
+};
 
 //---------------------------------------- end event API section ---------------------------------------------
 
@@ -1104,7 +1117,7 @@ function dragstart_handler(ev) {
   ev.dataTransfer.dropEffect = "copy";
 }
 
-$(document).on("dragstart", ".fudStyle", function(event) {
+$(document).on("dragstart", ".fudStyle", function (event) {
   //console.log(event.target.id);
   //console.log("dataTransfer: " + event.originalEvent.dataTransfer);
 

@@ -533,3 +533,9 @@ table, tbody, tr, td {
   border: 0;
   border-spacing: 0;
 }
+
+.spinner-grow{
+  display: block;
+  margin: 25% auto 0;
+  color: white;
+}
