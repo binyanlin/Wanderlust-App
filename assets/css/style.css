@@ -76,14 +76,14 @@
   align-content: center;
   text-align: center;
   font-weight: bold;
-  color: rgb(126, 58, 58);
+  /* color: rgb(126, 58, 58); */
 }
 
 .slidecontainer:active {
   align-content: center;
   text-align: center;
   font-weight: bold;
-  color: rgb(126, 58, 58);
+  /* color: rgb(126, 58, 58); */
 }
 
 label {
@@ -134,15 +134,15 @@ input[id=socialLvl]::-webkit-slider-thumb {
 }
 
 input[id=safetyLvl]::-webkit-slider-thumb:hover {
-  background-size: 50px;
+  background-size: 45px;
 }
 
 input[id=moneyLvl]::-webkit-slider-thumb:hover {
-  background-size: 50px;
+  background-size: 45px;
 }
 
 input[id=socialLvl]::-webkit-slider-thumb:hover {
-  background-size: 50px;
+  background-size: 45px;
 }
 
 input[id=safetyLvl]::-webkit-slider-thumb:active {
