@@ -1,5 +1,7 @@
 # Wanderlust
 
+! https://binyanlin.github.io/wanderlust-app/
+
 ## What is it?
 Wanderlust is an app that was created by a group of 3. We desired to create an application with all of our aligned interests.
 <br>This resulted in an app that was curated for the spontaneous traveler. One who is directionless yet adventurous. 
