@@ -76,14 +76,14 @@
   align-content: center;
   text-align: center;
   font-weight: bold;
-  color: rgb(126, 58, 58);
+  /* color: rgb(126, 58, 58); */
 }
 
 .slidecontainer:active {
   align-content: center;
   text-align: center;
   font-weight: bold;
-  color: rgb(126, 58, 58);
+  /* color: rgb(126, 58, 58); */
 }
 
 label {
@@ -119,30 +119,30 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 input[id=safetyLvl]::-webkit-slider-thumb {
-  background: url('../images/slider1icon.png') no-repeat;
+  background: url('../images/slider1.png') no-repeat;
   background-size: 40px;
 }
 
 input[id=moneyLvl]::-webkit-slider-thumb {
-  background: url('../images/slider2icon.png') no-repeat;
+  background: url('../images/slider2.png') no-repeat;
   background-size: 40px;
 }
 
 input[id=socialLvl]::-webkit-slider-thumb {
-  background: url('../images/slider3icon.png') no-repeat;
+  background: url('../images/slider3.png') no-repeat;
   background-size: 40px;
 }
 
 input[id=safetyLvl]::-webkit-slider-thumb:hover {
-  background-size: 50px;
+  background-size: 45px;
 }
 
 input[id=moneyLvl]::-webkit-slider-thumb:hover {
-  background-size: 50px;
+  background-size: 45px;
 }
 
 input[id=socialLvl]::-webkit-slider-thumb:hover {
-  background-size: 50px;
+  background-size: 45px;
 }
 
 input[id=safetyLvl]::-webkit-slider-thumb:active {
@@ -532,4 +532,10 @@ table, tbody, tr, td {
   padding: 0;
   border: 0;
   border-spacing: 0;
+}
+
+.preL{
+  display:block;
+  margin: 25% auto 0;
+  color: white;
 }

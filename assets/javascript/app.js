@@ -8,14 +8,15 @@ const apiKeys = [
 // Yelp Client ID
 // 7vmrY-xkHwlI8QAWACW6dg
 
-const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler"];
-let pageDisplayBool = [true, false, false, false, false];
+const pageDisplay = [".openingPage", ".secondPage", ".eventPage", ".foodPage", ".scheduler", ".preL"];
+let pageDisplayBool = [true, false, false, false, false, false];
 let clickId = 0;
 let eventClickId = 0;
 let pageHide = false;
 
 const displayer = () => {
   $(".openingPage").hide();
+  $(".preL").hide();
   $(".secondPage").hide();
   $(".eventPage").hide();
   $(".foodPage").hide();
@@ -34,7 +35,11 @@ const displayer = () => {
     $(".foodPage").show();
   } if (pageDisplayBool[4]) {
     $(".scheduler").show();
-  };
+  } if (pageDisplayBool[5]) {
+    $(".preL").show();
+  }
+
+
 };
 
 displayer();
@@ -317,7 +322,12 @@ let selectedLocation = "" //a string to hold final location
 
 $(document).on("click", ".buttonStart", function () {
   pageDisplayBool[0] = false;
-  pageDisplayBool[1] = true;
+  pageDisplayBool[5] = true;
+  setTimeout(function () {
+    $(".preL").hide();
+    $(".secondPage").show();
+    $(".map").show();
+  }, 3000);
   displayer();
   decideSort();
   initMap();
@@ -327,10 +337,7 @@ $(document).on("click", ".buttonStart", function () {
   //backgroundtest
   // document.body.style.background = "url(assets/images/nara.jpg) no-repeat center center fixed"; 
   //document.body.style.backgroundSize = "cover"; 
-
   ticketMastAPISearch();
-
-
 });
 
 $(document).on("click", ".close", function () {
@@ -348,18 +355,21 @@ $('.flightsB').click(function () {
 $(document).on("click", ".eventsB", function () {
   pageDisplayBool[1] = false;
   pageDisplayBool[2] = true;
+  pageDisplayBool[5] = false;
   displayer();
 });
 
 $(document).on("click", ".foodPlacesB", function () {
   pageDisplayBool[1] = false;
   pageDisplayBool[3] = true;
+  pageDisplayBool[5] = false;
   displayer();
 });
 
 
 $(document).on("click", ".destinationB", function () {
   pageDisplayBool[1] = false;
+  pageDisplayBool[5] = false;
   displayer();
   pageHide = true;
   $(".revealButton").append(`<button class="btn btn-light"><h3>Back To My Trip!</h3></button>`);
@@ -367,6 +377,7 @@ $(document).on("click", ".destinationB", function () {
 
 $(document).on("click", ".revealButton", function () {
   pageDisplayBool[1] = true;
+  pageDisplayBool[5] = false;
   $(".revealButton").empty();
   displayer();
 });
@@ -374,6 +385,7 @@ $(document).on("click", ".revealButton", function () {
 $(document).on("click", ".restartButton", function () {
   pageDisplayBool[1] = false;
   pageDisplayBool[0] = true;
+  pageDisplayBool[5] = false;
   displayer();
   empty();
   selectedLocation = "";
@@ -411,10 +423,11 @@ function decideSort() {
     generateDestination();
   }
 }
+
 //start FUNCTION GENERATEDESTINATION section
 function generateDestination() {
 
-  //console.log(userInput); test worked
+  ////console.log(userInput); test worked
 
   //have a for loop sift through the array of objects
   //have conditional statements to find destinations that match the user's inputs
@@ -424,29 +437,29 @@ function generateDestination() {
       if ($("#moneyLvl").val() == genDestinations[i].money) {
         if ($("#socialLvl").val() == genDestinations[i].social) {
           usersPool.push(genDestinations[i].name);
-          //console.log("uno")
-        };
-      };
-    };
+          ////console.log("uno")
+        }
+      }
+    }
     if ($("#safetyLvl").val() == genDestinations[i].safety) {
       if ($("#moneyLvl").val() == genDestinations[i].money) {
         usersPool.push(genDestinations[i].name);
-        //console.log("dos")
-      };
-    };
+        ////console.log("dos")
+      }
+    }
     if ($("#safetyLvl").val() == genDestinations[i].safety) {
       if ($("#socialLvl").val() == genDestinations[i].social) {
         usersPool.push(genDestinations[i].name);
-        //console.log("tres")
-      };
-    };
+        ////console.log("tres")
+      }
+    }
     if ($("#moneyLvl").val() == genDestinations[i].money) {
       if ($("#socialLvl").val() == genDestinations[i].social) {
         usersPool.push(genDestinations[i].name);
-        //console.log("quatro")
-      };
-    };
-  };
+        ////console.log("quatro")
+      }
+    }
+  }
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -458,11 +471,11 @@ function generateDestination() {
     selectedLocation = filteredPool[Math.floor(Math.random() * filteredPool.length)];
     pickedPool.push(selectedLocation);
     $(".genDes").text(selectedLocation);
-    console.log(selectedLocation);
+    //console.log(selectedLocation);
   } else {
     alert("You've exhausted cities with your slide options, adjust the sliders!");
-  };
-};//end FUNCTION GENERATEDESTINATION section
+  }
+}//end FUNCTION GENERATEDESTINATION section
 
 //start FUNCTION DEFAULTDESTINATION section
 function defaultDestination() {
@@ -470,7 +483,7 @@ function defaultDestination() {
   //have a for loop sift through the array of objects
   for (let i = 0; i < genDestinations.length; i++) {
     usersPool.push(genDestinations[i].name);
-  };
+  }
 
   let filteredPool = usersPool.filter(function (x) {
     return pickedPool.indexOf(x) < 0;
@@ -484,8 +497,8 @@ function defaultDestination() {
 
   } else {
     alert("You've exhausted cities with your slide options, adjust the sliders!");
-  };
-};//end FUNCTION DEFAULTDESTINATION section
+  }
+}//end FUNCTION DEFAULTDESTINATION section
 
 //start MAP section
 let geocoder;
@@ -502,7 +515,7 @@ function initMap() {
 
   // Call the genMap function (once) when the map is idle (ready)
   google.maps.event.addListenerOnce(map, 'idle', genMap);
-};
+}
 
 function genMap() {
   // Define address to center map to
@@ -523,7 +536,7 @@ function genMap() {
     }
   });
 
-};//end MAP section
+}//end MAP section
 
 //start LOCATION DESCRIPTION section
 function genDescription() {
@@ -538,9 +551,9 @@ function genDescription() {
       $('#tripInfo').load(combo);
       //}, 2000)
     }
-  };
+  }
   // }, 4000) 
-};
+}
 //end LOCATION DESCRIPTION section
 
 //start 2NDPGBG section
@@ -552,8 +565,8 @@ function getBackground() {
       document.body.style.background = "url(assets/images/" + bgPick + ".jpg) no-repeat center center fixed";
       document.body.style.backgroundSize = "cover";
     }
-  };
-};//end 2NDPGBG section
+  }
+}//end 2NDPGBG section
 
 //--------------------------------------- start yelp food API section -------------------------------------------
 
@@ -582,7 +595,7 @@ const YelpAPISearch = () => {
       "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
     }
   }).then(function (response) {
-    console.log(response);
+    //console.log(response);
     breakfastObj = response;
     for (let i = 0; i < 5; i++) {
       let name = response.businesses[i].name;
@@ -599,7 +612,7 @@ const YelpAPISearch = () => {
       let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
       $(`.breakfast${i + 1}`).append(foodInfo);
       $(`.breakfast${i + 1}`).append(foodInfo2);
-    };
+    }
   });
 
   let breakfastIndex = 0;
@@ -616,9 +629,9 @@ const YelpAPISearch = () => {
           $(`.breakfast${i + 1}`).empty();
           $(`.breakfast${i + 1}`).append(foodInfo);
           $(`.breakfast${i + 1}`).append(foodInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   $(document).on("click", ".btnLeftBlue1", function () {
@@ -634,9 +647,9 @@ const YelpAPISearch = () => {
           $(`.breakfast${i + 1}`).empty();
           $(`.breakfast${i + 1}`).append(foodInfo);
           $(`.breakfast${i + 1}`).append(foodInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   // lunch ajax
@@ -650,7 +663,7 @@ const YelpAPISearch = () => {
       "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
     }
   }).then(function (response) {
-    console.log(response);
+    //console.log(response);
     lunchObj = response;
     for (let i = 0; i < 5; i++) {
       let name = response.businesses[i].name;
@@ -667,7 +680,7 @@ const YelpAPISearch = () => {
       let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
       $(`.lunch${i + 1}`).append(foodInfo);
       $(`.lunch${i + 1}`).append(foodInfo2);
-    };
+    }
   });
 
   let lunchIndex = 0;
@@ -685,9 +698,9 @@ const YelpAPISearch = () => {
           $(`.lunch${i + 1}`).empty();
           $(`.lunch${i + 1}`).append(foodInfo);
           $(`.lunch${i + 1}`).append(foodInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   $(document).on("click", ".btnLeftBlue2", function () {
@@ -703,9 +716,9 @@ const YelpAPISearch = () => {
           $(`.lunch${i + 1}`).empty();
           $(`.lunch${i + 1}`).append(foodInfo);
           $(`.lunch${i + 1}`).append(foodInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   // dinner ajax
@@ -718,7 +731,7 @@ const YelpAPISearch = () => {
       "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
     }
   }).then(function (response) {
-    console.log(response);
+    //console.log(response);
     dinnerObj = response;
     for (let i = 0; i < 5; i++) {
       let name = response.businesses[i].name;
@@ -735,7 +748,7 @@ const YelpAPISearch = () => {
       let foodInfo2 = $(`<p class="text-center">`).text("Price " + price + "  Rating " + rating + " ★");
       $(`.dinner${i + 1}`).append(foodInfo);
       $(`.dinner${i + 1}`).append(foodInfo2);
-    };
+    }
   });
 
   let dinnerIndex = 0;
@@ -753,9 +766,9 @@ const YelpAPISearch = () => {
           $(`.dinner${i + 1}`).empty();
           $(`.dinner${i + 1}`).append(foodInfo);
           $(`.dinner${i + 1}`).append(foodInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   $(document).on("click", ".btnLeftBlue3", function () {
@@ -772,9 +785,9 @@ const YelpAPISearch = () => {
           $(`.dinner${i + 1}`).append(foodInfo);
           $(`.dinner${i + 1}`).append(foodInfo2);
 
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
 
@@ -788,7 +801,7 @@ const YelpAPISearch = () => {
   // .header("X-RapidAPI-Key", "8330ea6096msha4fd84b5e8f593bp161f8ejsn6c508a8ee435")
   // .header("Content-Type", "application/x-www-form-urlencoded")
   // .end(function (result) {
-  //   console.log(result.status, result.headers, result.body);
+  //   //console.log(result.status, result.headers, result.body);
   // });
 
 
@@ -804,7 +817,7 @@ const YelpAPISearch = () => {
       "Authorization": "Bearer ETyIXGHKE8nskR_WJUaEvwJeXNjFJ5Cq_a_HdZNZmsTkzTut_-Y68XQPpCej1uyiIcmuW2PhP2j2rlSZMKmeecYZK8lOYImJNV9s00Su6K_Peuojo9vcupVUc5n-XHYx"
     }
   }).then(function (response) {
-    console.log(response);
+    //console.log(response);
     activityObj = response;
     for (let i = 0; i < 10; i++) {
       let name = response.businesses[i].name;
@@ -816,7 +829,7 @@ const YelpAPISearch = () => {
       $(`.activitiesLink${[i + 1]}`).attr("href", yelpURL);
       let activityInfo = $(`<p class="text-center actName">`).text(name);
       $(`.activities${i + 1}`).append(activityInfo);
-    };
+    }
   });
 
 
@@ -834,9 +847,9 @@ const YelpAPISearch = () => {
           $(`.activities${i + 1}`).empty();
           $(`.activities${i + 1}`).append(activityInfo);
           // $(`.activities${i + 1}`).append(activityInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
 
@@ -852,9 +865,9 @@ const YelpAPISearch = () => {
           $(`.activities${i + 1}`).empty();
           $(`.activities${i + 1}`).append(activityInfo);
           // $(`.activities${i + 1}`).append(activityInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   let eventIndex = 0;
@@ -870,9 +883,9 @@ const YelpAPISearch = () => {
           $(`.events${i + 1}`).empty();
           $(`.events${i + 1}`).append(eventInfo);
           // $(`.events${i + 1}`).append(eventInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   $(document).on("click", ".btnLeftGreen2", function () {
@@ -887,15 +900,15 @@ const YelpAPISearch = () => {
           $(`.events${i + 1}`).empty();
           $(`.events${i + 1}`).append(eventInfo);
           // $(`.events${i + 1}`).append(eventInfo2);
-        };
-      };
-    };
+        }
+      }
+    }
   });
 
   $(document).on("click", ".foodScheduleB", function () {
     $(this).find("img").addClass("foodSelected");
     let doop = this;
-    console.log("food button this: " + doop);
+    //console.log("food button this: " + doop);
     setTimeout(function () {
       $(doop).find("img").removeClass("foodSelected");
     }, 3000);
@@ -910,32 +923,32 @@ const YelpAPISearch = () => {
     selectedFood = "";
     foodBlock = "";
     clickId++;
-    console.log("clickId counter: " + clickId);
+    //console.log("clickId counter: " + clickId);
   });
 
-//event handler for events
+  //event handler for events
 
-$(document).on("click", ".actScheduleB", function () {
-  $(this).find("img").addClass("actSelected");
-  let doop = this;
-  console.log("event button this: " + doop);
-  setTimeout(function () {
-    $(doop).find("img").removeClass("actSelected");
-  }, 3000);
-  let selectedAct = $(this).siblings("a").find(".actName").text();
-  console.log(selectedAct);
-  let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
-  let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
-  actBlock.append(`<h5>${selectedAct}</h5>`);
-  $(".dragContainer2").append(actBlock);
-  let color = btnColor[Math.floor(Math.random() * btnColor.length)];
-  actBlock.addClass(`${color}`);
-  actBlock.append(`<span class="close">×<span>`);
-  selectedact = "";
-  actBlock = "";
-  eventClickId++;
-  console.log("clickId counter: " + clickId);
-});
+  $(document).on("click", ".actScheduleB", function () {
+    $(this).find("img").addClass("actSelected");
+    let doop = this;
+    //console.log("event button this: " + doop);
+    setTimeout(function () {
+      $(doop).find("img").removeClass("actSelected");
+    }, 3000);
+    let selectedAct = $(this).siblings("a").find(".actName").text();
+    //console.log(selectedAct);
+    let btnColor = ["alert-success", "alert-primary", "alert-danger", "alert-secondary", "alert-light", "alert-info"]
+    let actBlock = $(`<div draggable="true" class="fudStyle eventStyle col-sm rounded text-center" id="chosen${eventClickId}">`);
+    actBlock.append(`<h5>${selectedAct}</h5>`);
+    $(".dragContainer2").append(actBlock);
+    let color = btnColor[Math.floor(Math.random() * btnColor.length)];
+    actBlock.addClass(`${color}`);
+    actBlock.append(`<span class="close">×<span>`);
+    selectedact = "";
+    actBlock = "";
+    eventClickId++;
+    //console.log("clickId counter: " + clickId);
+  });
 
   $(document).on("click", ".eventButton", function () {
     pageDisplayBool[2] = true;
@@ -956,6 +969,7 @@ $(document).on("click", ".actScheduleB", function () {
     pageDisplayBool[2] = false;
     pageDisplayBool[3] = false;
     pageDisplayBool[4] = true;
+    pageDisplayBool[5] = false;
     if (scheduleFirstVisit) {
       scheduleMaker();
       scheduleFirstVisit = false;
@@ -979,27 +993,27 @@ $(document).on("click", ".actScheduleB", function () {
 
 const ticketMastAPISearch = () => {
 
-  console.log("Ticketmaster: " + selectedLocation);
+  //console.log("Ticketmaster: " + selectedLocation);
 
   $.ajax({
     method: "GET",
     url: "https://app.ticketmaster.com/discovery/v2/events.json?&size=10&apikey=SYRduW0EVKOBGCJJQzdeMKtjqAh7M1GZ&city=" + selectedLocation,
     async: true,
     dataType: "json",
-  }).then(function(response) {
-    console.log(response);
+  }).then(function (response) {
+    //console.log(response);
     eventObj = response;
-    for (let i=0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       let eventImage = response._embedded.events[i].images[0].url;
       let eventName = response._embedded.events[i].name;
       let ticketMasterURL = response._embedded.events[i].url;
-      $(`.eventImage${i+1}`).attr("src", eventImage);
-      $(`.eventLink${i+1}`).attr("href", ticketMasterURL);
+      $(`.eventImage${i + 1}`).attr("src", eventImage);
+      $(`.eventLink${i + 1}`).attr("href", ticketMasterURL);
       let eventInfo = $(`<p class="text-center actName eventName">`).text(eventName);
-      $(`.events${i+1}`).append(eventInfo);
-    };
+      $(`.events${i + 1}`).append(eventInfo);
+    }
   });
-};  
+};
 
 //---------------------------------------- end event API section ---------------------------------------------
 
@@ -1032,10 +1046,10 @@ const scheduleMaker = () => {
           randomNum.push(currentNum)
         } else {
           i--;
-        };
-      };
-    };
-    console.log(randomNum);
+        }
+      }
+    }
+    //console.log(randomNum);
   };
 
   numGen();
@@ -1053,7 +1067,7 @@ const scheduleMaker = () => {
     } else if (i >= 6 && i < 9) {
       fud = dinnerObj.businesses[randomNum[i]].name
       fudURL = dinnerObj.businesses[randomNum[i]].url
-    };
+    }
 
     let foodBlock = $(`<div draggable="true" class="fudStyle col-sm rounded text-center foodBlock${i}" id="random${i}">`)
     foodBlock.append($(`<a class="foodRandom${i}" href="${fudURL}" target="_blank">`));
@@ -1066,9 +1080,9 @@ const scheduleMaker = () => {
       $(`.foodBlock${i}`).addClass("btn-primary");
     } else if (i >= 6 && i < 9) {
       $(`.foodBlock${i}`).addClass("btn-info")
-    };
+    }
     $(`.foodBlock${i}`).append(`<span class="close">×<span>`);
-  };
+  }
 
   //generating event elements 
   let activity;
@@ -1086,9 +1100,9 @@ const scheduleMaker = () => {
       $(`.actBlock${i}`).addClass("alert-info");
     } else if (i >= 3 && i < 6) {
       $(`.actBlock${i}`).addClass("alert-success");
-    };
+    }
     $(`.actBlock${i}`).append(`<span class="close">×<span>`);
-  };
+  }
 }; //end scheduleMaker function
 
 // ---------------------------------drag and drop handler --------------------------------------------------
@@ -1097,16 +1111,16 @@ function dragstart_handler(ev) {
   ev.dataTransfer.setData("text/plain", ev.target.id);
   ev.dataTransfer.setData("text/html", "<p>Example paragraph</p>");
   ev.dataTransfer.setData("text/uri-list", "http://developer.mozilla.org");
-};
+}
 
 function dragstart_handler(ev) {
   // Set the drag effect to copy
   ev.dataTransfer.dropEffect = "copy";
-};
+}
 
-$(document).on("dragstart", ".fudStyle", function(event) {
-  // console.log(event.target.id);
-  // console.log("dataTransfer: " + event.originalEvent.dataTransfer);
+$(document).on("dragstart", ".fudStyle", function (event) {
+  //console.log(event.target.id);
+  //console.log("dataTransfer: " + event.originalEvent.dataTransfer);
 
   event.originalEvent.dataTransfer.setData("src", event.target.id);
   // $(".eventStyle").parent("td").attr("rowspan", 1);
@@ -1119,7 +1133,7 @@ $(document).on("dragover", ".drop", function (event) {
 $(document).on("drop", ".drop", function (event) {
   event.preventDefault();
   const src = event.originalEvent.dataTransfer.getData("src")
-  // console.log(src);
+  //console.log(src);
   event.target.append(document.getElementById(src));
 
   // let eventVar = document.getElementById(src);
